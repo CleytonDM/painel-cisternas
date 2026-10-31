@@ -1,0 +1,1077 @@
+<meta name="dash-one-writer">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap">
+<style>
+  /* Identidade do Programa Cisternas (manual de marca do MDS): azul escuro #1B6086 e azul claro
+     #75CAE3, grafismos de gotas e círculos, títulos em fonte geométrica (Gotham no manual; aqui
+     Montserrat, a alternativa livre mais próxima). Os tons de texto misturam a cor com o texto do
+     tema, para ler bem no claro e no escuro. */
+  .cis {
+    --cis-agua: #1B6086; --cis-claro: #75CAE3;
+    --cis-medio: color-mix(in srgb, var(--cis-agua) 55%, var(--cis-claro));
+    --cis-s1: #2a7fc4; --cis-s2: #e08a00;
+    --cis-fonte: 'Montserrat', var(--font-anthropic-sans);
+    --cis-titulo: color-mix(in srgb, var(--cis-agua) 72%, var(--color-fg));
+    --cis-tinta: color-mix(in srgb, var(--cis-claro) 12%, var(--color-panel));
+    --cis-tinta-forte: color-mix(in srgb, var(--cis-claro) 24%, var(--color-panel));
+    display: grid; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans);
+    max-width: 88rem; margin-inline: auto;
+  }
+  .cis-band {
+    --cis-gotas-w: 15rem;
+    position: relative; overflow: hidden; color: #fff; border-radius: var(--cds-radius);
+    padding: var(--cds-pad-md) calc(var(--cis-gotas-w) + 1rem) var(--cds-pad-md) var(--cds-pad-xl);
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--cds-gap-xs) var(--cds-gap-xl); align-items: center;
+    background: var(--cis-agua); border-left: 6px solid var(--cis-claro);
+  }
+  .cis-band-txt { display: grid; gap: 2px; min-width: 0; }
+  /* Versão negativa da marca sobre fundo escuro; o manual pede no mínimo 132 px de largura */
+  .cis-logo { display: block; width: clamp(140px, 14vw, 200px); height: auto; }
+  /* Gotas encostadas na borda direita e embaixo; o desenho cabe inteiro na área reservada
+     (meet), então a marca, que fica fora dessa área, nunca encobre nem corta uma gota */
+  .cis-gotas { position: absolute; right: 0; bottom: 0; height: 100%; width: var(--cis-gotas-w); pointer-events: none; }
+  @media (max-width: 40rem) {
+    .cis-band { grid-template-columns: minmax(0, 1fr); padding-right: var(--cds-pad-md); }
+    .cis-band-marca { order: -1; }
+    .cis-gotas { display: none; }
+  }
+  .cis-band-kicker { margin: 0; font-size: var(--cds-font-size-caption); letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+  .cis-band-sub { margin: 0; font-size: var(--cds-font-size-body); opacity: .9; max-width: 70ch; }
+  .cis-title { font-family: var(--cis-fonte); font-weight: 700; font-size: clamp(1.2rem, 1rem + .8vw, 1.6rem); line-height: 1.2; margin: 0; text-wrap: balance; color: #fff; }
+  .cis-muted { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: 0; }
+  .cis-pickbar {
+    position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-lg); align-items: end;
+    background: var(--color-panel); border: 1px solid var(--color-border-line); border-left: 5px solid var(--cis-claro);
+    border-radius: var(--cds-radius); padding: var(--cds-pad-sm) var(--cds-pad-md); box-shadow: var(--cds-shadow-popover);
+  }
+  .cis-pickbar .cis-muted { flex: 1 1 16rem; }
+  .cis-pick { display: grid; gap: var(--cds-gap-xs); min-width: 0; flex: 0 1 46rem; }
+  .cis-pick label { color: var(--cis-titulo); font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); text-transform: uppercase; letter-spacing: .06em; }
+  .cis-pick select { font-weight: var(--cds-font-weight-medium); border-color: color-mix(in srgb, var(--cis-claro) 45%, var(--color-border-line)); }
+  .cis-hero {
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--cds-gap-lg); align-items: start;
+    background: var(--cis-tinta); border: 1px solid color-mix(in srgb, var(--cis-claro) 35%, var(--color-border-line));
+    border-radius: var(--cds-radius); padding: var(--cds-pad-lg);
+  }
+  @media (max-width: 56rem) { .cis-hero { grid-template-columns: minmax(0, 1fr); } }
+  .cis-hero-id { display: grid; gap: var(--cds-gap-sm); min-width: 0; }
+  .cis-kicker { margin: 0; font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); letter-spacing: .06em; text-transform: uppercase; color: var(--cis-titulo); }
+  .cis-hero-nome { margin: 0; font-family: var(--cis-fonte); font-weight: 700; font-size: var(--cds-font-size-title); line-height: 1.2; text-wrap: balance; overflow-wrap: anywhere; }
+  .cis-tags { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); }
+  .cis-tag { font-size: var(--cds-font-size-caption); padding: 2px var(--cds-pad-sm); border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); }
+  .cis-tag.cis-uf { background: var(--cis-agua); border-color: var(--cis-agua); color: #fff; font-weight: var(--cds-font-weight-medium); }
+  .cis-sit.exec { color: var(--color-ok); border-color: currentColor; background: color-mix(in srgb, var(--color-ok) 12%, var(--color-panel)); }
+  .cis-sit.pc { color: var(--color-warn); border-color: currentColor; background: color-mix(in srgb, var(--color-warn) 12%, var(--color-panel)); }
+  .cis-vig { display: grid; gap: var(--cds-gap-xs); }
+  .cis-vig-lab { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--cds-gap-xs) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .cis-vig-track { height: .55rem; border-radius: 999px; background: color-mix(in srgb, var(--color-fg) 10%, transparent); overflow: hidden; }
+  .cis-vig-fill { height: 100%; border-radius: inherit; background: var(--cis-medio); }
+  .cis-vig-fill.fim { background: var(--color-warn); }
+  .cis-vig-fill.passou { background: var(--color-bad); }
+  .cis-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--cds-gap-sm); }
+  .cis-kpi { display: grid; gap: 2px; align-content: start; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-sm) var(--cds-pad-md); min-width: 0; }
+  .cis-kpi .lab { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .cis-kpi .val { font-family: var(--cis-fonte); font-weight: 700; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; color: var(--cis-titulo); }
+  .cis-kpi .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .cis-kpi.destaque { background: var(--cis-agua); border-color: var(--cis-agua); box-shadow: inset 0 4px 0 var(--cis-claro); }
+  .cis-kpi.destaque .val { color: #fff; }
+  .cis-kpi.destaque .lab, .cis-kpi.destaque .sub { color: rgba(255, 255, 255, .85); }
+  .cis-alertas {
+    display: grid; gap: var(--cds-gap-sm); border-radius: var(--cds-radius); padding: var(--cds-pad-lg);
+    background: var(--color-panel); border: 1px solid var(--color-border-line); border-left: 6px solid var(--color-ok);
+  }
+  .cis-alertas.warn { border-left-color: var(--color-warn); background: color-mix(in srgb, var(--color-warn) 7%, var(--color-panel)); }
+  .cis-alertas.bad { border-left-color: var(--color-bad); background: color-mix(in srgb, var(--color-bad) 7%, var(--color-panel)); }
+  .cis-alertas-head { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+  .cis-alertas h2 { font-family: var(--cis-fonte); font-size: var(--cds-font-size-heading); font-weight: 700; margin: 0; }
+  .cis-badge {
+    min-width: 1.6rem; text-align: center; padding: 1px var(--cds-pad-sm); border-radius: 999px; font-size: var(--cds-font-size-caption);
+    font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; color: var(--color-panel); background: var(--color-ok);
+  }
+  .cis-badge.warn { background: var(--color-warn); }
+  .cis-badge.bad { background: var(--color-bad); }
+  .cis-callouts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: var(--cds-gap-sm); }
+  .cis-callouts li {
+    --c: var(--color-ok); display: flex; gap: var(--cds-gap-sm); align-items: center; min-width: 0;
+    padding: var(--cds-pad-sm) var(--cds-pad-md); border-radius: var(--cds-radius); background: var(--color-panel);
+    border: 1px solid color-mix(in srgb, var(--c) 40%, var(--color-border-line)); border-left: 4px solid var(--c);
+    font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium);
+  }
+  .cis-callouts li::before {
+    content: "!"; flex: none; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: grid; place-items: center;
+    background: var(--c); color: var(--color-panel); font-size: var(--cds-font-size-caption); font-weight: 700;
+  }
+  .cis-callouts li.warn { --c: var(--color-warn); }
+  .cis-callouts li.bad { --c: var(--color-bad); }
+  .cis-callouts li.ok::before { content: "✓"; }
+  .cis-pick select, .cis-search {
+    width: 100%; font: inherit; color: var(--color-fg); background: var(--color-panel);
+    border: 1px solid var(--color-border-line); border-radius: var(--cds-radius);
+    padding: var(--cds-pad-xs) var(--cds-pad-sm);
+  }
+  .cis-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); }
+  .cis-chips li {
+    font-size: var(--cds-font-size-caption); border: 1px solid currentColor; border-radius: 999px;
+    padding: 2px var(--cds-pad-sm); display: inline-flex; gap: var(--cds-gap-xs); align-items: center;
+  }
+  .cis-chips li::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: currentColor; }
+  .cis-chips .bad { color: var(--color-bad); }
+  .cis-chips .warn { color: var(--color-warn); }
+  .cis-chips .ok { color: var(--color-ok); }
+  .cis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); }
+  .cis-card {
+    background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius);
+    padding: var(--cds-pad-lg); min-width: 0; display: grid; gap: var(--cds-gap-sm); align-content: start;
+  }
+  .cis-card { border-top: 3px solid var(--cis-claro); }
+  .cis-card h2 { font-family: var(--cis-fonte); font-size: var(--cds-font-size-heading); font-weight: 700; margin: 0; color: var(--cis-titulo); }
+  .cis-ficha { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: var(--cds-gap-sm) var(--cds-gap-md); margin: 0; }
+  .cis-ficha > div { min-width: 0; }
+  .cis-ficha .wide { grid-column: 1 / -1; }
+  .cis-ficha dt { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .cis-ficha dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+  .cis-saldo { display: grid; gap: var(--cds-gap-xs); padding-top: var(--cds-pad-sm); border-top: 1px solid var(--color-border-line); }
+  .cis-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
+  .cis-funil { display: grid; gap: var(--cds-gap-sm); min-height: 11rem; }
+  .cis-funil .row { display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: var(--cds-gap-xs) var(--cds-gap-sm); align-items: center; }
+  .cis-funil .lab { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .cis-funil .track { position: relative; height: 1.6rem; }
+  .cis-funil .fill { position: absolute; inset: 0 auto 0 0; border-radius: var(--cds-radius); }
+  .cis-funil .val { grid-column: 2; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; margin-top: -2px; }
+  .cis-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; padding: 0; list-style: none; }
+  .cis-legend li { display: inline-flex; gap: var(--cds-gap-xs); align-items: center; }
+  .cis-sw { width: .9rem; height: 2px; display: inline-block; }
+  .cis-sw.s1 { background: var(--cis-s1); }
+  .cis-sw.s2 { background: var(--cis-s2); }
+  .cis-sw.dash { background: none; border-top: 2px dashed var(--cds-chart-reference); height: 0; }
+  .cis-chart { position: relative; min-height: 260px; }
+  .cis-chart svg { display: block; overflow: visible; }
+  .cis-tip {
+    position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border);
+    border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm);
+    font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; white-space: nowrap; z-index: 2;
+  }
+  .cis-tip .t { color: var(--cds-text-secondary); }
+  .cis-tip i { display: inline-block; width: .5rem; height: .5rem; border-radius: 50%; margin-right: 4px; }
+  .cis-tablebox { max-height: 28rem; overflow: auto; border-top: 1px solid var(--color-border-line); }
+  .cis-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .cis-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); }
+  .cis-table td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+  .cis-table .num { text-align: right; white-space: nowrap; }
+  .cis-table .nowrap { white-space: nowrap; }
+  .cis-carteira tbody tr { cursor: pointer; }
+  .cis-carteira tbody tr:hover td { background: var(--cds-surface-popover); }
+  .cis-carteira tr.atual td { font-weight: var(--cds-font-weight-medium); background: var(--cis-tinta-forte); }
+  .cis-carteira tr.atual td:first-child { box-shadow: inset 4px 0 0 var(--cis-claro); }
+  .cis-carteira tr.bad td:first-child { box-shadow: inset 3px 0 0 var(--color-bad); }
+  .cis-carteira tr.warn td:first-child { box-shadow: inset 3px 0 0 var(--color-warn); }
+  .cis-carteira td.alertas { color: var(--color-fg-muted); min-width: 14rem; }
+  .cis-cardhead { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; justify-content: space-between; }
+  .cis-copy {
+    font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg); background: var(--color-panel); cursor: pointer;
+    border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-xs) var(--cds-pad-sm);
+  }
+  .cis-copy:hover { background: var(--cds-surface-popover); }
+  .cis-aviso { font-size: var(--cds-font-size-caption); color: var(--color-ok); }
+  .cis-quadrobox { overflow-x: auto; display: grid; gap: var(--cds-gap-xs); }
+  .cis-tabtit { margin: 0; text-align: center; font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); }
+  .cis-quadro { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .cis-quadro th, .cis-quadro td { border: 1px solid var(--color-border-line); padding: 3px var(--cds-pad-sm); text-align: center; vertical-align: middle; }
+  .cis-quadro thead th, .cis-quadro tfoot td { background: var(--cis-tinta-forte); font-weight: var(--cds-font-weight-medium); }
+  .cis-quadro .nowrap { white-space: nowrap; }
+  .cis-notas { margin: 0; padding-left: 1.2rem; display: grid; gap: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .cis-origem { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .cis-vazio {
+    min-height: 260px; display: grid; place-content: center; justify-items: center; gap: var(--cds-gap-sm); text-align: center;
+    padding: var(--cds-pad-lg); border-radius: var(--cds-radius);
+    border: 2px dashed color-mix(in srgb, var(--color-warn) 55%, var(--color-border-line));
+    background: color-mix(in srgb, var(--color-warn) 8%, var(--color-panel));
+  }
+  .cis-vazio::before {
+    content: "!"; width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center;
+    background: var(--color-warn); color: var(--color-panel); font-size: var(--cds-font-size-heading); font-weight: 700;
+  }
+  .cis-vazio-tit { margin: 0; font-family: var(--cis-fonte); font-weight: 700; font-size: var(--cds-font-size-title); line-height: 1.25;
+    color: color-mix(in srgb, var(--color-warn) 65%, var(--color-fg)); text-wrap: balance; }
+  .cis-vazio-sub { margin: 0; color: var(--color-fg-muted); }
+  @media (max-width: 40rem) { .cis-hide-narrow { display: none; } }
+  [data-dash-source-state=empty] { color: transparent; }
+  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+<div class="cis">
+  <header class="cis-band" id="topo">
+    <div class="cis-band-txt">
+      <p class="cis-band-kicker">MDS · Transferegov · ações 8948 e 11V1</p>
+      <h1 class="cis-title">Painel Programa Cisternas</h1>
+      <p class="cis-band-sub">Convênios e termos em acompanhamento: execução física e financeira, saldo em conta e alertas. Carga de <span data-draw="carga" data-source="instrumentos" data-field="data_carga" data-row="0">—</span>.</p>
+    </div>
+    <div class="cis-band-marca">
+      <img class="cis-logo" alt="Programa Cisternas" width="520" height="119" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAggAAAB3CAMAAABRyUhsAAAAYFBMVEUAAAD///////////////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw2ciRAAAAIHRSTlMA/QUtT9BusI8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGBsXzUAABRgSURBVHja7V3ZgqwoDLXC+v9fPMomgQSC2t1zq8qHO9OlosIhCScL23blADj+0daZ134Y53X4YfseH3UcMADtXuhwOxbgC4UPg4Hyr/4w+isUPgkHOwzciz6c+iLhc8QB+Bd/6C8SPkUc2NfwsF8kfAQOWK1QDv9FwgeoBf2aH1+Z8P5qwb8kxz07Acox/g2fY9vZ5K0MWwXqig/FAbiX7Hioi5gBoy9pLi5/gqCVtOoFCvuDafGZi+XdPDBCHLzcjR6Cet4CNZcBjwao/Wh5TUi/oxNcKwKJAIxEgE/EwUt+XKYTYLOmHC7qmEMUmQxCY6ve31/KpxPG18+sTrh0w/5vaQS3cpwLto/KI31cGy7LYw+bi3/nu/YT5iPNoTUcXBcJgM2Q0NF5WPIglhEHvJS15yihVoyOwgVeZCuhIYPWO+Xa1CRA+npoHm0+zUxYxMF1kdAAIYxEA4TSeMbBITwQEnIj+Xe39UCoX7F8HZQG0rUmq5FdIJj6AoCP5M+WcXCZTAhjaKKC1snujEDw8UdfhidNU6+CPeBP2Z4AYtUWTzg4JYINjShfy/34UOdqJIVr80DHJ1mEFH1oo3vW0Cfg4LLMjEBIf6iIqASE1OU2wyzOe5tXCLZM/ThbVT6hio1QCQ3/aodd2fOt4y+He9VEDLnDjYKAcMBG3bGG/kkeCcwqEK52UC0RokBuJEI024LD+xgssyXpUH5PAsGmkImy9qglQvyiMuxB9oCqlU4Ago4iIQoEXQEhQWf7LHNx7wi3jIOryjMBIc5hsGlsKokQR00dw6ziwG7VaOoABFPL/Q3NclubF2XYXWi+ekgEwtGQ2xIgw8ICqttNBu3nKAa/joOrRgICQhhq3QIh/YjGMo+dz5Kin6gYCBlO1ahnWVT9lJ4QEIeBEF5o05+kG2Dmbnx0AdkDwTZAyKMT8QmV6Z/nbz08Jy/ESoSkGaJJgrEB4UPSg04gQL4UPkg3XDAUfwgIWLtnC6ICQv7bIoA0EiEhI9kX5UZ3ipRaSISm4nAjIORHuNLKBxgIl3BwtX9GqiEerrALeBROCVFJCkQppwENv7tixpwA2fIq4ZQI4VREAwJChE6tYN5fILi/AwI2FoPrIETMxpVEsAkZIJg83pGr9pGWepVWzCmziiqpdEoBQjaP7FYB4YTJ9jG64aKB8Era+u7y0VTLR8RRwGkTMEBAXKIrQGhb2c7rq2E9hxpOd2oFBF1WquYzOCWhgbAnNUAb1uw2dWUFiQglnfkABASX5fNQIsRBNiwQ3MkWnwaIQXS0Lk4Lv2EgnGD1pD3yhhFJAibJqErvVk4Cay8DQUUBjijm4lKAysabqIZgI7gaCKZppawACmsJ5dogEaC8xAmE43XsSX6+v5EgUwwqr9HQvNXg/bYeoNKSFro4nXzudwuAVwntqsGj3zcEBJsljYbKa7A7GsJhsk1SbITQWjQxNEKJSbd8gpFwWMXaz4zF0/mL9MguTJJH4CE3tK+sBiwBKh7BZKKpWjVgICAVQNFlFgPhYJMUYCDo58Jw/ik8aG9EYWm1Itk75yDj3GoWXByXHJhS6B2Tp6Wtln0Es9gRSoU/rmzBdGfCU+tHcQgIx/2utRBbpvVtjYRktGvvvY2xXtoJiCOoMl/svsQOFK1dEwqnhkfuogwEgPLIk27aTurZZh+EhhEQWurI6nQkrVIDoQTN4aVCvsO+q5FQReaBOjomJLcyyY7B+gbKpDj6P04dtzRfkIY/3UUGuZ7VGV9gzpnvMx0AONioA0LWKvX4VusURRIEBQiFdUy/v6eRkMRlCftMssBrFgq0RNh7/hhOkw0+WAdCrXJOICCR4E8vZzxxRg+8sk4KNkILBFBnUIM9eYvYSMsUATRAUBGLJ+P9dik9Mdu9WATGhSCfkNtkNJf7StoIxyD5snD3cvXQ2fwYCFgkqKSgwyu4c77rKIi2Er/QACFjBeB0NFScwkwi4FAl/37uBirbPegF/RpAgVo1BL+dBt2xN/eBECZzLRJM1FyuijCMtIOGQm/0QNBFJBj0CcmJMARCHaHGubj+bXFAzvhQ9MDl/9u0mfMILszP2k1hpPbUDAhpMqukJ1K9lli3pQSa5Jjj40Sgj1ogJOGFlgd4WEdAMMgEeTdKaZDm7Eom/L6e28DOmEUTOs1jSlfIN8+BEEVCdhI6Osy9ycVxPRCCSOjXmvlPHgj4VIOkN89nO4Y66Yw9jaTXH42vQSVzSl9IjZ0CIYnv7G8oEsp4lPiyG7lnNos5g+Jt5WEwHnLMGZrfegwE1YTCv5W1OMtn02f+qx1VTEkC2mT10CBBBIW0XuF+PGJJAZu3+6GgT4VLi58qeLFqZYN4S/u49Df0r3E8F6r/Dl/435UHZhqL6s7EIcpUqAR0iPoARYQxwnOKrE92ZbNcucd+s/cvxKurSuW7w3605C0+6RhDRbSIJCiZbY4TUql0VRCk11OtEKmt3GtUp940PV4UhoR8LdFqNNQKI+oYTUYyfEtovIG3uVH6h9XYuCCOFOOcjsjEwH+R8Abxqe0k94F2tC5b7TXhpLnQpm/RtX8/gaVX+9EdtfumdLSbVcUk+KcrJ3yPn0eCNIutXwhEORAXUZXJoPlYRwPfMr3/10MaqGzoxYXboxa8M7w58ZnxPP+gQDDyDGcvvE59q+/9e4c8pc2CFua/DrGlvsrhn9YMMRDxtcg4PJcE9T1++FjIaRPlOXgJX/3t9v/fYVaAIKIg7WMFOaE5Bifv3c0eoktFjUq+b/yWohaud+jrWSBYgf4QuqT7r1pYe9Lehz+PB/1j6nD00+tR1WBE/JRgSCCRVfvSdA80cs5bnRzExXNurU+HtY26yXtOpZuPu+vA6ONuLTokl6oSdj+4pk/2Oa635zfE77AK1XvV5fx+pp8+sQnudrJD96vbDoVVIBjBZNcig3IqEsJ2QdaR/BVQnjLTVuBVXVpOuhuW0v1BwLyWBPvRAixEzmCwkte7vhAo32m9GmZpmuPTuw59xfjk+F4rqe7qGYEw5RePiAd6pELxXJgAgd9WIvjK4KeAADP4N2hV3BNJtzAJBPOSpV3xG++4PLleT/IIWkhLjBcO48C52J88EGBoroYQ3A2kNrIECEYIhCaamwGCBjEQqBZoYQt8KFGKOltZNcynkZF6sNy4Av44cM6VjAQaCJN3iLWZjbxe5GNASEVgx0Bw2wIQrKxnpzuuWFiojSPgk6yYpxykAszLc7htAAQBFgHgWSBsQiCgQjLcdzap/iMgUIwNaVOquYiWM4t6rhnkNRl53SB6ax4IgttDyNzfAKEeTe5NNQiBAMIwMEEoooGF8nlz4eHFLm0+flH21gMgzJ1o8GeqgS4Kzwr3KRC8iMEXUHxaEMB8Dt0UMkrmlZosc0RvzQFBLE/+wljE5crZVwWUgscCgZsyqr9ONhpe2iV+OYZp3UgQvzULBNFi70+Wj41SZIGAizvwQGDu76/TMoJPSWX56znNMFjv2rnc4YEgEHAK/hYIBmZAcEKJwLxYWyd8/gEpNVimG0QiW79u1vGnxZ0xpusPDgiqpc5CXRPXTMj9a5yZ2iImJtKhfnT9YUkgmHLe0CIBv6shJskQCDzmVXuhaRnWo0tO5tXhHXHuz3a1UsddccRHTwZCKGqVqEY/pJjb+9VZCcp1RmrYzGUv46d9k8q5uwYUnBt7eTwhBjRYwyPSIR+OBEKdJaJBBAQlIvBbQWXPXD2PPD+ycHYJXJbq9XJA8B0Zd8ZSuYqS4YBgm8l3+luVQ/v31NROu6RGuZUNEFjPcQuE6ryntGIDBE9BZQgEL4r8aQDjUIFqj5PB7SPOZQMrsQ2cajBtm7H2QnxzaxiL+gSCZ8q5QMjYxBxvPlRrq9UD3EkEkEoEYPSdJoGgKaiMgIAatWzfNkDQuEuUQ+/5eoIpMotBLiAgk/Anod08GSA4fmoAnfjaPlQPZ94FIDD7EuLnetWP1ggIzVsD66dstCXfo5L1hYg6XpMIIOHEXWcoMzw8DQTXx/tsfwIELHM8CYSNWoeMgODRDZ7rtqZPYePTxqf0itCXtGIjOMZEsJwnbpK5SwNBWJzjp4HQ5AyQ8QsOvTlUVaIYIGAZgKEG/DSHibvvCeeyXoiI5rylTu6amgNBFhz5C0DAM83TQLDdDBgAoXlp1VbCZoEwTiYY24tSxtAv5EhwiwYjdVaLjEUtiVNcBAIbLjqyEWBqLLrmrxkQUC0rA8DqhgYIbtglY2+0lChaoJgNo62xee0vAMF2PMIsvHdVImwXbARNbmmMh37rOKWhRHBNR2k2zEn1PMIo8nukztEm3e6Ik3T3nE6cZgBxaKOMUIo7Bo8rm/yGRHBT/5jBvJMeA4GQMVwRu475dnrUJQMzQVWda2zuWKpouxe7Mjn7HcQBbUKKOSLXllrst4FgukO1W4v3hJKmENIBQbXCcASEVgCQZgi3FDAlhrnvEnYNWQmEpiBCX7QdhErEch4nJS6mwDqdOGXkAoapdIclIPDuRJ5iVqQF3AIBrwP6HQEwEHzz8c0vAIIPcFVc99xgLAIhhH2WGPNUqNlfEQlcEPN9IIyHzYQg5qeBYGkgOJsPL9npxDQP0kMg4H72/X4iqtYNo9kZKqNJAl6KQLBdjLk7fsJR0kq0cOAG+BEgjF/AwzQW+CEgTLViDwTVDa4XRbnpfvMyZKqOZ6frI1moT86Ripouyd1AwUiUg+Wjk7R4axQ+ZtHN9iKDZ4Hgl4BgmVA1094P7YDwnDX0sTZuhTm2AiSkMilHFV7LTbFaQfh5NKwfUDIPAGHqOVGTSJ8fBYLjprXZet0wAEK/DKHAIa2fKEBC9DKYUcoJLsqrZ7Fvg61BnwDCHP+thfKrQFAwAoJuC9V6RpZA/wID59I8IFj3SLCU/0CNUo9igcWSSTOJkB8V4n0ECHMk+A3+ykbQG5fgYjZCN7BA0H2jQ1fHcPxIgq95hs9l6Cft1EV59TYYieG+Pn180RUgDPL8SID9IhAG7gLTCWQ9AALNcRmWnoeZxrYTy11D3KltSh3XWznYjRsJpyY5j+oJINDJ0FLP/lM8wlQUNUCADTrdwAKhKWJHhcRBG4xBJEOjxw8J/6O7jTCqUZXx93Qpf2LJ+jNAiCFmynJgMH8DBLPBDAhYNzBAaKNkS30EN1T7kQ52rAk9yqAO6Y5K6lT0ZS2ZuCfTkTlwxw8oB8K5VWCotDHWDWtA0Ko9QCwRYCIRmo9qVmoWbzSznEuWY1RDl5i5btgqEXUkwruFeluBVgjjn3aLjDVLDmJbUjzmvq+hLReEQ5jphn/I+zjOeGeAAFg3cEDwsrImg+0OoN2HxzFe6WgdHgHqC3lsWSoEf5TxChZrCN33PtLFo7bWfLU3gMC6H1uKuewUyxpwhEQA/BMDBHMvlyxFdRsik5fZ62t/5FIeW6naDsEncRSrkVX7osvAuttAOIWiZ8Xmj0UobV35iYFKMgQ9qEggCKnscTES6NKfh7v/wbZQ8gD7INKOsnBnCxEDzwCh4xt/BQhxAnipJIpAQOLXMkDQ9xLO6R4c1jHau08tBCKiIk1Xqsm12k+txiwKZY37FYkAXdtmCgTUhmOA8EBVmmZT9xEQ4hpsLUa9iQBYLmzYLlSJkgAyIBBE2Z8Aoc3YUXzpHCCSvDdNAsFdyRiASdzBxHhbynC+XYe9HZN+eEHGI3RQ+DMgbJYvnkcBAQWlgqbyYuBKgHCf3bMAhGMBsG4i3NiZofvIZp23wSTTqXyix1D4CxuB8gDwTqciEQCRFrMEKelEPEw+aAktvwAEWEl1v1hxebThnKq37QNf7/s78DX4sl38afo+BQRxEiyZacG6ocl8R08Cwa7PxPCs4BGqN8o0ciAsPPaRGuz946rc5MPBaWBaeTW3YaFaNWOvmf0FQomZwIornZOBUOsGo6bIakr9vroVaf0op2oiwQp4hOWtvx7asoeQe8cC5CiPkAjrHE0wiEewXSw7NJ6PG8yiWpQIrbnotgkQsG6gdI0ZjJ+jjITqSWcse0Mtuh8CwtVNvOaLFL/BOFRN9UkYZmxG3XM6nW9EA4HzrdNAwB9GAUG1JTzrw1IpVdAnpnRdYn9INVzd1k9gk+hhMS1J2Q8DjwLBjYHQiAQzBULV454Agh551PV8zoi9j08A4foOXsIyi3wUs1vl3G4DwQyB0Kd40wHXMIvDtkQ+ZPOyrYOaWsGK4xGWZ+gFdvPeAz1fZ1GGW/W7QGiFVLFyFFNd0QyBYEarWejOyngHf8F6ExiKd/ZKkdRS5krwyt7WPRuzyJTgtZT5yqfF10CwPBDaOd/WveitRQAnWus/uC/kM7u9CmrwemCBIJFfCn4ZCO0XKQq1MCvESTkv3JgttBuAqHyiQJVfWDbc3P95XjTTsLWYZxX+JRVMHwdCh08DIyBwuiEBwY50cF8MYR7BLBTh60bC7X3AZ6/uB0W5pxHM8yLnT9sIhAlLTW5gVQm+aRKYqDoTsM41uKHKARZ1wwP7wQ+Dr+MWLAMegd3HhyE8fwMIlL04AILigdB4MzsgwIsIctjAruWDPrCAVE/s7gnsxA6R0MM9nQA61mz8zT/MI5CdGGU2VwCLnnuWWAJAL94cWaXnTDshExGExttv4yC9eleKI+1JNnU6kTfvjJoG6pufA4IaUT2dchgAgXyk7ZPfqb0ZyJi8GKTI7PImjiOUWwlGPbbbbxV7vROivt32MW7HmCsQaK2om3Xc5NARt+PLUVPdigzU+Djt/bOdtpm4KWQ5GfeKPK9PpUeqR55Xpzt0IgXwV/dAYC4o/SnrEplvWEbdPr9x6dJGsP+3nWD//ri3te6CcvCP4mC6//O9vaEXmrq4N/S4le63+SOvfPXlLrlBL9pt++4C/+5CZW4mHObBFwdfJFj4ioMPQcKIuxWvRb/HGyCB5W4LyfM9PgMJNHfr1BcGn7YM7QuRxFKLXxh8IBSOPGeTYiBjRd4vDN7i+A8ZKbWAtY5aBQAAAABJRU5ErkJggg==">
+    </div>
+    <svg class="cis-gotas" viewBox="0 0 240 120" preserveAspectRatio="xMaxYMax meet" aria-hidden="true" focusable="false"><path d="M70 52C78 68 98 82 98 102A28 28 0 0 1 42 102C42 82 62 68 70 52Z" fill="#fff" fill-opacity=".16"/><path d="M160 8C172 36 210 62 210 98A50 50 0 0 1 110 98C110 62 148 36 160 8Z" fill="#75CAE3" fill-opacity=".6"/><path d="M230 40C236 52 250 62 250 76A20 20 0 0 1 210 76C210 62 224 52 230 40Z" fill="#75CAE3" fill-opacity=".35"/></svg>
+  </header>
+
+  <div class="cis-pickbar">
+    <div class="cis-pick">
+      <label for="cis-sel">Instrumento</label>
+      <select id="cis-sel" data-draw="sel" data-source="instrumentos"></select>
+    </div>
+    <p class="cis-muted">Agrupados por situação; dentro de cada grupo, por UF e número. Também dá para abrir um instrumento pela tabela no fim da página.</p>
+  </div>
+
+  <section class="cis-hero" id="instrumento" aria-label="Instrumento selecionado">
+    <div class="cis-hero-id">
+      <p class="cis-kicker" data-draw="titulo-inst" data-source="instrumentos">—</p>
+      <h2 class="cis-hero-nome" data-draw="campo" data-source="instrumentos" data-field="parceiro">—</h2>
+      <div class="cis-tags">
+        <span class="cis-tag cis-uf" data-draw="campo" data-source="instrumentos" data-field="uf">—</span>
+        <span class="cis-tag cis-sit" data-draw="situacao-tag" data-source="instrumentos">—</span>
+        <span class="cis-tag" data-draw="campo" data-source="instrumentos" data-field="municipio">—</span>
+      </div>
+      <div class="cis-vig">
+        <div class="cis-vig-lab">
+          <span>Vigência de <span data-draw="campo" data-source="instrumentos" data-field="inicio_vigencia" data-fmt="data">—</span> a <span data-draw="campo" data-source="instrumentos" data-field="fim_vigencia" data-fmt="data">—</span></span>
+          <span><span data-draw="vigpct" data-source="instrumentos">—</span> do prazo decorrido na carga</span>
+        </div>
+        <div class="cis-vig-track"><div class="cis-vig-fill" data-draw="vigbar" data-source="instrumentos"></div></div>
+      </div>
+    </div>
+    <div class="cis-kpis">
+      <div class="cis-kpi">
+        <span class="lab">Valor global</span>
+        <span class="val" data-draw="campo" data-source="instrumentos" data-field="vl_global" data-fmt="brlc" data-fetchpriority="high">—</span>
+        <span class="sub"><span data-draw="campo" data-source="indicadores" data-field="pct_empenhado" data-fmt="pct">—</span> empenhado</span>
+      </div>
+      <div class="cis-kpi">
+        <span class="lab">Repassado pelo MDS</span>
+        <span class="val" data-draw="campo" data-source="instrumentos" data-field="vl_repassado" data-fmt="brlc">—</span>
+        <span class="sub"><span data-draw="campo" data-source="indicadores" data-field="pct_repassado" data-fmt="pct">—</span> do valor global</span>
+      </div>
+      <div class="cis-kpi">
+        <span class="lab">Pago pelo parceiro</span>
+        <span class="val" data-draw="campo" data-source="instrumentos" data-field="vl_pago" data-fmt="brlc">—</span>
+        <span class="sub"><span data-draw="campo" data-source="indicadores" data-field="pct_pago" data-fmt="pct">—</span> do valor global</span>
+      </div>
+      <div class="cis-kpi destaque">
+        <span class="lab">Saldo em conta</span>
+        <span class="val" data-draw="campo" data-source="instrumentos" data-field="vl_saldo_conta" data-fmt="brlc">—</span>
+        <span class="sub"><span data-draw="campo" data-source="indicadores" data-field="pct_saldo" data-fmt="pct">—</span> do valor repassado</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cis-alertas" id="alertas">
+    <div class="cis-alertas-head">
+      <h2>Alertas deste instrumento</h2>
+      <span class="cis-badge" data-draw="alertas-n" data-source="alertas">—</span>
+    </div>
+    <ul class="cis-callouts" data-draw="alertas-inst" data-source="alertas"></ul>
+    <p class="cis-muted">Alerta quando faltam até <span data-draw="regra" data-source="regras" data-field="vigencia_dias" data-row="0">—</span> dias de vigência, quando passam mais de <span data-draw="regra" data-source="regras" data-field="sem_pagamento_dias" data-row="0">—</span> dias sem pagamento, quando o saldo em conta passa de <span data-draw="regra" data-source="regras" data-field="saldo_parado_pct" data-row="0" data-fmt="pct">—</span> do repassado, quando o MDS repassou menos do que o cronograma previa até o mês anterior à carga e quando a prestação de contas venceu. Datas contadas a partir da carga.</p>
+  </section>
+
+  <div class="cis-grid">
+    <section class="cis-card" id="ficha">
+      <h2>Ficha do instrumento</h2>
+      <dl class="cis-ficha">
+        <div class="wide"><dt>Parceiro</dt><dd data-draw="campo" data-source="instrumentos" data-field="parceiro">—</dd></div>
+        <div><dt>Número</dt><dd data-draw="nr-ano" data-source="instrumentos">—</dd></div>
+        <div><dt>Modalidade</dt><dd data-draw="campo" data-source="instrumentos" data-field="modalidade">—</dd></div>
+        <div><dt>Situação</dt><dd data-draw="campo" data-source="instrumentos" data-field="situacao">—</dd></div>
+        <div><dt>CNPJ</dt><dd data-draw="campo" data-source="instrumentos" data-field="cnpj" data-fmt="cnpj">—</dd></div>
+        <div><dt>UF</dt><dd data-draw="campo" data-source="instrumentos" data-field="uf">—</dd></div>
+        <div><dt>Município sede</dt><dd data-draw="campo" data-source="instrumentos" data-field="municipio">—</dd></div>
+        <div><dt>Assinatura</dt><dd data-draw="campo" data-source="instrumentos" data-field="assinatura" data-fmt="data">—</dd></div>
+        <div><dt>Início da vigência</dt><dd data-draw="campo" data-source="instrumentos" data-field="inicio_vigencia" data-fmt="data">—</dd></div>
+        <div><dt>Fim da vigência</dt><dd data-draw="campo" data-source="instrumentos" data-field="fim_vigencia" data-fmt="data">—</dd></div>
+        <div><dt>Prazo da prestação de contas</dt><dd data-draw="campo" data-source="instrumentos" data-field="limite_prestacao_contas" data-fmt="data">—</dd></div>
+        <div><dt>Termos aditivos</dt><dd data-draw="campo" data-source="instrumentos" data-field="qtd_aditivos" data-fmt="int">—</dd></div>
+        <div><dt>Banco</dt><dd data-draw="campo" data-source="instrumentos" data-field="banco">—</dd></div>
+        <div><dt>Agência</dt><dd data-draw="campo" data-source="instrumentos" data-field="agencia">—</dd></div>
+        <div><dt>Conta</dt><dd data-draw="campo" data-source="instrumentos" data-field="conta">—</dd></div>
+        <div><dt>Processo</dt><dd data-draw="campo" data-source="instrumentos" data-field="processo">—</dd></div>
+        <div class="wide"><dt>Objeto</dt><dd data-draw="campo" data-source="instrumentos" data-field="objeto">—</dd></div>
+      </dl>
+    </section>
+
+    <section class="cis-card" id="resumo">
+      <h2>Resumo financeiro</h2>
+      <p class="cis-muted">Do valor global ao que o parceiro já pagou. Cada barra é a parte do valor global.</p>
+      <div class="cis-funil" data-draw="funil" data-source="instrumentos indicadores"></div>
+      <div class="cis-saldo">
+        <p class="cis-muted">Saldo em conta na carga: <span data-draw="campo" data-source="instrumentos" data-field="vl_saldo_conta" data-fmt="brl">—</span>. Rendimentos de aplicação registrados: <span data-draw="campo" data-source="instrumentos" data-field="vl_rendimentos" data-fmt="brl">—</span>. Contrapartida depositada: <span data-draw="campo" data-source="instrumentos" data-field="vl_contrapartida_depositada" data-fmt="brl">—</span>.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="cis-card" id="fisico">
+    <div class="cis-cardhead">
+      <h2>Cronograma físico</h2>
+      <span>
+        <span class="cis-aviso" data-aviso="ok" hidden>Copiada. Cole no Excel ou no SEI.</span>
+        <span class="cis-aviso" data-aviso="sel" hidden>Tabela selecionada: tecle Ctrl+C para copiar.</span>
+        <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
+      </span>
+    </div>
+    <p class="cis-muted">Metas como estão registradas hoje no Transferegov, já com aditivos e reformulações aprovados, incluídas as metas pagas com rendimentos de aplicação.</p>
+    <div class="cis-quadrobox">
+      <p class="cis-tabtit">Tabela 1: Cronograma físico atual do <span data-draw="titulo-inst" data-source="instrumentos">—</span></p>
+      <table class="cis-quadro" data-source="metas" data-row-key="id">
+        <thead>
+          <tr>
+            <th data-field="meta">Meta</th>
+            <th data-field="especificacao">Especificação</th>
+            <th data-field="valor">Valor (R$)</th>
+            <th data-field="quantidade">Quantidade</th>
+            <th data-field="inicio">Data de Início</th>
+            <th data-field="fim">Data de Término</th>
+          </tr>
+        </thead>
+        <tbody data-draw="metatab"></tbody>
+        <tfoot>
+          <tr><td colspan="2">Total</td><td class="nowrap" data-draw="metasoma"></td><td></td><td></td><td></td></tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <section class="cis-card" id="tecnologias">
+    <div class="cis-cardhead">
+      <h2>Tecnologias previstas por UF</h2>
+      <span>
+        <span class="cis-aviso" data-aviso="ok" hidden>Copiada. Cole no Excel ou no SEI.</span>
+        <span class="cis-aviso" data-aviso="sel" hidden>Tabela selecionada: tecle Ctrl+C para copiar.</span>
+        <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
+      </span>
+    </div>
+    <p class="cis-muted">Entram todas as metas de implementação de tecnologias. A tecnologia e o estado vêm do texto de cada etapa (sem estado no texto, vale a UF do parceiro). Um lote registrado em etapas separadas (custeio e investimento, material e serviço, ISS, complementos, caráter produtivo) conta uma vez só. Etapa zerada, com valor abaixo de R$ 1, ou marcada como "não integra esta meta" conta zero.</p>
+    <div class="cis-quadrobox">
+      <p class="cis-tabtit">Tabela 2: Distribuição territorial atual das tecnologias previstas no <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por UF</p>
+      <table class="cis-quadro" data-draw="tectab" data-source="tecnologias"></table>
+      <p class="cis-origem">Fonte: Transferegov, módulo Discricionárias, cronograma físico do plano de trabalho (metas e etapas; dados abertos siconv_meta_crono_fisico e siconv_etapa_crono_fisico), carga de <span data-draw="carga" data-source="instrumentos">—</span>. Elaboração: quantidades das etapas somadas por UF e por tecnologia, identificadas na descrição de cada etapa.</p>
+    </div>
+    <p class="cis-muted" data-tec="vazio" hidden>Nenhuma meta deste instrumento tem etapas que permitam separar as tecnologias por UF.</p>
+    <ul class="cis-notas" data-draw="tecnotas" data-source="tecnologias"></ul>
+  </section>
+
+  <section class="cis-card" id="cronograma">
+    <h2>Previsto, repassado e pago</h2>
+    <p class="cis-muted">Valores acumulados: parcelas do MDS no cronograma de desembolso, ordens bancárias do MDS para a conta do instrumento e pagamentos feitos pelo parceiro. A distância entre repassado e pago é o dinheiro que ficou na conta. O cronograma é o que está registrado hoje e pode ter sido refeito por aditivos.</p>
+    <ul class="cis-legend">
+      <li><span class="cis-sw dash"></span>Previsto no cronograma (MDS)</li>
+      <li><span class="cis-sw s1"></span>Repassado pelo MDS</li>
+      <li><span class="cis-sw s2"></span>Pago pelo parceiro</li>
+    </ul>
+    <div class="cis-chart" data-draw="fluxo" data-source="cronograma repasses pagamentos"></div>
+  </section>
+
+  <section class="cis-card" id="pagamentos">
+    <h2>Pagamentos feitos pelo parceiro</h2>
+    <p class="cis-muted"><span data-draw="campo" data-source="instrumentos" data-field="qtd_pagamentos" data-fmt="int">—</span> pagamentos registrados, somando <span data-draw="campo" data-source="instrumentos" data-field="vl_pago" data-fmt="brl">—</span>. Último em <span data-draw="campo" data-source="instrumentos" data-field="ult_pagamento" data-fmt="data">—</span>. Gráfico dos últimos 24 meses até a carga; CPF de pessoa física aparece mascarado.</p>
+    <div class="cis-chart" data-draw="pagmes" data-source="pagamentos"></div>
+    <input id="cis-busca" class="cis-search" type="search" placeholder="Filtrar por favorecido, documento ou comprovante" aria-label="Filtrar pagamentos">
+    <div class="cis-tablebox">
+      <table class="cis-table" data-source="pagamentos" data-row-key="id">
+        <thead>
+          <tr>
+            <th data-field="data">Data</th>
+            <th data-field="favorecido">Favorecido</th>
+            <th data-field="documento_favorecido" class="cis-hide-narrow">CNPJ/CPF</th>
+            <th data-field="comprovante" class="cis-hide-narrow">Comprovante</th>
+            <th data-field="nr_comprovante" class="cis-hide-narrow">Nº</th>
+            <th data-field="valor" class="num">Valor</th>
+          </tr>
+        </thead>
+        <tbody data-draw="pagtab"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="cis-card" id="carteira">
+    <h2>Todos os instrumentos em acompanhamento</h2>
+    <p class="cis-muted">Clique numa linha para abrir o instrumento. Ordenado pelos alertas mais graves.</p>
+    <div class="cis-tablebox">
+      <table class="cis-table cis-carteira" data-source="alertas" data-row-key="nr">
+        <thead>
+          <tr>
+            <th data-field="nr">Número</th>
+            <th data-field="parceiro">Parceiro</th>
+            <th data-field="uf">UF</th>
+            <th data-field="situacao" class="cis-hide-narrow">Situação</th>
+            <th data-field="fim_vigencia" class="cis-hide-narrow">Fim da vigência</th>
+            <th data-field="vl_saldo_conta" class="num">Saldo em conta</th>
+            <th data-field="alertas">Alertas</th>
+          </tr>
+        </thead>
+        <tbody data-draw="cart"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+  const n = (v) => (v === '' || v == null ? null : Number(v));
+  const brl = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
+  const brlc = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1});
+  const pct = new Intl.NumberFormat('pt-BR', {style: 'percent', maximumFractionDigits: 0});
+  const int = new Intl.NumberFormat('pt-BR', {maximumFractionDigits: 0});
+  const meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  const dia = (s) => new Date(s.slice(0, 10) + 'T00:00:00Z');
+  const fmt = {
+    txt: (v) => String(v),
+    brl: (v) => brl.format(Number(v)),
+    brlc: (v) => brlc.format(Number(v)),
+    pct: (v) => pct.format(Number(v)),
+    int: (v) => int.format(Number(v)),
+    data: (v) => v.slice(8, 10) + '/' + v.slice(5, 7) + '/' + v.slice(0, 4),
+    cnpj: (v) => (/^\d{14}$/.test(v) ? v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : String(v)),
+  };
+  const mesLabel = (d) => meses[d.getUTCMonth()] + '/' + String(d.getUTCFullYear()).slice(2);
+
+  // Instrumento aberto: o escolhido, ou o maior termo/convênio em execução.
+  const atual = () => {
+    const picked = dash.params().nr;
+    if (picked) return String(picked);
+    const d = dash.data('instrumentos');
+    if (d.status !== 'ok') return null;
+    const exec = d.data.filter((r) => r.situacao === 'Em execução');
+    const top = (exec.length ? exec : d.data).reduce((a, b) => (n(b.vl_global) > n(a.vl_global) ? b : a));
+    return top.nr;
+  };
+  // Número com o ano de celebração (data de assinatura); instrumento não assinado fica só com o número
+  const nrAno = (i) => i.nr + (i.assinatura ? '/' + i.assinatura.slice(0, 4) : '');
+  window.cis = {n, fmt, atual, dia, mesLabel, brlc, nrAno};
+
+  dash.calc('regras', {
+    inputs: ['instrumentos'],
+    title: 'Regras dos alertas',
+    description: 'Limites usados nos alertas do painel; mude aqui para ajustar.',
+    fn: (instrumentos) => [{vigencia_dias: 90, sem_pagamento_dias: 60, saldo_parado_pct: 0.5}],
+  });
+
+  dash.calc('indicadores', {
+    inputs: ['instrumentos'],
+    title: 'Percentuais de execução',
+    description: 'Empenhado, repassado e pago como parte do valor global; saldo em conta como parte do repassado.',
+    fn: (instrumentos) => instrumentos.map((i) => {
+      const v = (k) => (i[k] === '' || i[k] == null ? 0 : Number(i[k]));
+      const g = v('vl_global');
+      return {
+        nr: i.nr,
+        pct_empenhado: g ? v('vl_empenhado') / g : null,
+        pct_repassado: g ? v('vl_repassado') / g : null,
+        pct_contrapartida: g ? v('vl_contrapartida_depositada') / g : null,
+        pct_pago: g ? v('vl_pago') / g : null,
+        pct_saldo: v('vl_repassado') ? v('vl_saldo_conta') / v('vl_repassado') : null,
+      };
+    }),
+  });
+
+  dash.calc('alertas', {
+    inputs: ['instrumentos', 'cronograma', 'repasses', 'regras'],
+    title: 'Alertas por instrumento',
+    description: 'Regras aplicadas a cada instrumento em acompanhamento, contando os dias a partir da data da carga.',
+    fn: (instrumentos, cronograma, repasses, regras) => {
+      const r = regras[0];
+      const v = (x) => (x === '' || x == null ? 0 : Number(x));
+      const t = (s) => Date.parse(s.slice(0, 10) + 'T00:00:00Z');
+      const real = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1});
+      const peso = {bad: 2, warn: 1, ok: 0};
+      return instrumentos.filter((i) => i.acompanhamento === 'True').map((i) => {
+        const carga = t(i.data_carga);
+        const mesCarga = i.data_carga.slice(0, 7);
+        const exec = i.situacao === 'Em execução';
+        const previsto = cronograma.filter((c) => c.nr === i.nr && c.responsavel === 'Concedente' && c.mes < mesCarga).reduce((s, c) => s + v(c.valor), 0);
+        const repassado = repasses.filter((x) => x.nr === i.nr).reduce((s, x) => s + v(x.valor), 0);
+        const atraso = Math.max(0, previsto - repassado);
+        const diasFim = i.fim_vigencia ? Math.round((t(i.fim_vigencia) - carga) / 864e5) : null;
+        const diasPag = i.ult_pagamento ? Math.round((carga - t(i.ult_pagamento)) / 864e5) : null;
+        const pctSaldo = v(i.vl_repassado) > 0 ? v(i.vl_saldo_conta) / v(i.vl_repassado) : null;
+        const lista = [];
+        if (exec && diasFim !== null && diasFim < 0) lista.push(['bad', 'Vigência encerrada há ' + -diasFim + ' dias']);
+        else if (diasFim !== null && diasFim >= 0 && diasFim <= r.vigencia_dias) lista.push(['warn', 'Vigência termina em ' + diasFim + ' dias']);
+        if (i.situacao === 'Aguardando Prestação de Contas' && i.limite_prestacao_contas && t(i.limite_prestacao_contas) < carga) lista.push(['bad', 'Prestação de contas vencida']);
+        if (exec && v(i.vl_repassado) > 0 && (diasPag === null || diasPag > r.sem_pagamento_dias)) lista.push(['warn', diasPag === null ? 'Nenhum pagamento registrado' : diasPag + ' dias sem pagamento']);
+        if (exec && pctSaldo !== null && pctSaldo >= r.saldo_parado_pct) lista.push(['warn', 'Saldo em conta é ' + Math.round(pctSaldo * 100) + '% do repassado']);
+        if (exec && atraso >= 1) lista.push(['warn', 'Repasse abaixo do cronograma em ' + real.format(atraso)]);
+        const nivel = lista.some((a) => a[0] === 'bad') ? 'bad' : lista.length ? 'warn' : 'ok';
+        return {
+          nr: i.nr, parceiro: i.parceiro, uf: i.uf, situacao: i.situacao, fim_vigencia: i.fim_vigencia,
+          vl_saldo_conta: v(i.vl_saldo_conta), dias_para_fim: diasFim, dias_sem_pagamento: diasPag,
+          previsto_ate_mes_anterior: previsto, repassado_total: repassado, repasse_atrasado: atraso,
+          pct_saldo: pctSaldo, nivel, peso: peso[nivel], n_alertas: lista.length,
+          alertas: lista.map((a) => a[1]).join(' · '), niveis: lista.map((a) => a[0]).join(','),
+        };
+      }).sort((a, b) => b.peso - a.peso || b.n_alertas - a.n_alertas || b.vl_saldo_conta - a.vl_saldo_conta);
+    },
+  });
+
+  document.querySelectorAll('#cis-busca').forEach((el) => el.addEventListener('input', () => dash.draw('pagtab')));
+</script>
+
+<script>
+  const {n, fmt, atual, nrAno} = window.cis;
+
+  dash.draw('carga', (el) => {
+    const d = dash.data('instrumentos');
+    el.textContent = d.status === 'ok' && d.data.length ? fmt.data(d.data[0].data_carga) : '—';
+  });
+
+  dash.draw('regra', (el) => {
+    const d = dash.data('regras');
+    const v = d.status === 'ok' && d.data[0] ? d.data[0][el.dataset.field] : null;
+    el.textContent = v == null ? '—' : fmt[el.dataset.fmt || 'int'](v);
+  });
+
+  dash.draw('campo', (el) => {
+    const d = dash.data(el.dataset.source);
+    const nr = atual();
+    if (d.status !== 'ok' || !nr) { el.textContent = '—'; return; }
+    el.dataset.where = 'nr=' + encodeURIComponent(nr);
+    const row = d.data.find((r) => String(r.nr) === nr);
+    const v = row ? row[el.dataset.field] : null;
+    el.textContent = v === '' || v == null || (typeof v === 'number' && !isFinite(v)) ? '—' : fmt[el.dataset.fmt || 'txt'](v);
+  });
+
+  // Situações na ordem do ciclo do instrumento; uma situação nova vai para o fim
+  const ORDEM_SITUACAO = ['Em execução', 'Aguardando Prestação de Contas', 'Prestação de Contas Iniciada Por Antecipação',
+    'Prestação de Contas em Análise', 'Prestação de Contas Comprovada em Análise', 'Prestação de Contas em Complementação',
+    'Proposta/Plano de Trabalho Aprovado', 'Proposta/Plano de Trabalho Complementado em Análise', 'Sem situação'];
+  const posSituacao = (s) => (ORDEM_SITUACAO.includes(s) ? ORDEM_SITUACAO.indexOf(s) : ORDEM_SITUACAO.length);
+  const curto = (s, max) => (s.length > max ? s.slice(0, max - 1).trimEnd() + '…' : s);
+
+  dash.draw('sel', (sel) => {
+    const d = dash.data('instrumentos');
+    if (d.status !== 'ok') { sel.replaceChildren(); return; }
+    const rows = d.data.filter((r) => r.acompanhamento === 'True')
+      .sort((a, b) => (a.uf ?? '').localeCompare(b.uf ?? '') || String(a.nr).localeCompare(String(b.nr), 'pt-BR', {numeric: true}));
+    const grupos = [...new Set(rows.map((r) => r.situacao))].sort((a, b) => posSituacao(a) - posSituacao(b) || a.localeCompare(b));
+    sel.replaceChildren(...grupos.map((g) => {
+      const og = document.createElement('optgroup');
+      const doGrupo = rows.filter((r) => r.situacao === g);
+      og.label = g + ' (' + doGrupo.length + ')';
+      doGrupo.forEach((r) => og.append(new Option(r.uf + ' · ' + nrAno(r) + ' · ' + curto(r.parceiro ?? '', 70), r.nr)));
+      return og;
+    }));
+    sel.value = atual() ?? '';
+    sel.onchange = () => dash.setParams({nr: sel.value});
+  });
+
+  dash.draw('alertas-n', (el) => {
+    const d = dash.data('alertas');
+    const nr = atual();
+    const row = d.status === 'ok' && nr ? d.data.find((r) => r.nr === nr) : null;
+    const nivel = row ? row.nivel : 'ok';
+    el.textContent = row ? String(row.n_alertas) : '—';
+    el.className = 'cis-badge ' + nivel;
+    document.querySelectorAll('.cis-alertas').forEach((sec) => { sec.className = 'cis-alertas ' + nivel; });
+  });
+
+  dash.draw('alertas-inst', (ul) => {
+    const d = dash.data('alertas');
+    const nr = atual();
+    ul.replaceChildren();
+    if (d.status !== 'ok' || !nr) return;
+    const row = d.data.find((r) => r.nr === nr);
+    if (!row || !row.n_alertas) {
+      const li = document.createElement('li');
+      li.className = 'ok';
+      li.textContent = 'Nenhum alerta pelas regras abaixo';
+      ul.append(li);
+      return;
+    }
+    const textos = row.alertas.split(' · ');
+    const niveis = row.niveis.split(',');
+    textos.forEach((txt, k) => {
+      const li = document.createElement('li');
+      li.className = niveis[k];
+      li.textContent = txt;
+      ul.append(li);
+    });
+  });
+
+  dash.draw('funil', (el) => {
+    const ins = dash.data('instrumentos'), ind = dash.data('indicadores');
+    const nr = atual();
+    el.replaceChildren();
+    if (ins.status !== 'ok' || ind.status !== 'ok' || !nr) return;
+    const i = ins.data.find((r) => r.nr === nr), p = ind.data.find((r) => r.nr === nr);
+    if (!i || !p) return;
+    const etapas = [
+      ['Valor global', 'vl_global', null, 'var(--cds-chart-muted)'],
+      ['Empenhado pelo MDS', 'vl_empenhado', 'pct_empenhado', 'var(--cds-chart-muted)'],
+      ['Repassado pelo MDS', 'vl_repassado', 'pct_repassado', 'var(--cis-s1)'],
+      ['Contrapartida depositada', 'vl_contrapartida_depositada', 'pct_contrapartida', 'var(--cds-chart-muted)'],
+      ['Pago pelo parceiro', 'vl_pago', 'pct_pago', 'var(--cis-s2)'],
+    ].filter(([, campo]) => campo !== 'vl_contrapartida_depositada' || n(i[campo]) > 0);
+    etapas.forEach(([rotulo, campo, pcampo, cor]) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      const lab = document.createElement('span');
+      lab.className = 'lab';
+      lab.textContent = rotulo;
+      const track = document.createElement('div');
+      track.className = 'track';
+      const fill = document.createElement('div');
+      fill.className = 'fill';
+      const share = pcampo ? p[pcampo] : 1;
+      fill.style.width = Math.max(0, Math.min(1, share ?? 0)) * 100 + '%';
+      fill.style.background = cor;
+      track.append(fill);
+      const val = document.createElement('span');
+      val.className = 'val';
+      const b = document.createElement('b');
+      b.dataset.source = 'instrumentos';
+      b.dataset.field = campo;
+      b.dataset.where = 'nr=' + encodeURIComponent(nr);
+      b.textContent = i[campo] === '' || i[campo] == null ? '—' : fmt.brl(i[campo]);
+      val.append(b);
+      if (pcampo && p[pcampo] != null) {
+        const s = document.createElement('span');
+        s.dataset.source = 'indicadores';
+        s.dataset.field = pcampo;
+        s.dataset.where = 'nr=' + encodeURIComponent(nr);
+        s.textContent = fmt.pct(p[pcampo]);
+        val.append(' · ', s);
+      }
+      row.append(lab, track, val);
+      el.append(row);
+    });
+  });
+</script>
+
+<script>
+  const {n, fmt, atual, dia, mesLabel, brlc, nrAno} = window.cis;
+  const H = 260;
+
+  // Margem esquerda medida pelo maior rótulo do eixo y.
+  const margemY = (svg, ticks, f) => {
+    const probe = svg.append('g').attr('class', 'probe');
+    let w = 0;
+    ticks.forEach((t) => { const tx = probe.append('text').style('font-size', 'var(--cds-font-size-caption)').text(f(t)); w = Math.max(w, tx.node().getComputedTextLength()); });
+    probe.remove();
+    return Math.ceil(w) + 10;
+  };
+
+  const tooltip = (box) => {
+    let tip = box.querySelector('.cis-tip');
+    if (!tip) { tip = document.createElement('div'); tip.className = 'cis-tip'; tip.hidden = true; box.append(tip); }
+    return tip;
+  };
+
+  const placeTip = (box, tip, x, y) => {
+    tip.hidden = false;
+    const bw = box.clientWidth, tw = tip.offsetWidth;
+    tip.style.left = Math.max(0, Math.min(bw - tw, x + 12)) + 'px';
+    tip.style.top = Math.max(0, y - tip.offsetHeight - 8) + 'px';
+  };
+
+  const tipLinhas = (tip, titulo, linhas) => {
+    tip.replaceChildren();
+    const t = document.createElement('div');
+    t.className = 't';
+    t.textContent = titulo;
+    tip.append(t);
+    linhas.forEach(([cor, nome, valor]) => {
+      const l = document.createElement('div');
+      if (cor) { const i = document.createElement('i'); i.style.background = cor; l.append(i); }
+      l.append(nome + ': ' + valor);
+      tip.append(l);
+    });
+  };
+
+  const acumulado = (eventos, ini, fim) => {
+    const pts = [{d: ini, v: 0}];
+    let s = 0;
+    eventos.sort((a, b) => a.d - b.d).forEach((e) => { s += e.v; pts.push({d: e.d, v: s}); });
+    pts.push({d: fim, v: s});
+    return pts;
+  };
+
+  const valorEm = (pts, x) => {
+    let v = 0;
+    for (const p of pts) { if (p.d <= x) v = p.v; else break; }
+    return v;
+  };
+
+  dash.draw('fluxo', (el) => {
+    const c = dash.data('cronograma'), r = dash.data('repasses'), p = dash.data('pagamentos'), ins = dash.data('instrumentos');
+    const nr = atual();
+    el.querySelectorAll('svg, .cis-tip, .cis-muted').forEach((x) => x.remove());
+    if ([c, r, p, ins].some((x) => x.status !== 'ok') || !nr) return;
+    const carga = dia(ins.data[0].data_carga);
+    const prev = c.data.filter((x) => x.nr === nr && x.responsavel === 'Concedente').map((x) => ({d: dia(x.mes + '-01'), v: n(x.valor) ?? 0}));
+    const rep = r.data.filter((x) => x.nr === nr).map((x) => ({d: dia(x.data), v: n(x.valor) ?? 0}));
+    const pag = p.data.filter((x) => x.nr === nr && x.data).map((x) => ({d: dia(x.data), v: n(x.valor) ?? 0}));
+    const todas = [...prev, ...rep, ...pag].map((e) => e.d);
+    if (!todas.length) {
+      const m = document.createElement('p');
+      m.className = 'cis-muted';
+      m.textContent = 'Este instrumento ainda não tem cronograma, repasses nem pagamentos registrados.';
+      el.append(m);
+      return;
+    }
+    const ini = d3.utcMonth.offset(d3.utcMonth.floor(d3.min(todas)), -1);
+    const fim = d3.max([...todas, carga]);
+    const series = [
+      {nome: 'Previsto no cronograma', cor: 'var(--cds-chart-reference)', dash: '4 3', pts: acumulado(prev, ini, fim)},
+      {nome: 'Repassado pelo MDS', cor: 'var(--cis-s1)', pts: acumulado(rep, ini, carga)},
+      {nome: 'Pago pelo parceiro', cor: 'var(--cis-s2)', pts: acumulado(pag, ini, carga)},
+    ];
+    const W = el.clientWidth;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const ymax = d3.max(series, (s) => d3.max(s.pts, (q) => q.v)) || 1;
+    const y0 = d3.scaleLinear([0, ymax], [H - 26, 8]).nice();
+    const yt = y0.ticks(5);
+    const ml = margemY(svg, yt, (v) => brlc.format(v)), mr = 12;
+    const x = d3.scaleUtc([ini, fim], [ml, W - mr]);
+    const y = y0;
+    svg.append('g').attr('transform', `translate(${ml},0)`)
+      .call(d3.axisLeft(y).tickValues(yt).tickSize(-(W - ml - mr)).tickFormat((v) => brlc.format(v)))
+      .attr('font-size', null).attr('font-family', null)
+      .call((g) => g.select('.domain').remove())
+      .call((g) => g.selectAll('line').style('stroke', 'var(--cds-chart-grid)'))
+      .call((g) => g.selectAll('text').style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)'));
+    const nTicks = Math.max(2, Math.floor((W - ml) / 80));
+    svg.append('g').attr('transform', `translate(0,${H - 26})`)
+      .call(d3.axisBottom(x).ticks(nTicks).tickFormat(mesLabel).tickSizeOuter(0))
+      .attr('font-size', null).attr('font-family', null)
+      .call((g) => g.select('.domain').style('stroke', 'var(--cds-chart-axis)'))
+      .call((g) => g.selectAll('line').style('stroke', 'var(--cds-chart-axis)'))
+      .call((g) => g.selectAll('text').style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)'));
+    svg.append('line').attr('x1', x(carga)).attr('x2', x(carga)).attr('y1', 8).attr('y2', H - 26)
+      .style('stroke', 'var(--cds-chart-reference)').style('stroke-width', 1);
+    const linha = d3.line().x((q) => x(q.d)).y((q) => y(q.v)).curve(d3.curveStepAfter);
+    series.forEach((s) => {
+      svg.append('path').datum(s.pts).attr('d', linha).style('fill', 'none').style('stroke', s.cor)
+        .style('stroke-width', 2).style('stroke-linejoin', 'round').style('stroke-linecap', s.dash ? 'butt' : 'round')
+        .style('stroke-dasharray', s.dash || null);
+    });
+    const tip = tooltip(el);
+    const rule = svg.append('line').attr('y1', 8).attr('y2', H - 26).style('stroke', 'var(--cds-chart-axis)').style('opacity', 0);
+    svg.append('rect').attr('x', ml).attr('y', 0).attr('width', Math.max(0, W - ml - mr)).attr('height', H - 26)
+      .style('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [mx, my] = d3.pointer(ev, el);
+        const [sx] = d3.pointer(ev, svg.node());
+        const xd = x.invert(sx);
+        rule.attr('x1', sx).attr('x2', sx).style('opacity', 1);
+        tipLinhas(tip, mesLabel(xd), series.map((s) => [s.dash ? null : s.cor, s.nome, fmt.brl(valorEm(s.pts, xd))]));
+        placeTip(el, tip, mx, my);
+      })
+      .on('pointerleave', () => { tip.hidden = true; rule.style('opacity', 0); });
+  });
+
+  dash.draw('pagmes', (el) => {
+    const p = dash.data('pagamentos'), ins = dash.data('instrumentos');
+    const nr = atual();
+    el.querySelectorAll('svg, .cis-tip, .cis-vazio').forEach((x) => x.remove());
+    if (p.status !== 'ok' || ins.status !== 'ok' || !nr) return;
+    const carga = dia(ins.data[0].data_carga);
+    const ultimo = d3.utcMonth.floor(carga);
+    const mesesJanela = d3.utcMonth.range(d3.utcMonth.offset(ultimo, -23), d3.utcMonth.offset(ultimo, 1));
+    const porMes = d3.rollup(p.data.filter((x) => x.nr === nr && x.data), (v) => ({total: d3.sum(v, (q) => n(q.valor) ?? 0), qtd: v.length}), (x) => x.data.slice(0, 7));
+    const dados = mesesJanela.map((m) => ({m, ...(porMes.get(d3.utcFormat('%Y-%m')(m)) ?? {total: 0, qtd: 0})}));
+    if (!dados.some((q) => q.qtd)) {
+      const ult = ins.data.find((r) => r.nr === nr)?.ult_pagamento;
+      const box = document.createElement('div');
+      box.className = 'cis-vazio';
+      box.setAttribute('role', 'status');
+      const tit = document.createElement('p');
+      tit.className = 'cis-vazio-tit';
+      tit.textContent = 'Nenhum pagamento nos últimos 24 meses.';
+      const sub = document.createElement('p');
+      sub.className = 'cis-vazio-sub';
+      sub.textContent = ult ? 'Último pagamento registrado em ' + fmt.data(ult) + '.' : 'Não há pagamento registrado para este instrumento.';
+      box.append(tit, sub);
+      el.append(box);
+      return;
+    }
+    const W = el.clientWidth;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const y = d3.scaleLinear([0, d3.max(dados, (q) => q.total) || 1], [H - 26, 8]).nice();
+    const yt = y.ticks(4);
+    const ml = margemY(svg, yt, (v) => brlc.format(v)), mr = 4;
+    const x = d3.scaleBand(dados.map((q) => q.m), [ml, W - mr]).padding(0.25);
+    svg.append('g').attr('transform', `translate(${ml},0)`)
+      .call(d3.axisLeft(y).tickValues(yt).tickSize(-(W - ml - mr)).tickFormat((v) => brlc.format(v)))
+      .attr('font-size', null).attr('font-family', null)
+      .call((g) => g.select('.domain').remove())
+      .call((g) => g.selectAll('line').style('stroke', 'var(--cds-chart-grid)'))
+      .call((g) => g.selectAll('text').style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)'));
+    const passo = Math.ceil(dados.length / Math.max(1, Math.floor((W - ml) / 56)));
+    svg.append('g').attr('transform', `translate(0,${H - 26})`)
+      .call(d3.axisBottom(x).tickValues(dados.map((q) => q.m).filter((_, k) => (dados.length - 1 - k) % passo === 0)).tickFormat(mesLabel).tickSizeOuter(0))
+      .attr('font-size', null).attr('font-family', null)
+      .call((g) => g.select('.domain').style('stroke', 'var(--cds-chart-axis)'))
+      .call((g) => g.selectAll('line').remove())
+      .call((g) => g.selectAll('text').style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)'));
+    const tip = tooltip(el);
+    const bw = Math.min(32, x.bandwidth());
+    svg.append('g').selectAll('rect').data(dados).join('rect')
+      .attr('x', (q) => x(q.m) + (x.bandwidth() - bw) / 2).attr('width', bw)
+      .attr('y', (q) => y(q.total)).attr('height', (q) => Math.max(0, y(0) - y(q.total)))
+      .attr('rx', 3).style('fill', 'var(--cis-s2)')
+      .on('pointermove', (ev, q) => {
+        const [mx, my] = d3.pointer(ev, el);
+        tipLinhas(tip, mesLabel(q.m), [[null, 'Pago', fmt.brl(q.total)], [null, 'Pagamentos', fmt.int(q.qtd)]]);
+        placeTip(el, tip, mx, my);
+      })
+      .on('pointerleave', () => { tip.hidden = true; });
+  });
+
+  dash.draw('pagtab', (tb) => {
+    const p = dash.data('pagamentos');
+    const nr = atual();
+    tb.replaceChildren();
+    if (p.status !== 'ok' || !nr) return;
+    const busca = (document.getElementById('cis-busca')?.value ?? '').trim().toLowerCase();
+    const frag = document.createDocumentFragment();
+    p.data.filter((x) => x.nr === nr)
+      .filter((x) => !busca || [x.favorecido, x.documento_favorecido, x.comprovante, x.nr_comprovante].join(' ').toLowerCase().includes(busca))
+      .forEach((x) => {
+        const tr = document.createElement('tr');
+        tr.dataset.key = x.id;
+        [[x.data ? fmt.data(x.data) : '', 'nowrap'], [x.favorecido ?? '', ''], [x.documento_favorecido ?? '', 'nowrap cis-hide-narrow'],
+         [x.comprovante ?? '', 'cis-hide-narrow'], [x.nr_comprovante ?? '', 'cis-hide-narrow'], [x.valor === '' ? '' : fmt.brl(x.valor), 'num']]
+          .forEach(([txt, cls]) => { const td = document.createElement('td'); td.className = cls; td.textContent = txt; tr.append(td); });
+        frag.append(tr);
+      });
+    tb.append(frag);
+  });
+
+  // --- quadros para copiar: cronograma físico e tecnologias por UF
+  const aberto = () => {
+    const d = dash.data('instrumentos');
+    const nr = atual();
+    return d.status === 'ok' ? d.data.find((r) => r.nr === nr) : null;
+  };
+  const nomeModalidade = (s) => String(s).split(' ').map((w, k) => (k && ['de', 'do', 'da'].includes(w) ? w : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
+  const celula = (tag, txt, attrs = {}) => {
+    const c = document.createElement(tag);
+    c.textContent = txt;
+    Object.entries(attrs).forEach(([k, v]) => c.setAttribute(k, v));
+    return c;
+  };
+  // Mesma ordem das regras de atualizar_dados.py
+  const TECNOLOGIAS = ['Cisterna de 16 mil litros', 'Cisterna calçadão', 'Cisterna de enxurrada', 'Cisterna telhadão', 'Cisterna escolar',
+    'Cisterna comunitária', 'Cisterna de produção', 'Cisterna de 52 mil litros', 'Barragem subterrânea', 'Pequena barragem',
+    'Barreiro trincheira', 'Tanque de pedra', "Bomba d'água popular", 'Sistema pluvial multiuso', 'Sistema de tratamento e reuso'];
+
+  dash.draw('situacao-tag', (el) => {
+    const i = aberto();
+    el.textContent = i ? i.situacao : '—';
+    el.className = 'cis-tag cis-sit' + (!i ? '' : i.situacao === 'Em execução' ? ' exec' : /Prestação de Contas/.test(i.situacao) ? ' pc' : '');
+  });
+
+  // Prazo decorrido da vigência na data da carga
+  const prazo = (i) => {
+    if (!i || !i.inicio_vigencia || !i.fim_vigencia) return null;
+    const t = (s) => Date.parse(s.slice(0, 10) + 'T00:00:00Z');
+    const total = t(i.fim_vigencia) - t(i.inicio_vigencia);
+    return total > 0 ? (t(i.data_carga) - t(i.inicio_vigencia)) / total : null;
+  };
+
+  dash.draw('vigpct', (el) => {
+    const p = prazo(aberto());
+    el.textContent = p == null ? '—' : fmt.pct(Math.max(0, p));
+  });
+
+  dash.draw('vigbar', (el) => {
+    const i = aberto();
+    const p = prazo(i);
+    el.style.width = (p == null ? 0 : Math.max(0, Math.min(1, p)) * 100) + '%';
+    const t = (s) => Date.parse(s.slice(0, 10) + 'T00:00:00Z');
+    const dias = i && i.fim_vigencia ? (t(i.fim_vigencia) - t(i.data_carga)) / 864e5 : null;
+    const r = dash.data('regras');
+    const limite = r.status === 'ok' && r.data[0] ? r.data[0].vigencia_dias : 90;
+    el.className = 'cis-vig-fill' + (dias == null ? '' : dias < 0 ? ' passou' : dias <= limite ? ' fim' : '');
+  });
+
+  dash.draw('titulo-inst', (el) => {
+    const i = aberto();
+    el.textContent = i ? nomeModalidade(i.modalidade) + ' nº ' + nrAno(i) : '—';
+  });
+
+  dash.draw('nr-ano', (el) => {
+    const i = aberto();
+    el.textContent = i ? nrAno(i) : '—';
+  });
+
+  dash.draw('metatab', (tb) => {
+    const m = dash.data('metas');
+    const nr = atual();
+    tb.replaceChildren();
+    if (m.status !== 'ok' || !nr) return;
+    m.data.filter((x) => x.nr === nr).sort((a, b) => n(a.meta) - n(b.meta)).forEach((x) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = x.id;
+      tr.append(celula('td', fmt.int(x.meta)), celula('td', x.especificacao ?? ''), celula('td', x.valor === '' ? '' : fmt.brl(x.valor), {class: 'nowrap'}),
+        celula('td', x.quantidade === '' ? '' : fmt.int(x.quantidade)), celula('td', x.inicio ? fmt.data(x.inicio) : ''), celula('td', x.fim ? fmt.data(x.fim) : ''));
+      tb.append(tr);
+    });
+  });
+
+  dash.draw('metasoma', (el) => {
+    const m = dash.data('metas');
+    const nr = atual();
+    el.textContent = m.status === 'ok' && nr ? fmt.brl(m.data.filter((x) => x.nr === nr).reduce((s, x) => s + (n(x.valor) ?? 0), 0)) : '';
+  });
+
+  dash.draw('tectab', (tab) => {
+    const t = dash.data('tecnologias');
+    const nr = atual();
+    tab.replaceChildren();
+    if (t.status !== 'ok' || !nr) return;
+    const linhas = t.data.filter((x) => x.nr === nr);
+    document.querySelectorAll('[data-tec="vazio"]').forEach((p) => { p.hidden = linhas.length > 0; });
+    if (!linhas.length) return;
+
+    const metas = [...new Set(linhas.map((x) => n(x.meta)))].sort((a, b) => a - b);
+    const ufs = [...new Set(linhas.map((x) => x.uf))].sort();
+    const grupos = metas.map((meta) => {
+      const tecs = [...TECNOLOGIAS, ...new Set(linhas.map((x) => x.tecnologia))].filter((tec, k, todas) => todas.indexOf(tec) === k
+        && linhas.some((x) => n(x.meta) === meta && x.tecnologia === tec));
+      return {meta, tecs, sub: tecs.length > 1};
+    });
+    const soma = (f) => linhas.filter(f).reduce((s, x) => s + (n(x.quantidade) ?? 0), 0);
+
+    const thead = document.createElement('thead');
+    const h1 = document.createElement('tr');
+    const h2 = document.createElement('tr');
+    h1.append(celula('th', 'UF', {rowspan: 2}));
+    grupos.forEach((g) => {
+      h1.append(celula('th', 'Meta ' + g.meta, {colspan: g.tecs.length + (g.sub ? 1 : 0)}));
+      g.tecs.forEach((tec) => h2.append(celula('th', tec)));
+      if (g.sub) h2.append(celula('th', 'Subtotal'));
+    });
+    h1.append(celula('th', 'Total', {rowspan: 2}));
+    thead.append(h1, h2);
+
+    const linha = (tag, rotulo, filtro) => {
+      const tr = document.createElement('tr');
+      tr.append(celula(tag, rotulo));
+      grupos.forEach((g) => {
+        g.tecs.forEach((tec) => tr.append(celula(tag, fmt.int(soma((x) => filtro(x) && n(x.meta) === g.meta && x.tecnologia === tec)))));
+        if (g.sub) tr.append(celula(tag, fmt.int(soma((x) => filtro(x) && n(x.meta) === g.meta))));
+      });
+      tr.append(celula(tag, fmt.int(soma(filtro))));
+      return tr;
+    };
+    const tbody = document.createElement('tbody');
+    ufs.forEach((uf) => tbody.append(linha('td', uf, (x) => x.uf === uf)));
+    const tfoot = document.createElement('tfoot');
+    tfoot.append(linha('td', 'Total', () => true));
+    tab.append(thead, tbody, tfoot);
+  });
+
+  // Metas em que as etapas não fecham com a quantidade da meta: diz qual número o quadro usou
+  dash.draw('tecnotas', (ul) => {
+    const t = dash.data('tecnologias');
+    const nr = atual();
+    ul.replaceChildren();
+    if (t.status !== 'ok' || !nr) return;
+    const porMeta = new Map();
+    t.data.filter((x) => x.nr === nr && x.ajuste).forEach((x) => porMeta.set(n(x.meta), x));
+    [...porMeta.keys()].sort((a, b) => a - b).forEach((meta) => {
+      const x = porMeta.get(meta);
+      const etapas = fmt.int(x.soma_etapas), daMeta = fmt.int(x.qtd_meta);
+      const txt = {
+        global: `registrada no Transferegov com quantidade ${daMeta}; o quadro usa a soma das etapas (${etapas}).`,
+        meta: `as etapas somam ${etapas}; o quadro usa a quantidade registrada na meta (${daMeta}).`,
+        diferenca: `as etapas somam ${etapas}, mas a meta registra ${daMeta}; a diferença de ${fmt.int(Math.abs(n(x.qtd_meta) - n(x.soma_etapas)))} não está distribuída nas etapas.`,
+      }[x.ajuste];
+      if (txt) ul.append(celula('li', 'Meta ' + meta + ': ' + txt));
+    });
+  });
+
+  dash.draw('cart', (tb) => {
+    const d = dash.data('alertas');
+    const nr = atual();
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    d.data.forEach((x) => {
+      const tr = document.createElement('tr');
+      tr.className = x.nivel + (x.nr === nr ? ' atual' : '');
+      [[x.nr, 'nowrap'], [x.parceiro ?? '', ''], [x.uf ?? '', ''], [x.situacao ?? '', 'cis-hide-narrow'],
+       [x.fim_vigencia ? fmt.data(x.fim_vigencia) : '', 'nowrap cis-hide-narrow'], [fmt.brl(x.vl_saldo_conta), 'num'], [x.alertas, 'alertas']]
+        .forEach(([txt, cls]) => { const td = document.createElement('td'); td.className = cls; td.textContent = txt; tr.append(td); });
+      tr.onclick = () => {
+        dash.setParams({nr: x.nr});
+        document.querySelectorAll('#instrumento').forEach((t) => t.scrollIntoView({behavior: 'smooth', block: 'center'}));
+      };
+      tb.append(tr);
+    });
+  });
+</script>
+
+<script>
+  // "Copiar tabela": leva o quadro como tabela com bordas (HTML, para Word/SEI) e como texto
+  // separado por tabulação (para o Excel). Só lê a página; não escreve nela.
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const limpa = (s) => s.replace(/\s+/g, ' ').trim();
+  const BORDA = 'border:1px solid #000;padding:2px 6px;text-align:center;vertical-align:middle;';
+  const CINZA = 'background:#d9d9d9;font-weight:bold;';
+
+  const montar = (box) => {
+    const titulo = limpa(box.querySelector('.cis-tabtit')?.textContent ?? '');
+    const tab = box.querySelector('table');
+    let html = `<p style="text-align:center;font-family:Calibri,Arial,sans-serif;font-size:11pt"><b>${esc(titulo)}</b></p>`
+      + '<table style="border-collapse:collapse;font-family:Calibri,Arial,sans-serif;font-size:11pt">';
+    const grade = [];
+    [...tab.rows].forEach((tr, i) => {
+      const parte = tr.parentElement.tagName;
+      const tag = parte === 'THEAD' ? 'th' : 'td';
+      html += '<tr>';
+      grade[i] = grade[i] || [];
+      let col = 0;
+      [...tr.cells].forEach((c) => {
+        const txt = limpa(c.textContent);
+        const span = (c.colSpan > 1 ? ` colspan="${c.colSpan}"` : '') + (c.rowSpan > 1 ? ` rowspan="${c.rowSpan}"` : '');
+        html += `<${tag}${span} style="${BORDA}${parte === 'TBODY' ? '' : CINZA}">${esc(txt)}</${tag}>`;
+        while (grade[i][col] !== undefined) col++;
+        for (let r = 0; r < c.rowSpan; r++) {
+          grade[i + r] = grade[i + r] || [];
+          for (let k = 0; k < c.colSpan; k++) grade[i + r][col + k] = r === 0 && k === 0 ? txt : '';
+        }
+        col += c.colSpan;
+      });
+      html += '</tr>';
+    });
+    html += '</table>';
+    const fonte = limpa(box.querySelector('.cis-origem')?.textContent ?? '');
+    if (fonte) html += `<p style="font-family:Calibri,Arial,sans-serif;font-size:9pt">${esc(fonte)}</p>`;
+    const tsv = [titulo, ...grade.map((l) => Array.from(l, (v) => v ?? '').join('\t')), ...(fonte ? [fonte] : [])].join('\r\n');
+    return {html, tsv};
+  };
+
+  const timers = new Map();
+  const avisar = (secao, tipo) => {
+    secao.querySelectorAll('[data-aviso]').forEach((s) => { s.hidden = s.dataset.aviso !== tipo; });
+    clearTimeout(timers.get(secao));
+    timers.set(secao, setTimeout(() => secao.querySelectorAll('[data-aviso]').forEach((s) => { s.hidden = true; }), 5000));
+  };
+
+  document.querySelectorAll('[data-copiar]').forEach((btn) => btn.addEventListener('click', async () => {
+    const secao = btn.closest('section');
+    const box = secao?.querySelector('.cis-quadrobox');
+    if (!box || !box.querySelector('table')) return;
+    const {html, tsv} = montar(box);
+    try {
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([html], {type: 'text/html'}),
+        'text/plain': new Blob([tsv], {type: 'text/plain'}),
+      })]);
+      avisar(secao, 'ok');
+    } catch {
+      // Sem acesso à área de transferência: seleciona o quadro na página para Ctrl+C
+      const sel = window.getSelection();
+      const r = document.createRange();
+      r.selectNodeContents(box);
+      sel.removeAllRanges();
+      sel.addRange(r);
+      let copiou = false;
+      try { copiou = document.execCommand('copy'); } catch {}
+      avisar(secao, copiou ? 'ok' : 'sel');
+    }
+  }));
+</script>

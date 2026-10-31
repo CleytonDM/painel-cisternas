@@ -1,0 +1,476 @@
+id,nr,meta,tipo,especificacao,inicio,fim,quantidade,unidade,valor
+3764,700219,1,Normal,Construção de cisternas de placas,2008-12-10,2010-04-01,,,590841.36
+3766,700219,2,Normal,Capacitação de pedreiros para construção das cisternas,2008-12-10,2010-04-01,,,2975.0
+3767,700219,3,Normal,Capacitação em Gerenciamento de Recursos Hídricos - GRH,2008-12-10,2010-04-01,,,14740.48
+3771,700219,4,Normal,"Acompanhamento, Monitoramento e Controle",2008-12-10,2010-04-01,,,1763.0
+170069,705882,1,Normal,Construção Cisternas,2009-11-30,2011-03-31,1.0,unidade,807905.49
+170071,705882,2,Normal,Capacitação de Beneficiarios em GRH,2009-11-30,2010-07-30,1.0,unidade,26670.0
+170074,705882,3,Normal,Capacitação de Pedreiros,2009-11-30,2010-07-30,1.0,unidade,5460.0
+170076,705882,4,Normal,Capacitação de Agentes Comunitários de Saúde,2009-12-01,2010-07-30,,,740.0
+89280,707181,1,Normal,Capacitação de Agricultores e Pedreiros,2009-12-30,2011-08-31,1.0,UN,4550.0
+89282,707181,2,Normal,CAPACITAÇÃO DAS FAMÍLIAS BENEFICIÁRIAS EM GRH,2009-12-30,2011-08-31,1.0,UN,23960.0
+166451,707181,3,Normal,Capacitação de Agentes Comunitários de Saúde,2009-12-30,2011-08-31,1.0,UN,1320.0
+166458,707181,4,Normal,Construção de Cisternas de Placas,2009-12-30,2011-12-30,531.0,UN,716869.22
+98283,707379,1,Normal,Construção de cisternas de placas no interior do município para atender a carencia hidrica das comunidades da zona rural.,2009-11-30,2011-03-01,1.0,Unidade,1189910.61
+185232,707379,2,Normal,Capacitação dos agentes comunitários de saude,2009-11-30,2010-03-01,2.0,OFICINA,1072.0
+185254,707379,3,Normal,Capacitação dos Beneficiarios,2009-11-30,2011-01-03,28.0,OFICINA,36562.4
+185275,707379,4,Normal,Capacitação dos Pedreiros,2009-11-30,2011-01-03,6.0,OFICINA,5148.0
+297400,718479,1,Normal,Cadastramento e Seleção,2010-01-11,2017-12-31,82428.0,UN,1231599.55
+297444,718479,2,Normal,Acompanhamento - visitas  técnicas,2010-05-10,2017-12-31,6592.0,UN,2132795.52
+297507,718479,3,Normal,construção de cisternas,2010-05-10,2017-12-31,82428.0,UN,117451679.81
+297517,718479,4,Normal,encontros territoriais e estadual,2010-06-10,2017-12-31,13.0,CONVENIO,142500.0
+297526,718479,5,Normal,comunicação,2010-01-11,2017-12-31,36.0,UN,459150.0
+299354,718479,6,Normal,capacitações,2010-01-11,2012-05-30,3514.0,UN,5689061.38
+1573589,718479,7,Rendimentos,Aplicação Financeira para aquisição de agua e recomposição da contribuição a familia,2010-01-11,2012-12-30,33400.0,UN,9519000.0
+1903111,718479,8,Rendimentos,Implementar 4.420 cisternas de placas,2015-11-09,2016-05-31,4420.0,UN,8673763.8
+325886,723351,1,Normal,Capacitação de Pedreiros,2009-12-08,2010-04-30,20.0,Unidade,16290.0
+325902,723351,2,Normal,Capacitação de Beneficiarios,2009-12-08,2010-11-30,134.0,Unidade,198909.6
+325909,723351,3,Normal,Capacitação de Agentes Comunitário de Saúde,2009-12-08,2010-12-08,6.0,Unidade,4777.2
+337987,723351,4,Normal,Construção de Cisternas,2009-12-08,2011-06-30,4000.0,unidade,1998760.0
+338029,723351,5,Normal,Construção de Cisternas,2009-12-08,2011-06-30,4000.0,unidade,3340120.0
+309774,723356,1,Normal,Construção de 6.300 cisternas de placas de 16.000 litros,2010-05-01,2011-05-30,6300.0,Pessoa Juridica,8323875.0
+309777,723356,2,Normal,Capacitação de 310 pedreiros.,2010-05-01,2011-05-10,31.0,Cursos,58590.0
+309784,723356,3,Normal,Capacitação de 6.300 famílias beneficiadas.,2010-03-01,2011-01-30,210.0,Curso,460950.0
+309790,723356,4,Normal,Capacitação de 330 agentes comunitários de saúde.,2010-03-01,2011-01-30,11.0,Curso,12666.5
+328133,723356,5,Normal,Realização de 1 seminário estadual sobre convivência com o semiarido.,2011-09-01,2011-11-30,1.0,Seminário,29914.5
+1517936,733049,1,Rendimentos,Aquisição de Água para implementação e abastecimento inicial,2013-09-01,2017-03-31,8400.0,UN,672000.0
+1517940,733049,2,Rendimentos,Placa de Identificação da Barragem Subterrânea,2013-09-01,2017-03-31,1500.0,UN,225000.0
+1517942,733049,3,Rendimentos,Ajuste da Contribuição à Família - Barragem Subterranea,2013-09-01,2017-03-31,1500.0,UN,150000.0
+1517944,733049,4,Rendimentos,Ajuste de Contribuição à Família - Cisterna de Enxurrada,2013-09-01,2017-03-31,4200.0,UN,1715280.0
+1944871,733049,5,Rendimentos,Implementar 1.653 cisternas de enxurradas,2015-09-30,2021-03-31,1653.0,UN,19463595.63
+1945421,733049,6,Normal,Seleção e Cadastramento (1.500 tecnologias),2010-08-31,2021-03-31,1500.0,UN,31724.4
+1945422,733049,7,Normal,Capacitação (1.500 tecnologias),2010-08-31,2021-03-31,232.0,UN,893110.0
+1945423,733049,8,Normal,Assessoria Técnica (1.500 tecnologias),2010-10-31,2021-03-31,3000.0,UN,1046856.64
+1945428,733049,9,Normal,Implementação de 1.500 Cisternas de enxurradas,2010-08-31,2021-03-31,1500.0,UN,14101254.0
+1945429,733049,10,Normal,Encontro (1.500 tecnologias),2011-12-31,2021-03-31,12.0,UN,77040.0
+1945444,733049,11,Normal,Seleção e Cadastramento (5.700 tecnologias),2011-12-31,2021-03-31,5700.0,UN,123519.0
+1945445,733049,12,Normal,Capacitação (5.700 tecnologias),2011-12-31,2021-03-31,885.0,UN,3627988.0
+1945446,733049,13,Normal,Assessoria Técnica (5.700 tecnologias),2011-12-31,2021-03-31,9621.0,UN,8414711.64
+1945447,733049,14,Normal,Implementação de Tecnologias (5.700 tecnologias),2011-12-31,2021-03-31,5700.0,UN,51673260.6
+1945448,733049,15,Normal,Encontro (5.700 tecnologias),2011-12-31,2021-03-31,46.0,UN,295320.0
+1945450,733049,16,Normal,Implementação de Tecnologias (7.673 tecnologias),2012-12-31,2021-03-31,7673.0,UN,80239288.56
+2428708,733049,17,Normal,Implementação de 355 Cisternas de Enxurrada,2018-05-21,2021-03-31,355.0,UN,4180022.05
+2428709,733049,18,Normal,Encontro Estadual,2018-05-21,2021-03-31,1.0,UN,5570.01
+2432833,733049,19,Rendimentos,Implementar 100 sistemas de tratamento e reuso de água cinza domiciliar,2018-05-21,2021-03-31,100.0,UN,715800.0
+408175,733189,1,Normal,Construção de Cisternas Consumo Humano 16m3,2010-06-24,2012-12-31,45150.0,UN,67479675.0
+408180,733189,2,Normal,Capacitação de Agentes Comunitários de Saúde,2010-06-24,2012-12-01,1.96,UN,733880.0
+408183,733189,3,Normal,Capacitação de Pedreiros,2010-06-24,2012-12-01,109.0,UN,423870.0
+408186,733189,4,Normal,Capacitação de Beneficiários,2010-06-24,2012-12-01,1505.0,UN,3189250.0
+408189,733189,5,Normal,Comunicação,2010-06-24,2012-12-31,1.0,UN,191628.0
+1238296,733189,6,Normal,Assistencia Tecnica,2011-11-01,2013-05-30,33400.0,UN,10653250.96
+1238504,733189,7,Normal,Melhorias da área de captação,2011-01-01,2013-05-31,33400.0,UN,1455570.0
+501652,739529,1,Normal,CONSTRUÇÃO DE CISTERNAS DE PLACAS.,2010-12-29,2011-11-30,210.0,UN,269992.8
+501665,739529,2,Normal,CAPACITAÇÃO DE PEDREIROS.,2010-12-29,2011-04-30,2.0,UN,1820.0
+501678,739529,3,Normal,CAPACITAÇÃO DE BENEFICIÁRIOS EM GERENCIAMENTO DOS RECURSOS HÍDRICOS.,2010-12-29,2011-07-30,7.0,UN,9100.0
+501692,739529,4,Normal,CAPACITAÇÃO DOS AGENTES COMUNITÁRIOS DE SAÚDE.,2010-12-29,2011-08-30,1.0,UN,560.0
+652333,753587,1,Normal,CONSTRUÇÃO DE CISTERNAS DE PLACAS.,2011-04-27,2012-06-30,135.0,UN,199999.8
+652339,753587,2,Normal,CAPACITAÇÃO DE AGRICULTORES PEDREIROS.,2011-04-27,2011-12-30,1.0,UN,926.0
+652341,753587,3,Normal,CAPACITAÇÃO DE BENEFICIÁRIOS EM GERENCIAMENTO DOS RECURSOSHÍDRICOS.,2011-04-27,2012-01-30,5.0,UN,6266.0
+652342,753587,4,Normal,CAPACITAÇÃO DOS AGENTES COMUNITÁRIOS DE SAÚDE.,2011-04-27,2011-08-30,1.0,UN,694.0
+815644,756028,1,Normal,Construção de Cisternas de 16 mil litros,2011-12-29,2013-12-31,11000.0,UN,19645247.0
+839547,756028,2,Normal,Papacitação Para Pedreiro,2011-12-29,2013-12-31,92.0,UN,211344.0
+839548,756028,3,Normal,Capacitação Para Baneficiários,2011-12-29,2013-12-31,11000.0,UN,870720.0
+839549,756028,4,Normal,Capacitação Para Agentes Comunitários de saúde,2011-12-29,2012-07-30,5.0,UN,10200.0
+839550,756028,5,Normal,"Acompanhamento, Monitoramento e Controle",2011-12-29,2012-07-30,1.0,UN,64480.0
+1223104,756028,6,Normal,Famílias beneficiárias – cisterna de 16 mil litros – consumo – FASE II,2012-12-01,2013-12-31,7800.0,UN,195000.0
+1223106,756028,7,Normal,Cartilhas 1ª água – FASE II - Serviços de elaboração das cartilhas– FASE II,2012-12-01,2013-12-31,9000.0,UN,34500.0
+1223117,756028,8,Normal,Assistência técnica para a construção das cisternas de 16 mil litros– FASE II,2012-12-01,2013-12-31,7800.0,UN,893304.0
+1223122,756028,9,Normal,Encontros municipais– FASE II,2012-12-01,2013-12-31,11.0,UN,27192.0
+1539039,756028,10,Rendimentos,"O reajuste no valor do pessoal, tecnicos de campo, consultoria, e deslocamento dos veiculos, são de suma importância para a consecução da meta do convênio, haja vista a dificuldade encontrada pelo convenente para a contratação de mão de obra no estado da Bahia, além do acréscimo de 7.800 cisternas a serem construídas. Pelo exposto, conclui-se pela aprovação da proposta apresentada pelo Consórcio Público de Desenvolvimento Sustentável do Território do Sisal – CONSISAL/BA, afinal, os valores empregados não configuram alteração do objeto e dos valores inicialmente pactuados.",2013-12-30,2013-12-31,6.0,UN,249922.42
+1577357,756028,11,Rendimentos,Rendimento de Aplicação - capacitação do Consorcio,2014-04-02,2014-04-04,1.0,UN,30000.0
+1702764,756028,12,Rendimentos,Rendimentos de Aplicação continuidade do projeto,2014-07-01,2014-12-31,1.0,UN,70409.49
+1716572,756028,13,Rendimentos,RENDIMENTOS PARA TÉCNICOS DE CAMPO - FINALIZANDO O OBJETO,2014-09-25,2014-12-31,1.0,UN,32121.84
+814490,756033,1,Normal,CONSTRUÇÃO DE CISTERNAS DE PLACAS.,2011-12-29,2013-01-30,3450.0,UN,5176359.3
+814492,756033,2,Normal,CAPACITAÇÃO DE PEDREIROS.,2011-12-29,2012-10-30,34.0,UN,33456.0
+814494,756033,3,Normal,CAPACITAÇÃO DE BENEFICIÁRIOS EM GERENCIAMENTO DOS RECURSOS HÍDRICOS.,2011-12-29,2012-12-30,115.0,UN,149500.0
+814495,756033,4,Normal,CAPACITAÇÃO DOS AGENTES COMUNITÁRIOS DE SAÚDE.,2011-12-29,2012-12-30,12.0,UN,25800.0
+814498,756033,5,Normal,"ACOMPANHAMENTO, MONITORAMENTO E SUPERVISÃO DO PROJETO.",2011-12-29,2013-01-30,1.0,UN,199101.0
+1233592,756033,6,Normal,CONSTRUÇÃO DE CISTERNAS DE PLACAS - FASE II,2012-12-24,2013-12-31,3690.0,UN,8422971.12
+1233596,756033,7,Normal,CAPACITAÇÃO DE BENEFICIÁRIOS EM GERENCIAMENTO DOS RECURSOS HÍDRICOS - FASE II,2012-12-24,2013-12-31,123.0,UN,167280.0
+1233598,756033,8,Normal,CAPACITAÇÃO DE PEDREIROS EM CONSTRUÇÃO DE CISTERNAS DE 16 MIL LITROS - FASE II,2012-12-24,2013-12-31,30.0,UN,28770.0
+1233601,756033,9,Normal,CAPACITAÇÃO DOS AGENTES COMUNITÁRIOS DE SAÚDE - FASE II,2012-12-24,2013-12-31,10.0,UN,19200.0
+1233604,756033,10,Normal,"ACOMPANHAMENTO, MONITORAMENTO E SUPERVISÃO DO PROJETO - FASE II",2012-12-24,2013-12-31,3690.0,UN,460901.0
+1779581,756033,11,Rendimentos,Cisternas de 16 mil litros – FASE II – Rendimentos de Aplicação,2014-09-01,2015-04-30,840.0,UN,891230.4
+1779582,756033,12,Rendimentos,"Acompanhamento, Monitoramento e Asistência Técnica FASE II – Rendimento de aplicação financeira",2014-09-01,2015-04-30,8.0,UN,25791.78
+839469,756747,1,Normal,Construção de Cisternas,2011-12-29,2017-12-31,800.0,UN,1254472.8
+906799,756747,2,Normal,Capacitação de Pedreiros,2011-12-29,2017-12-31,8.0,UN,8880.0
+906815,756747,3,Normal,Capacitação de Beneficiários,2011-12-29,2017-12-31,27.0,UN,38340.0
+906820,756747,4,Normal,Capacitação de Agentes de Saúde,2012-04-01,2017-12-31,5.0,UN,13300.0
+906823,756747,5,Normal,Fortalecimento Institucional,2011-12-29,2017-12-31,1.0,UN,54600.0
+1462137,756747,6,Rendimentos,Contratação de pedreiros (reajuste valor diárias),2013-03-24,2014-07-08,1.0,UN,54720.0
+1497454,756747,7,Rendimentos,Contratação de Equipe Técnica (Acrescido em 5 meses),2013-08-01,2014-07-08,1.0,UN,25800.0
+1517010,756747,8,Normal,Construção de Cisternas de Placa conforme Lei 12.873 de 24 de outubro de 2013,2013-12-15,2017-12-31,2300.0,UN,6526779.0
+1517024,756747,9,Normal,Equipe Tecnica,2013-12-15,2017-12-31,12.0,UN,629185.32
+1644501,756747,10,Rendimentos,Contratação de Equipe Técnica(Acrescido em 3 meses),2014-01-01,2014-10-06,1.0,UN,21157.86
+1649923,756747,11,Rendimentos,Contratação de Equipe Técnica(Acrescido em 3 meses),2014-04-01,2015-01-05,1.0,UN,21157.86
+1675357,756747,12,Rendimentos,Contratação de Equipe Técnica(Acrescido em 2 meses),2014-07-01,2015-03-08,1.0,UN,14105.24
+1872053,756747,13,Rendimentos,Contratação de Equipe Técnica(Acrescido em 11 meses),2015-09-01,2016-07-31,1.0,UN,105327.11
+1872056,756747,14,Rendimentos,Contratação de Equipe Técnica(Acrescido em 10 meses),2015-09-01,2016-07-31,1.0,UN,88689.6
+1893545,756747,15,Rendimentos,Locação de Veículo,2015-10-01,2016-07-31,10.0,MÊS,23000.0
+2034381,756747,16,Rendimentos,"Equipe tecnica, combustivel e veiculo",2016-07-28,2016-07-28,10.0,UN,213029.79
+2269012,756747,17,Rendimentos,"Ampliação de meta (41 cisternas de placas de 16 mil litros), equipe técnica, veículo e combustível (acrescido de 7 meses).",2017-05-01,2017-12-31,1.0,MÊS,260315.5
+862001,757754,1,Normal,Meta 01 - Implementação das tecnologias sociais de acesso à água para produção de alimentos,2011-12-29,2023-04-30,1.0,UN,142548671.41
+885782,757754,2,Normal,Meta 02 - Assistência Técnica para famílias beneficiadas,2011-12-29,2023-04-30,16363.0,UN,11164474.9
+885784,757754,3,Normal,"Meta 03 - Eventos de Capacitação (cursos, seminários, encontros e intercâmbios)",2011-12-29,2023-04-30,1.0,UN,7214093.0
+1514844,757754,4,Rendimentos,Meta 04 - Utilização dos Rendimentos de Aplicação,2012-10-01,2014-06-30,1.0,UN,4143935.38
+2429564,757754,5,Rendimentos,Meta 05 - Utilização dos Rendimentos de Aplicação para o Caráter Produtivo,2018-05-15,2023-04-30,1.0,UN,9095555.0
+2471798,757754,6,Normal,Meta 06 - Cisterna Calçadão 2021 - Parte 1 de 4  para implementar 675 cisternas (meta para Investimento – 44),2018-08-03,2023-04-30,258.0,UN,3699689.04
+2471800,757754,7,Normal,Meta 07 - Cisterna Calçadão 2021 - Parte 1 de 10 para implementar 3 cisternas com sobras (meta para Investimento – 44),2018-08-03,2023-04-30,1.0,UN,12325.09
+2471802,757754,8,Normal,Meta 08 - Cisterna Calçadão 2021 – Parte 2 de 4 para implementar 675 cisternas (meta para Custeio - 33),2018-08-03,2023-04-30,96.0,UN,488336.64
+2476303,757754,9,Rendimentos,Meta 10 - Cisterna Calçadão 2021 - Parte 3 de 4  para implementar 675 cisternas (meta para Investimento – 44),2018-08-16,2023-04-30,417.0,UN,5979729.96
+2476377,757754,10,Rendimentos,Meta 11 - Cisterna Calçadão 2021 - Parte 3 de 10 para implementar 3 cisternas com sobras (meta para Investimento – 44),2018-08-16,2023-04-30,1.0,UN,2014.79
+2476390,757754,11,Rendimentos,Meta 12 - Cisterna Calçadão 2021 – Parte 4 de 4 para implementar 675 cisternas (meta para Custeio - 33),2018-08-16,2023-04-30,579.0,UN,2945280.36
+2476416,757754,12,Rendimentos,Meta 13 - Cisterna Calçadão 2021 - Parte 4 de 10 para implementar 3 cisternas com sobras (meta para Custeio – 33),2018-08-16,2023-04-30,1.0,UN,4214.38
+2476496,757754,13,Rendimentos,Meta 14 - Cisterna Calçadão 2021 - Parte 5 de 10 para implementar 3 cisternas com sobras (meta para Investimento – 44),2018-08-16,2023-04-30,1.0,UN,7699.42
+2817079,757754,14,Rendimentos,Meta 15 - Cisterna Calçadão 2021 - Parte 6 de 10 para implementar 3 cisternas com sobras (meta para Investimento – 44),2020-11-01,2023-04-30,1.0,UN,6640.46
+3052511,757754,15,Normal,Meta 09 - Cisterna Calçadão 2021 - Parte 2 de 10 para implementar 3 cisternas com sobras (meta para Custeio – 33),2018-08-03,2023-04-30,1.0,UN,872.46
+3057499,757754,16,Rendimentos,Meta 16 - Cisterna Calçadão 2021 - Parte 7 de 10 para implementar 3 cisternas com sobras (meta para Custeio – 33),2020-11-01,2023-04-30,1.0,UN,5086.84
+3057502,757754,17,Rendimentos,Meta 17 - Cisterna Calçadão 2021 – Parte 1 de 2 para implementar 48 cisternas (meta para Investimento – 44),2020-11-01,2023-04-30,48.0,UN,688314.24
+3057503,757754,18,Rendimentos,Meta 18 - Cisterna Calçadão 2021 – Parte 2 de 2 para implementar 48 cisternas (meta para Custeio – 33),2020-11-01,2023-04-30,48.0,UN,244168.32
+3057505,757754,19,Rendimentos,Meta 19 - Cisterna Calçadão 2021 - Parte 8 de 10 para implementar 3 cisternas com sobras (meta para Investimento – 44),2020-11-01,2023-04-30,1.0,UN,2569.38
+3057512,757754,20,Rendimentos,Meta 20 - Cisterna Calçadão 2022 - Parte 9 de 10 para implementar 3 cisternas com sobras (meta para Investimento – 44),2022-03-21,2023-04-30,1.0,UN,11770.5
+3057514,757754,21,Rendimentos,Meta 21 - Cisterna Calçadão 2022 - Parte 10 de 10 para implementar 3 cisternas com sobras (meta para Custeio - 33),2022-03-21,2023-04-30,1.0,UN,5086.84
+3057518,757754,22,Rendimentos,Meta 22 - Cisterna Calçadão 2022 - Parte 1 de 2 para implementar 38 cisternas (meta para Investimento - 44),2022-03-21,2023-04-30,38.0,UN,544915.44
+3057525,757754,23,Rendimentos,Meta 23 - Cisterna Calçadão 2022 - Parte 2 de 2 para implementar 38 cisternas (meta para Custeio - 33),2022-03-21,2023-04-30,38.0,UN,193299.92
+934262,759540,1,Normal,Implantação dos Processos de Capacitação,2011-12-29,2013-02-28,225.0,UN,346100.0
+934269,759540,2,Normal,Implamentação das Tecnologias Sociais para Produção e Dessedentação Animal,2012-02-01,2013-12-31,1600.0,UN,14588000.62
+934277,759540,3,Normal,Realização de Encontros de Planejamento e Avaliação do Projeto e Intercâmbios entre Agricultores,2011-12-29,2013-12-01,10.0,UN,31640.0
+934285,759540,4,Normal,Assistencia Técnica do Projeto,2011-12-29,2013-12-01,1.0,UN,246000.0
+934288,759540,5,Normal,Comunicação e Sistematização das Esperiências do Projeto,2012-02-01,2013-12-01,20801.0,UN,60880.0
+1511409,759540,6,Rendimentos,Readequação - Implamentação das Tecnologias Sociais para Produção e Dessedentação Animal,2013-05-06,2013-12-31,1.0,UN,180160.42
+930947,761742,1,Normal,construção de cisternas de produção 50 mil litros,2012-04-02,2016-12-31,6926.0,UN,52321843.66
+930950,761742,2,Normal,Construção de barragem subterrânea,2012-04-02,2016-12-31,77.0,UN,677385.94
+930952,761742,3,Normal,Construção de Barreiro de Trincheira Familiar,2012-04-02,2016-12-31,6313.0,UN,33477839.0
+930956,761742,4,Normal,Barreiro de Trincheira Comunitário,2012-04-02,2016-12-31,575.0,UN,7488800.0
+930957,761742,5,Normal,Limpeza de Aguadas,2012-04-02,2016-12-31,2602.0,UN,5646340.0
+930959,761742,6,Normal,Bomba D´água Popular,2012-04-02,2016-12-31,4.0,UN,27527.05
+930961,761742,7,Normal,Tanque de Pedra,2012-04-02,2016-12-31,58.0,UN,301156.3
+930963,761742,8,Normal,Quintal produtivo,2012-04-02,2016-12-31,2447.0,UN,3662914.3
+930967,761742,9,Normal,Seleção de famílias beneficiárias,2011-12-30,2016-10-31,24735.0,UN,396584.5
+930973,761742,10,Normal,Capacitação de Pedreiros,2012-02-20,2014-12-31,24.0,UN,115200.0
+930975,761742,11,Normal,Capacitação de Pessoas em Convivência com o Semiárido e Gerenciamento  de Agua para Produção,2012-02-20,2016-11-30,2831.0,UN,6851020.0
+930978,761742,12,Normal,Capacitação das Comissões Municipais,2011-12-30,2014-12-31,24.0,UN,53760.0
+930981,761742,13,Normal,Intercâmbios de Experiências entre os Agricultores,2012-07-02,2016-11-30,96.0,UN,1337952.0
+930983,761742,14,Normal,"Sensibilização e Comunicação Social por meio de campanhas educativas em rádios, produção de vídeo sobre convivência com o semiárido, publicação de boletins informativos sobre sistematizaçãod e experiências e cartazes sobre manuntenção de estruturas hídricas.",2012-01-02,2016-12-31,1.0,UN,353452.5
+1223203,761742,15,Normal,Assistência Técnica,2012-06-01,2016-12-31,19.0,MÊS,23386213.56
+1223206,761742,16,Normal,Encontros Microrregionais de Planejamento e Avaliação,2012-06-01,2016-12-31,24.0,UN,172800.0
+1223221,761742,17,Normal,Encontros Estaduais,2012-06-01,2016-12-31,1.0,UN,31230.0
+1223247,761742,18,Normal,Encontros de Encerramento e Integração,2012-06-01,2016-12-31,24.0,UN,88800.0
+2010163,761742,19,Rendimentos,Construção de barreiros trincheira familiares de 600 m³ para captação de água de chuva (ampliação da meta principal através de uso do rendimento de aplicação autorizado).,2013-04-01,2016-06-30,1470.0,UN,7795410.0
+2010168,761742,20,Rendimentos,Seleção e cadastramento de famílias beneficiárias,2012-01-01,2016-06-30,1470.0,UN,87594.28
+2010171,761742,21,Rendimentos,Realização de Capacitações em Convivência com o Semiárido e Gerenciamento de Água para Produção,2013-06-01,2016-06-30,1470.0,UN,500000.0
+2010174,761742,22,Rendimentos,Assistência técnica mensal as 24 entidades subconveniadas,2015-05-27,2016-06-27,12.0,MÊS,2350377.12
+2055946,761742,23,Rendimentos,Construção de Barreiro Trincheira Familiar (ampliação da meta principal através de uso dos Rendimentos de Aplicação autorizado),2016-10-10,2016-12-31,36.0,UN,262858.32
+950519,764558,1,Normal,Implantação de cisternas calçadão de 52 mil litros,2012-10-01,2021-03-31,502.0,UN,5000000.0
+950520,764558,2,Normal,Implantação de pequenas barragens para produção de alimentos,2012-10-01,2021-03-31,844.0,UN,10871952.24
+952056,764558,3,Normal,Implantação de cisternas de placas de 16 mil litros,2012-10-01,2021-03-31,9236.0,UN,22166602.26
+1221708,764558,4,Normal,"Implementação cisternas telhadão de 25 mil litros, nos termos da Lei nº 12.873/2013 e Decreto nº 8.038/2013",2017-04-01,2021-03-31,1387.0,UN,12983152.2
+1221712,764558,5,Normal,Monitoramento da execução,2012-10-01,2021-03-31,1.0,UN,422672.56
+1452229,764558,6,Rendimentos,Utilização de rendimento de aplicação para a meta de construção de cisternas de produção,2013-10-25,2014-09-30,502.0,UN,69264.38
+1452235,764558,7,Rendimentos,Utilização do rendimento de aplicação para a meta de construção de cisternas para consumo.,2013-10-25,2014-09-30,9661.0,UN,398375.74
+1957350,764558,8,Rendimentos,"Implantação de cisternas de placas de 16 mil litros, nos termos da Lei nº 12.873/2013 e Decreto nº 8.038/2013",2018-01-01,2019-05-01,1000.0,UN,3450410.0
+2442472,764558,9,Rendimentos,"Implantação de cisternas de placas de 16 mil litros, nos termos da Lei nº 12.873/2013 e Decreto nº 8.038/2013 - Parte I (rendimentos)",2018-01-01,2019-05-01,606.0,UN,1071537.17
+2443423,764558,10,Normal,"Implantação de cisternas de placas de 16 mil litros, nos termos da Lei nº 12.873/2013 e Decreto nº 8.038/2013 - Parte II (sobra de recursos não executados da Meta 3)",2018-01-01,2021-03-31,296.0,UN,1019411.3
+2493331,764558,11,Rendimentos,"Implantação de cisternas de placas de 16 mil litros, nos termos da Lei nº 12.873/2013 e Decreto nº 8.038/2013",2018-10-11,2020-09-30,1244.0,UN,4292310.04
+1317739,769792,1,Normal,Implementar tecnologias sociais para captação e armazenamento de água das chuvas para a produção de alimentos.,2012-07-06,2021-03-31,1.0,UN,29622685.45
+1317797,769792,2,Normal,Implementar o apoio a gestão e ao monitoramento na construção de tecnologias sociais de acesso a água para a produção de alimentos.,2012-07-06,2021-03-31,1.0,UN,523752.45
+1643741,769792,3,Rendimentos,Implementar tecnologias sociais para captação e armazenamento de água das chuvas para a produção de alimentos (uso de rendimentos).,2014-05-28,2018-07-29,440.0,UN,5531262.0
+2260450,769792,4,Rendimentos,"Recomposição do saldo financeiro do Convênio n° 001/2012, face ao cancelamento do contrato n° 0354/2014, correspondente a antecipação financeira de meta física não apresentada (uso de rendimentos).",2017-08-18,2019-07-29,1.0,UN,810542.22
+2477062,769792,5,Rendimentos,Implementar tecnologias sociais para captação e armazenamento de água das chuvas para a produção de alimentos (uso de rendimentos).,2018-08-01,2019-07-29,29.0,UN,364560.45
+1094158,769890,1,Normal,Seleção e cadastramento,2012-08-01,2019-12-30,1.0,UN,189016.95
+1094162,769890,2,Normal,Capacitações,2012-09-01,2019-12-30,1.0,UN,1870949.63
+1094165,769890,3,Normal,Implementação das tecnologias,2012-10-01,2019-12-30,1.0,UN,36405637.28
+1094176,769890,4,Normal,Assistência Técnica,2012-08-01,2019-12-30,1.0,UN,5294582.27
+1851550,769890,5,Rendimentos,Seleção e cadastramento(Uso dos Rendimentos de 2015),2015-08-10,2016-07-01,398.0,UN,10646.5
+1851569,769890,6,Rendimentos,Capacitações (Uso dos Rendimentos de 2015),2015-08-10,2016-07-01,1177.0,UN,133589.5
+1851574,769890,7,Rendimentos,Implementações das Tecnologias (Uso dos rendimentos de 2015),2015-08-10,2016-07-01,673.0,UN,1164855.32
+1851801,769890,8,Rendimentos,Assistência Técnica (Uso dos Rendimento de 2015),2015-08-10,2016-07-01,1.0,UN,298626.28
+2057196,769890,9,Rendimentos,Valor para ajuste do SICONV (ajustes de 2016),2012-08-01,2017-07-02,1.0,UN,0.01
+2300459,769890,10,Rendimentos,Seleção e cadastramento (uso dos rendimentos de 2018),2017-11-17,2019-07-02,417.0,UN,11154.75
+2300461,769890,11,Rendimentos,capacitações (uso dos rendimentos de 2018),2017-11-17,2019-07-02,417.0,UN,47329.5
+2300465,769890,12,Rendimentos,Implementações das Tecnologias (uso dos rendimentos de 2018),2017-11-17,2019-07-02,417.0,UN,721760.28
+2300466,769890,13,Rendimentos,Assistência Técnica (uso dos rendimentos de 2018),2017-11-17,2019-07-02,417.0,UN,224595.18
+2442831,769890,14,Rendimentos,Valor para ajuste do SICONV (ajustes de 2018),2018-06-07,2019-07-02,1.0,UN,0.01
+2449944,769890,15,Rendimentos,Valor para ajuste do SICONV 2 (ajustes de 2018),2018-05-31,2019-07-02,1.0,UN,0.01
+1113054,772394,1,Normal,Construção de Cisternas de Placas,2012-08-01,2013-02-28,322.0,UN,490648.79
+1113057,772394,2,Normal,Capacitação de pedreiros,2012-08-01,2012-12-31,3.0,UN,2952.0
+1113058,772394,3,Normal,Capacitação em Gerenciamento de Recursos Hídricos - GRH,2012-07-01,2012-12-31,11.0,UN,13953.33
+1113060,772394,4,Normal,Capacitação dos Agentes Comunitários de Saúde,2012-10-01,2012-12-31,0.03,UN,5550.0
+1208208,775945,1,Normal,Promover o acesso à água para o consumo humano a partir da construção de cisternas de placa de 16 mil litros em municípios do semiárido paraibano,2012-12-28,2017-12-31,1.0,UN,18729018.0
+1773943,775945,2,Normal,Implantar processos de apoio a gestão e ao monitoramento para implementação de tecnologias sociais para o convívio com o semiárido,2012-12-28,2017-12-31,1.0,UN,270982.0
+1860721,775945,3,Rendimentos,Utilização do rendimento de aplicação para ampliar a Meta 1 implementação de Cisternas de Placas de 16 mil litros Rendimento,2014-11-02,2016-12-31,778.0,UN,2207753.94
+2291645,775945,4,Rendimentos,recomposição do saldo financeiro do convênio 775945,2017-10-30,2017-12-31,1.0,UN,167032.69
+1644185,775967,1,Normal,Implementação de cisternas de placas de 16 mil litros,2012-12-31,2021-12-31,2457.0,UN,9736052.96
+1644186,775967,2,Normal,Implementação de cisternas calçadão,2012-12-31,2021-12-31,900.0,UN,13090757.42
+1644195,775967,3,Normal,Apoio Técnico e Logístico,2012-12-31,2021-12-31,24.0,UN,63722.97
+2395418,775967,4,Normal,Implementação da tecnologia social Cisterna Calcadão,2018-03-21,2021-12-31,620.0,UN,9017466.0
+2395420,775967,5,Normal,Implementação da tecnologia social Cisternas 16 mil litros,2018-03-21,2021-12-31,1176.0,UN,1006707.83
+2395421,775967,6,Normal,Apoio Técnico e Logístico,2018-03-21,2021-12-31,1.0,UN,978115.82
+2397051,775967,7,Rendimentos,Meta 05 - Implementação da tecnologia social cisterna 16.000 litros - Parte 1/Investimento.,2018-03-23,2021-12-31,1176.0,UN,3068203.82
+1222132,776855,1,Normal,Seleção e Cadastramento das Famílias Beneficiadas,2012-12-26,2013-03-26,1884.0,UN,42201.6
+1222134,776855,2,Normal,Assistência Técnica,2012-12-26,2013-08-26,1884.0,UN,699044.48
+1222137,776855,3,Normal,Capacitações,2013-01-26,2013-08-26,1884.0,UN,208125.2
+1222138,776855,4,Normal,Implementações,2013-03-26,2013-08-26,1884.0,UN,3272639.88
+1222090,776880,1,Normal,"Identificação, Seleção e Cadastramento das Famílias",2012-11-28,2012-12-27,300.0,UN,7500.0
+1222091,776880,2,Normal,CAPACITAÇÃO,2012-11-28,2013-11-27,300.0,UN,149790.0
+1222096,776880,3,Normal,Implementação das Tecnologias Sociais de Acesso à Água para Produção de Alimentos,2012-11-28,2012-11-28,300.0,UN,2488536.0
+1222104,776880,4,Normal,CUSTEIO DO PROJETO,2012-11-28,2013-11-27,3.0,UN,461455.0
+1222136,776887,1,Normal,cadastro de familia e implantação de cisternas,2013-01-01,2013-08-30,1.0,UN,4784683.46
+1513206,794256,1,Normal,Implementação de Cisternas Calçadão,2013-12-31,2021-03-31,956.0,UN,12471090.62
+1513207,794256,2,Normal,Implementação de Barragem Subterrânea,2013-12-31,2021-03-31,286.0,UN,3621390.74
+1513215,794256,3,Normal,Implementação de Barreiro Trincheira Familiar,2013-12-31,2021-03-31,968.0,UN,7489125.04
+1513538,794256,4,Normal,Apoio Técnico e Logístico,2013-12-31,2020-10-03,1.0,UN,4096711.83
+1746547,794256,5,Normal,Implementação de Cisternas Escolares,2014-12-31,2021-03-31,95.0,UN,1276425.7
+1774756,794256,6,Rendimentos,Serviços Técnicos Profissionais de Publicidade e Serviços Gráficos,2015-04-01,2018-10-03,1.0,UN,86000.0
+1996817,794256,7,Normal,Implementação Cisterna Telhadão Multiuso de 25 mil litros,2016-04-19,2021-03-31,1051.0,UN,9837990.6
+2174945,794256,8,Rendimentos,Apoio Técnico e Logístico - Rendimento de Aplicação,2017-05-03,2020-10-03,1.0,UN,640000.0
+2492937,794256,9,Normal,Implementação de Microssistema Comunitário de Abastecimento de Água - Captação Superficial,2017-12-29,2021-03-31,30.0,UN,327055.2
+2492951,794256,10,Normal,Implementação de Cisternas de Placas de 16 mil litros,2017-12-29,2021-03-31,135.0,UN,465805.35
+2545067,794256,11,Rendimentos,Rendimento de Aplicação - Apoio Técnico e Logístico.,2019-03-07,2021-03-31,1.0,UN,158551.9
+2689261,794256,12,Rendimentos,Rendimento de Aplicação - Apoio Técnico e Logístico (2019/2020),2019-12-10,2021-03-31,1.0,UN,90800.0
+1512209,794638,1,Normal,Implementação de Cisternas Calçadão,2013-12-31,2021-03-31,1014.0,UN,12394730.4
+1512230,794638,2,Normal,Implementação de Barragem Subterranea,2013-12-31,2021-03-31,20.0,UN,260769.8
+1512235,794638,3,Normal,Implementação de Barreiro Trincheiro,2013-12-31,2021-03-31,1449.0,UN,10580047.38
+1512253,794638,4,Normal,"Apoio Técnico e logístico - Aluguel de Carro, Equipe técnica do consorcio, Comunicação e Capacitação.",2013-12-31,2021-03-31,1.0,UN,2257113.32
+1636366,794638,5,Rendimentos,Capacitação Equipe Técnica.,2014-05-15,2016-12-29,1.0,UN,23546.01
+1695406,794638,6,Rendimentos,Capacitação Equipe Técnica,2014-09-19,2016-12-29,2.0,UN,42000.0
+1729454,794638,7,Rendimentos,"Pagamento de assessoria contábil, jurídica e controladoria ao convênio.",2014-12-02,2017-12-30,1.0,UN,108000.0
+1746799,794638,8,Normal,Implementação de Cisternas nas Escolas,2013-12-31,2021-03-31,60.0,UN,778426.8
+1746802,794638,9,Normal,Implementação de Cisternas de Placa,2013-12-31,2021-03-31,3049.0,UN,9529466.56
+1889375,794638,10,Rendimentos,Pagamento de Combustível,2015-10-01,2017-12-30,3.0,UN,20760.0
+1889379,794638,11,Rendimentos,Pagamento da Equipe Técnica,2015-10-01,2017-12-30,3.0,UN,21585.0
+1889403,794638,12,Rendimentos,Pagamento de Assessoria Jurídica e Contábil,2015-10-01,2017-12-30,3.0,UN,27000.0
+2344114,794638,13,Rendimentos,Pagamento da Equipe Técnica,2018-01-01,2021-03-31,1.0,UN,271943.51
+2635075,794638,14,Rendimentos,"Equipe Técnica (salário, 13º salário e férias)",2019-04-01,2021-03-31,1.0,UN,272365.0
+2792481,794638,15,Rendimentos,"Equipe Técnica (salário, 13º salário e férias) - Julho a Dezembro/2020",2020-07-01,2021-03-31,1.0,UN,92024.42
+1511472,794674,1,Normal,Cisternas de Placa,2013-12-30,2021-03-31,21129.02,UN,61156046.77
+2470806,794674,2,Rendimentos,Cisternas de placas de 16 mil litros -Rendimentos,2018-08-01,2019-07-01,3735.98,UN,10813457.88
+1515747,794680,1,Normal,Cisternas Calçadão de 52 mil litros,2013-12-30,2021-11-04,6678.61,UN,85289842.97
+2466288,794680,2,Rendimentos,Uso do Saldo de Rendimento para ampliação da meta 1,2018-08-01,2021-11-04,480.39,UN,6134868.53
+2474512,794680,3,Rendimentos,Uso do Saldo de Rendimento para ampliação da meta 1 (2 cisternas calçadão),2018-09-01,2021-11-04,2.0,UN,25541.2
+3829641,7AAFVF,1,Normal,Implementação de cisternas escolares de 52 mil litros (IN nº 76/2026),2026-09-23,2028-03-23,12.0,MES,2068129.5
+3832592,7AAFVF,2,Normal,Gestão Operacional do Projeto,2026-09-23,2028-03-23,12.0,MES,431870.5
+1697166,811724,1,Normal,Serviço para Implementação de Tecnologias Sociais,2014-10-16,2018-08-31,5780.0,UN,80867351.07
+1697168,811724,2,Normal,Oficinas/Capacitações,2014-10-16,2018-08-31,20.0,UN,785730.0
+1697169,811724,3,Normal,Custeio de Monitoramento do Projeto,2014-10-16,2018-08-31,41.0,UN,4059555.44
+1697171,811724,4,Normal,Eventos de Avaliação do P1MC,2015-04-01,2018-08-31,10.0,UN,302040.0
+1697172,811724,5,Normal,Produtos de Comunicação/Sistematização,2014-10-16,2018-08-31,1.0,UN,212262.5
+2013726,811724,6,Rendimentos,CUSTEIO DE MONITORAMENTO DO PROJETO(RENDIMENTOS),2016-05-31,2017-08-20,1.0,UN,429686.56
+2375082,811724,7,Rendimentos,2ª RENDIMENTO - SERVIÇO PARA IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS,2018-02-01,2018-08-31,47.0,UN,705719.77
+2428406,811724,8,Rendimentos,3º RENDIMENTO SERVIÇO PARA IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS,2018-04-01,2018-08-31,1.0,UN,1257679.48
+2428411,811724,9,Rendimentos,3º RENDIMENTO - EVENTOS DE AVALIAÇÃO - REUNIÃO AMPLIADA COORDENAÇÃO EXECUTIVA DA AP1MC,2018-04-01,2018-08-31,1.0,UN,32600.0
+1997374,827965,1,Normal,Implementação de Cisterna Telhadão Multiuso de 25 mil litros - Instrução Operacional SESAN 2016,2016-05-05,2027-12-31,1229.0,UN,12210311.64
+2068524,827965,2,Rendimentos,Apoio Técnico e Logístico,2016-11-14,2021-11-17,1.0,UN,555067.22
+2346207,827965,3,Normal,Implementação de Cisternas de Placas de 16 mil litros - Instrução Operacional SESAN nº 2/2017,2017-12-29,2027-12-31,1427.0,UN,5006058.7
+2346213,827965,4,Normal,Implementação de Barreiros Trincheira Familiar,2017-12-29,2027-12-31,110.0,UN,933035.4
+2346216,827965,5,Normal,Apoio Técnico e Logístico,2017-12-29,2027-12-31,1.0,UN,6599.45
+2488515,827965,6,Rendimentos,Locação de Veiculos e Combustivel,2018-09-26,2021-11-17,1.0,UN,253296.0
+2512918,827965,7,Normal,Implementação de Cisterna Telhadão Multiuso de 25 mil litros - Instrução Operacional SESAN 2018,2018-12-01,2027-12-31,238.0,UN,2873664.36
+2614096,827965,8,Rendimentos,Locação de Veículos,2019-07-04,2021-05-01,6.0,UN,92664.0
+2972668,827965,9,Normal,Implementação de Microssistema Comunitário Nº 15 -Captação de Manancial Subterrâneo - Instrução Operacional SESAN nº 04,2021-09-09,2027-12-31,437.0,UN,5003453.35
+3327213,827965,10,Normal,Implementação de Cisternas de Placas de 16 mil litros - Instrução Normativa nº 9/2023,2016-12-23,2027-12-31,2476.0,UNIDADE,14373172.82
+3329671,827965,11,Rendimentos,Implementação de Cisternas de Placas de 16 mil litros - Instrução Normativa nº 9/2023,2016-12-23,2023-12-31,442.0,UN,2560739.87
+3331673,827965,12,Rendimentos,Apoio Técnico e Logístico,2023-11-30,2023-12-31,1.0,UN,502444.8
+2075570,839214,1,Normal,"Implementação de Cisterna Escolar 52 mil Litros (IO nº 2, de 13/04/2016)",2016-12-23,2027-04-01,664.0,UN,9137775.44
+2075611,839214,2,Normal,Apoio Técnico,2016-12-23,2027-04-01,1.0,UN,563913.48
+3013551,839214,3,Normal,"Implementação de Cisterna Escolar 52 mil Litros (IN nº 03, de 25/05/2021)",2021-12-06,2027-04-01,144.0,UN,2594155.68
+3326959,839214,4,Normal,"Implementação de Cisterna Escolar 52 mil Litros (IN nº 11, de 03/03/2023, e IN nº 57, de 11/03/2025)",2016-12-23,2027-04-01,239.0,UNIDADE,5704155.4
+3330031,839214,5,Rendimentos,Implementação de Cisterna Escolar 52 mil Litros (IN nº 57 de 11/03/2025),2023-11-28,2027-04-01,81.0,UN,3329214.31
+3330040,839214,6,Rendimentos,Apoio Técnico e Logístico,2023-11-28,2027-04-01,1.0,UN,669404.88
+2076370,839447,1,Normal,Apoio Técnico logístico - SEAGRI,2016-12-23,2027-04-01,1.0,UND,158681.7
+2076393,839447,2,Normal,Cisternas de placas de 16 mil litros,2016-12-23,2024-12-21,4242.0,UND,12951844.08
+2076406,839447,3,Normal,Cisterna escolares de 52 mil litros,2016-12-23,2024-12-21,90.0,UND,1284084.0
+2424472,839447,4,Rendimentos,Cisterna de 16.000 litros(uso dos rendimentos),2018-05-02,2020-02-14,102.0,UN,311430.48
+2510490,839447,5,Normal,Implementação de Cisternas de Placas de 16 mil litros (PCT),2018-12-01,2024-12-21,140.0,UN,494867.8
+2678276,839447,6,Normal,Cisterna de placa de 16 mil litros FDD (Instrução Operacional SESAN/MDS nº 02/2017),2019-11-18,2024-12-21,1105.0,UN,3905920.85
+2678284,839447,7,Normal,Cisterna calçadão de 52 mil litros FDD (Instrução Operacional SESAN nº 11/2017),2019-11-18,2024-12-21,143.0,UN,2124476.64
+2678285,839447,8,Normal,Cisterna Escolar de 52 mil litros FDD (Instrução Operacional SESAN nº 5/2017),2019-11-18,2024-12-21,3.0,UN,44931.21
+3316263,839447,9,Normal,"Cisterna de placa de 16 mil litros (Instrução Normativa SESAN nº 09, de 03 de março de 2023)",2023-10-27,2027-04-01,1483.0,UN,9181964.84
+3316268,839447,10,Normal,"Cisterna de placa de 16.000 litros - IN SESAN nº 09, de 03 de março de 2023 - (complemento de ajuste de quantitativo para 1 cisterna de 16.000 litros)",2023-10-27,2027-04-01,1.0,UN,405.98
+3318394,839447,11,Rendimentos,"Cisterna de placa de 16.000 litros - IN SESAN nº 09, de 03 de março de 2023 - (uso dos rendimentos - complemento de ajuste de quantitativo para 1 cisterna de 16.000 litros)",2023-11-01,2024-12-21,1.0,UN,5785.5
+3318398,839447,12,Rendimentos,"Cisterna de placa de 16 mil litros - Instrução Normativa SESAN nº 09, de 03 de março de 2023 (uso dos rendimentos de aplicação).",2023-11-01,2024-12-21,70.0,UN,433403.6
+2259046,851296,1,Normal,implementação de Microssistema Comunitário de Abastecimento de Água - Captação de manancial superficial (modelo da Tecnologia Social nº 16),2017-11-30,2021-12-30,945.0,UN,10097703.0
+2276475,851296,2,Normal,Cisterna de placas de 16 mil litros (Modelo da Tecnologia Social nº 01),2017-11-30,2021-12-30,1323.0,UN,4676500.71
+2372220,851296,3,Normal,Encontro para  intercâmbio entre gestores públicos e beneficiários do projeto.,2017-11-30,2021-12-30,1.0,UN,2793.63
+2339402,852350,1,Normal,Implementação de Cisternas Escolares de 52 mil litros.,2017-12-29,2024-12-31,93.0,UN,1355756.81
+2339420,852350,2,Normal,Implementação de Cisternas de Placas de 16 mil litros.,2017-12-29,2024-12-31,1242.0,UN,4232060.1
+2510465,852350,3,Normal,Diárias - Apoio,2017-12-29,2024-12-31,120.0,UN,12000.0
+2510498,852350,4,Normal,Implementação de Cisternas de Placas de 16 mil litros (PCT),2018-12-01,2024-12-31,77.0,UN,254962.4
+3301878,852350,5,Rendimentos,Implementação de Cisternas de Placa de 16 mil litros com uso de recursos de rendimento.,2023-09-18,2024-12-31,118.0,UN,715186.01
+3303000,852350,6,Normal,Implementação de Cisternas de Placas de 16 mil litros com uso de sobras (complemento meta 5),2023-09-18,2025-12-31,424.0,UN,2595409.62
+2309640,853235,1,Normal,Barragem Subterrânea,2017-12-29,2027-04-01,486.0,UN,7466563.8
+3270226,853235,2,Normal,Barragem Subterrânea (2ª etapa),2017-12-29,2027-04-01,490.0,UNI,11355426.6
+2167305,853785,1,Normal,Implementação de Cisternas de Placas de 16 Mil Litros,2017-12-29,2020-12-31,980.0,UN,3499344.8
+2521088,853785,2,Normal,Implementação de Tecnologias Sociais de Acesso à Água - Aditivo 1,2018-12-01,2020-12-31,220.0,UN,970072.0
+2252876,857171,1,Normal,1ª Etapa - Cisterna de placas de 16 mil litros,2017-12-29,2027-11-30,4195.0,UN,14100927.55
+2252877,857171,2,Normal,1ª Etapa - Cisterna escolar de 52 mil litros,2017-12-29,2027-11-30,313.0,UN,4355308.79
+2474057,857171,3,Normal,2ª Etapa - Cisterna de placas de 16 mil litros,2018-07-01,2027-11-30,1571.0,UN,5228929.54
+2522029,857171,4,Normal,2ª Etapa - Cisterna escolar de 52 mil litros,2018-12-01,2027-11-30,65.0,UN,923203.36
+2654211,857171,5,Normal,3ª Etapa - Cisternas de placas de 16 mil litros - contratos com ISS de 5%,2019-09-23,2027-11-30,1533.0,UN,6752420.43
+2654212,857171,6,Normal,3ª Etapa - Cisterna escolar de 52 mil litros (Recursos FDD/MJSP),2019-09-23,2027-11-30,244.0,UN,6077778.92
+2654213,857171,7,Normal,3ª Etapa - Cisterna calçadão de 52 mil litros (Recursos FDD/MJSP),2019-09-23,2027-11-30,80.0,UN,1951236.0
+3104298,857171,8,Normal,3ª Etapa - Cisternas de placas de 16 mil litros - contratos com ISS de 3%,2022-06-29,2027-11-30,450.0,UN,1942474.5
+3104318,857171,9,Normal,3ª Etapa - Cisternas de placas de 16 mil litros - contratos com isenção de ISS (0%),2022-06-29,2027-11-30,1795.0,UN,7511123.65
+3104392,857171,10,Normal,3ª Etapa - Cisternas de placas de 16 mil litros,2022-06-29,2027-11-30,362.0,UN,1594505.02
+3256744,857171,11,Normal,4ª Etapa - Cisterna de placas de 16 mil litros (5º TA),2022-06-29,2027-11-30,1996.0,UNI,11781746.13
+3481901,857171,12,Normal,5ª Etapa - Cisternas de placas de 16 mil litros (Parte 1),2024-12-15,2027-11-30,52.0,UN,361295.5
+3504179,857171,13,Rendimentos,5ª Etapa - Cisternas de placas de 16 mil litros (Parte 2)rendimento,2024-09-30,2026-06-30,696.0,UN,4816465.22
+3641610,857171,14,Normal,6ª Etapa - Cisterna escolar de 52 mil litros (Recursos FDD/MJSP) - IN nº 57/2025 (Parte 1),2025-10-01,2027-11-30,179.0,UN,5075287.95
+3652536,857171,15,Rendimentos,6ª Etapa - Cisterna escolar de 52 mil litros (Recursos FDD/MJSP) - IN nº 57/2025 (Parte 2),2024-09-30,2026-06-30,24.0,UN,671292.89
+2333197,859840,1,Normal,Gestão do Projeto,2017-12-28,2021-03-31,1.0,UN,894291.02
+2333200,859840,2,Normal,Cisternas Telhadão Multiuso de 25 m³ com galpão de 80 m²,2017-12-28,2021-03-31,592.0,UN,8344885.28
+2333859,859840,3,Normal,Cisternas escolares de 52 mil litros,2017-12-28,2021-03-31,13.0,UN,190932.43
+2320400,862600,1,Normal,IMPLEMENTAÇÕES DE TECNOLOGIAS SOCIAIS DE ACESSO À ÁGUA,2018-05-28,2019-05-31,1253.0,UN,16583029.99
+2320404,862600,2,Normal,"GESTÃO OPERACIONAL, MONITORAMENTO E COMUNICAÇÃO DO PROJETO",2018-05-28,2019-05-31,18.0,UN,3416970.01
+2322422,862649,1,Normal,Implementação de Tecnologias Sociais de Acesso à Água,2017-12-29,2023-12-31,4012.0,UN,15074180.47
+2322440,862649,2,Normal,"Execução, acompanhamento, monitoramento e controle das ações do projeto.",2017-12-29,2023-12-31,24.0,UN,1289088.83
+2510346,862649,3,Normal,Implementação de Cisternas de Placas de 16 mil litros - TED nº 17/2018 (PCT),2018-12-01,2023-12-31,690.0,UN,2386730.7
+3082434,862649,4,Rendimentos,"Uso de rendimento para complemento da Meta 2 Execução, acompanhamento, monitoramento e controle das ações do projeto",2022-05-16,2022-09-30,1.0,UN,194772.68
+3162704,862649,5,Rendimentos,"Uso de rendimento para complemento da Meta 2 Execução, acompanhamento, monitoramento e controle das ações do projeto (Meta 5)",2022-12-14,2023-12-31,1.0,UN,148582.0
+2698587,895504,1,Normal,Implementação de Tecnologias Sociais de Acesso à Água para o Consumo Humano - Cisterna de 16 mil litros,2019-12-31,2023-12-31,1.0,UN,15523505.96
+2699393,895504,2,Normal,Implementação de Tecnologias Sociais de Acesso à Água para o Consumo Humano - Microssistema de Abastecimento Comunitário,2019-12-31,2023-12-31,174.0,UN,1992221.7
+2699404,895504,3,Normal,Custeio Operacional,2019-12-31,2023-12-31,1.0,UN,1385349.4
+2966507,895504,4,Normal,Sobra de investimento.,2019-12-31,2023-12-31,1.0,UN,8.58
+3089389,895504,5,Rendimentos,Uso de rendimento para complemento da Meta 3 Custeio Operacional,2022-05-30,2023-12-31,1.0,UN,211122.0
+3151545,895504,6,Rendimentos,Uso de rendimento para complemento da Meta 3 Custeio Operacional,2022-11-18,2023-12-31,1.0,UN,300005.0
+2699133,896886,1,Normal,Serviço para Implementação de Tecnologias Sociais,2019-12-31,2026-05-31,1399.0,UN,13327513.1
+2699149,896886,2,Normal,Oficina/Capacitação,2019-12-31,2026-05-31,1.0,UN,6550.71
+3297097,896886,3,Rendimentos,Oficina/Capacitação - Aditivo,2024-05-21,2025-08-31,1.0,UN,84183.98
+3297098,896886,4,Rendimentos,Custeio e Monitoramento do Projeto,2023-09-12,2025-08-31,16.0,UN,2549202.3
+3297099,896886,5,Rendimentos,Comunicação,2023-09-12,2025-08-31,6.0,UN,14700.0
+3400007,896886,6,Rendimentos,Serviço para Implementação de Tecnologias Sociais - Termo Aditivo nº 2,2024-05-21,2025-08-31,51.0,UN,297271.65
+3522267,896886,7,Normal,Serviço para Implementação de Tecnologias Sociais (Parte 1 - Remanejamentos),2025-03-01,2026-05-31,111.0,UN,799868.47
+3523286,896886,8,Rendimentos,Serviço para Implementação de Tecnologias Sociais (Parte 2 - Rendimentos),2025-03-01,2025-08-31,86.0,UN,639680.6
+2766083,901956,1,Normal,Implementação de cisterna de placas de 16 mil litros,2020-12-31,2024-12-31,106.0,UN,519772.06
+2998395,901956,2,Normal,Implementação de cisterna de placas de 16 mil litros - Termo Aditivo nº 1,2021-12-01,2024-12-31,103.0,UN,505061.53
+3115343,901956,3,Normal,Implementação de cisterna de placas de 16 mil litros - Termo Aditivo nº 2 e nº 4,2022-09-30,2025-09-30,248.0,UN,1548070.56
+2776240,902159,1,Normal,Implementação de Tecnologia Social de Acesso à Água - Cisterna de Placa de 16 mil litros (modelo da Tecnologia Social nº 1),2020-11-18,2024-08-08,101.0,UN,451521.51
+2920832,902159,2,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 02/2021),2020-11-18,2024-08-08,3.0,UN,13410.59
+3419453,902159,3,Rendimentos,implementação de cisternas de placas de 16 mil litros (IN nº 02/2021) - complemento,2020-11-18,2024-08-08,22.0,UN,98352.16
+2996640,918909,1,Normal,"Cisternas de Placas de 16 mil litros para o consumo humano, INSTRUÇÃO NORMATIVA Nº 2/SEDS/SEISP/COAP/MC, DE 24 DE MARÇO DE 2021",2021-12-31,2023-04-30,3012.0,UN,14250284.04
+2996641,918909,2,Normal,Apoio Técnico e Logístico dp Consorcio,2021-12-31,2023-04-30,13.0,UN,749715.96
+2996874,918994,1,Normal,Cisternas de placas de 16 mil litros (Instrução Normativa nº 2/2021),2021-12-31,2024-06-30,3157.0,UN,14250477.01
+2996875,918994,2,Normal,Apoio Técnico e Logístico do Consórcio,2021-12-31,2024-06-30,12.0,UN,313727.76
+3313003,918994,3,Normal,Sobras de recursos,2023-10-18,2024-06-30,1.0,UN,435795.23
+2996636,919047,1,Normal,Cisternas de Placas de 16 mil litros (Instrução Normativa nº 02/2021),2021-12-31,2027-09-30,1757.0,UN,8267118.9
+3453327,919047,2,Normal,Cisternas de Placas de 16 mil litros (Instrução Normativa nº 09/2023),2024-09-15,2027-09-30,343.0,UN,2034027.73
+3453328,919047,3,Normal,Cisternas de Placas de 16 mil litros (Instrução Normativa nº 51/2024),2024-09-15,2027-09-30,487.0,UN,3300671.72
+3454088,919047,4,Rendimentos,Cisternas de Placas de 16 mil litros (Instrução Normativa nº 70/2026) - Parte 2,2024-09-06,2027-09-30,351.2,UN,2745623.35
+3838993,919047,5,Normal,Cisternas de Placas de 16 mil litros (Instrução Normativa nº 70/2026) - Parte 1,2026-09-15,2027-09-30,178.8,UN,1398181.65
+3002148,919058,1,Normal,Cisternas de placas de 16 mil litros (Instrução Normativa nº 2/2021),2021-12-31,2026-03-31,1575.0,UN,7078016.88
+3002149,919058,2,Normal,Contratação de equipe técnica,2021-12-31,2026-03-31,18.0,MES,328953.6
+3459746,919058,3,Normal,Cisternas de placas de 16 mil litros (Instrução Normativa nº 9/2023) - Parte 1,2024-10-01,2026-03-31,98.73,UN,603029.52
+3459990,919058,4,Rendimentos,Cisternas de placas de 16 mil litros (Instrução Normativa nº 9/2023) - Parte 2,2024-10-01,2025-02-28,36.27,UN,221565.33
+3251735,941602,1,Normal,Cisterna escolar de 10 mil litros (IN SESAN nº 28/2023),2023-06-30,2027-12-31,260.0,UN,6975256.6
+3251748,941602,2,Normal,Sistema pluvial multiuso comunitário com SAFISP (IN SESAN nº 26/2023),2023-06-30,2027-12-31,105.0,UN,2920220.1
+3251749,941602,3,Normal,Sistema pluvial multiuso comunitário de várzea com SAFISP (IN SESAN nº 25/2023),2023-06-30,2027-12-31,161.0,UN,4523787.66
+3492426,941602,4,Normal,Sistema pluvial multiuso autônomo para várzea (IN nº 47/2024),2024-12-15,2027-12-31,116.0,UN,3234265.6
+3492427,941602,5,Normal,Sistema pluvial multiuso autônomo para terra firme (IN nº 48/2024),2024-12-15,2027-12-31,217.0,UN,5250798.97
+3645353,941602,6,Normal,Sistema pluvial multiuso comunitário de várzea com SAFISP (IN SESAN nº 39/2024),2025-10-01,2027-12-31,32.2,UN,1035268.82
+3649568,941602,7,Rendimentos,Sistema pluvial multiuso Comunitário de varzea com SAFISP (IN SESAN nº 39/2024 - Complemento meta 6,2025-10-15,2026-06-30,3.8,UN,182864.26
+3649573,941602,8,Rendimentos,Sistema pluvial multiuso comunitário com SAFISP (IN SESAN nº 38/2024),2025-10-15,2026-06-30,17.0,UN,528586.61
+3778229,941602,9,Normal,Implementação de tecnologias sociais de acesso à água - Termo Aditivo nº 3,2026-05-01,2027-12-31,168.0,UN,5063082.06
+3845844,941602,10,Normal,Sistema pluvial multiuso comunitário de várzea - IN 50/2024,2026-09-11,2027-12-31,46.59,UN,1338316.8
+3861191,941602,11,Rendimentos,Sistema pluvial multiuso comunitário de várzea (complemento da meta 10) - IN 50/2024,2026-10-21,2027-12-31,1.41,UN,40407.84
+3253031,941781,1,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 09/2023),2023-08-08,2027-04-30,173.0,UN,1086862.12
+3253032,941781,2,Normal,Implementação de cisternas telhadão multiuso de 52 mil litros (IN nº 60/2025),2023-08-08,2027-04-30,20.0,UN,595393.6
+3253065,941781,3,Normal,Intercâmbio de pedreiros para o aperfeiçoamento do processo construtivo,2023-08-08,2027-04-30,1.0,UN,12721.08
+3599499,941781,4,Rendimentos,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024) - Parte 1,2025-08-01,2026-06-30,23.2,UN,169132.54
+3763472,941781,5,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024) - Parte 2,2023-08-08,2027-04-30,83.8,UN,612466.08
+3258593,942187,1,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 09/2023),2023-08-08,2027-04-30,85.0,UN,534007.4
+3689001,942187,2,Normal,Implementação de cisternas telhadão multiuso de 52 mil litros (IN nº 60/2025),2023-08-08,2027-04-30,9.0,UN,267927.12
+3764088,942187,3,Rendimentos,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024) - Parte 1.,2026-04-09,2026-09-30,18.8,UN,137104.99
+3765567,942187,4,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024) - Parte 2,2023-08-08,2027-04-30,96.2,UN,702930.91
+3291478,944934,1,Normal,SERVIÇO DE IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS,2023-09-29,2026-07-31,50646.0,UN,374398343.82
+3291488,944934,2,Normal,OFICINA/CAPACITAÇÃO,2023-09-29,2026-07-31,29.0,UN,2166961.08
+3291491,944934,3,Normal,CUSTEIO E MONITORAMENTO DO PROJETO,2023-09-29,2026-07-31,20.0,UN,14466038.8
+3291493,944934,4,Normal,EVENTOS DE AVALIAÇÃO DOS PROGRAMAS,2023-09-29,2026-07-31,24.0,UN,3201441.48
+3291495,944934,5,Normal,COMUNICAÇÃO,2023-09-29,2026-07-31,48977.0,UN,448495.97
+3449041,944934,6,Normal,SERVIÇO DE IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS - ADITIVO,2023-09-29,2026-07-31,25834.0,UN,215019339.79
+3449043,944934,7,Normal,OFICINA/CAPACITAÇÃO - ADITIVO,2023-09-29,2026-07-31,13.0,UN,718416.45
+3449044,944934,8,Normal,CUSTEIO E MONITORAMENTO DO PROJETO - ADITIVO,2023-09-29,2026-07-31,14.0,UN,11057273.36
+3449045,944934,9,Normal,EVENTOS DE AVALIAÇÃO DOS PROGRAMAS - ADITIVO,2023-09-29,2026-07-31,20.0,UN,799404.2
+3449046,944934,10,Normal,COMUNICAÇÃO - ADITIVO,2023-09-29,2026-07-31,58490.0,UN,225430.9
+3708581,944934,11,Rendimentos,SERVIÇO DE IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS - RENDIMENTOS,2026-01-09,2026-07-31,1140.0,UN,7635060.6
+3708599,944934,12,Rendimentos,CUSTEIO E MONITORAMENTO DO PROJETO - RENDIMENTOS,2026-01-09,2026-07-31,14.0,UN,1863393.53
+3716713,944934,13,Normal,SERVIÇO DE IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS - REMANEJAMENTO SOBRAS,2023-09-29,2026-07-31,500.0,UN,3482742.05
+3292878,945310,1,Normal,TS 07 - Sistema pluvial multiuso comunitário,2023-10-09,2027-11-30,391.0,UN,9614752.56
+3292887,945310,2,Normal,TS 08 - Sistema pluvial multiuso autônomo,2023-10-09,2027-11-30,130.0,UN,3170155.3
+3292890,945310,3,Normal,TS 24 - Sistema pluvial multiuso autônomo com serviço de acompanhamento familiar para inclusão social e produtiva,2023-10-09,2027-11-30,87.0,UN,2535331.38
+3292900,945310,4,Normal,TS 25 - Sistema pluvial multiuso comunitário com serviço de acompanhamento familiar para inclusão social e produtiva,2023-10-09,2027-11-30,73.0,UN,2137103.47
+3293285,945310,5,Normal,Gestão Projeto - apoio operacional,2023-10-09,2027-11-30,1.0,UN,1722454.19
+3423887,945310,6,Normal,TS 25 - Sistema pluvial multiuso comunitário com serviço de acompanhamento familiar para inclusão social e produtiva - sistema fotovoltaico,2024-07-01,2027-11-30,64.0,UN,1813632.94
+3424602,945310,7,Rendimentos,TS 25 - Sistema pluvial multiuso comunitário com serviço de acompanhamento familiar para inclusão social e produtiva - sistema fotovoltaico (complemento da meta 6),2024-07-01,2027-11-30,1.0,UN,176340.18
+3495911,945310,8,Normal,Implementação de tecnologias sociais de acesso à água - aditivo,2024-12-23,2027-11-30,361.0,UN,9494281.16
+3495912,945310,9,Normal,Gestão Projeto - apoio operacional - aditivo,2024-12-23,2027-11-30,16.0,UN,1012171.76
+3516637,945310,10,Rendimentos,"Gestão e Monitoramento do Projeto - Oficinas, Seminário e Protótipo",2024-11-04,2026-07-08,1.0,UN,70399.7
+3591057,945310,11,Rendimentos,"Gestão e Monitoramento do Projeto - Oficinas, Seminário e Protótipo",2025-07-16,2027-03-19,1.0,UN,54840.0
+3293337,945514,1,Normal,IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS DE ACESSO À ÁGUA,2023-10-17,2027-10-31,2657.0,UN,71266238.82
+3293340,945514,2,Normal,"GESTÃO OPERACIONAL, MONITORAMENTO E COMUNICAÇÃO DO PROJETO",2023-10-17,2027-10-31,30.0,MES,8950876.81
+3496038,945514,3,Normal,IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS DE ACESSO À ÁGUA - ADITIVO,2024-12-15,2027-10-31,1275.0,UN,34064164.55
+3496041,945514,4,Normal,"GESTÃO OPERACIONAL, MONITORAMENTO E COMUNICAÇÃO DO PROJETO - ADITIVO",2024-12-15,2027-10-31,16.0,MÊS,4218719.82
+3582327,945514,5,Rendimentos,IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS DE ACESSO À ÁGUA - RENDIMENTOS,2025-07-01,2027-09-30,104.0,UN,1240486.98
+3592880,945514,6,Rendimentos,"GESTÃO OPERACIONAL, MONITORAMENTO E COMUNICAÇÃO DO PROJETO - SEMINÁRIO",2025-07-10,2025-08-30,1.0,UN,429510.0
+3365958,956059,1,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024),2024-05-22,2028-05-22,1635.0,UN,10736001.0
+3365786,956067,1,Normal,Implementação de cisternas de placas de 16 mil litros,2024-05-22,2027-11-22,5167.0,UN,36502046.4
+3368851,956067,2,Normal,Implementação de cisternas calçadão com SAFISP (IN nº 52/2024),2024-05-22,2027-11-22,303.0,UN,8568573.1
+3778805,956067,3,Normal,Implementação de tecnologias sociais de acesso à água - 3ª Etapa (Parte 1),2024-05-22,2027-11-22,611.0,UN,4916872.94
+3856724,956067,4,Rendimentos,Implementação de tecnologias sociais de acesso à água - 3ª Etapa (Parte 2),2026-10-09,2027-11-22,106.0,UN,1800328.62
+3373822,956071,1,Normal,Implementação de cisternas de placas de 16 mil litros,2024-05-22,2027-06-30,2704.0,UN,17885931.12
+3373828,956071,2,Normal,Equipe de Monitoramento e Avaliação do Projeto,2024-05-22,2027-06-30,1.0,UN,921719.55
+3850546,956071,3,Normal,Implementação de cisternas de placas de 16 mil litros - 2ª Etapa (parte 1),2026-10-01,2027-06-30,473.0,UN,3701543.56
+3857320,956071,4,Rendimentos,Implementação de cisternas de placas de 16 mil litros - 2ª Etapa (parte 2 - Rendimentos),2026-10-13,2027-06-30,92.0,UNIDADE,718281.94
+3366028,956075,1,Normal,Implementação de cisternas calçadão de 52 mil litros com SAFISP (IN nº 52/2024),2024-05-22,2027-05-22,342.0,UN,9397441.8
+3369416,956075,2,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024),2024-05-22,2027-05-22,4312.0,UN,30676904.72
+3373847,956076,1,Normal,Implementação de cisternas de placas de 16 mil litros,2024-05-22,2027-11-22,2471.0,UN,18360637.62
+3373848,956076,2,Normal,Implementação de barragens subterrâneas (IN nº 29/2023),2024-05-22,2027-11-22,22.0,UN,477170.76
+3373852,956076,3,Normal,Implementação de barreiros trincheira familiar (IN nº 33/2023),2024-05-22,2027-11-22,22.0,UN,282284.24
+3373856,956076,4,Normal,Implementação de cisternas calçadão 52 mil litros (IN nº 10/2023),2024-05-22,2027-11-22,160.0,UN,3919895.14
+3373862,956076,5,Normal,Implementação de cisternas de enxurrada de 52 mil litros (IN nº 30/2023),2024-05-22,2027-11-22,22.0,UN,454209.68
+3370386,956078,1,Normal,Implantação de cisternas de placas de 16 mil litros (IN nº 51/2024),2024-05-22,2028-05-22,1339.0,UN,9218867.71
+3370387,956078,2,Normal,Implantação de cisterna calçadão 52 mil litros com SAFISP (IN  nº 52/2024),2024-05-22,2028-05-22,100.0,UN,2763504.0
+3365758,956084,1,Normal,Apoio à gestão (logística),2024-05-22,2027-09-22,2.0,UN,168828.15
+3365759,956084,2,Normal,Implantação de cisternas de placas de 16 mil litros (IN nº 51/2024),2024-05-22,2027-09-22,916.0,UN,6555058.4
+3365761,956084,3,Normal,Implantação de cisternas calçadão com SAFISP (IN nº 52/2024),2024-05-22,2027-09-22,145.0,UN,3930120.6
+3850373,956084,4,Normal,Implantação de cisternas de placas de 16 mil litros (IN nº 70/2026) - Parte 1,2024-05-22,2027-09-22,875.0,UN,6947266.6
+3857020,956084,5,Rendimentos,Implantação de cisternas de placas de 16 mil litros (IN nº 70/2026) - Parte 2,2024-05-22,2027-09-22,84.0,UN,662600.17
+3368550,956085,1,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024),2024-05-23,2027-11-30,10706.0,UN,71944899.5
+3368551,956085,2,Normal,Implementação de cisternas calçadão 52 mil com SAFISP  (IN nº 52/2024),2024-05-23,2027-11-30,600.0,UN,16323881.5
+3368553,956085,3,Normal,Implementação de sistemas de tratamento e reuso de água domiciliar (IN nº 36/2024),2024-05-23,2027-11-30,191.0,UN,3075467.21
+3378755,956085,4,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024) - Emenda Parlamentar,2024-05-23,2027-11-30,99.0,UN,685291.86
+3419333,956085,5,Normal,Implementação de cisterna calçadão 52 mil com SAFISP  (IN nº 52/2024) - Contrapartida,2024-08-19,2027-11-30,7.0,UN,196166.81
+3419334,956085,6,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024) - Contrapartida,2024-08-19,2027-11-30,2.0,UN,13844.28
+3692923,956085,7,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024) - Termo Aditivo nº 3,2025-12-22,2027-11-30,1514.0,UN,10118781.12
+3692924,956085,8,Normal,Implementação de cisternas calçadão 52 mil com SAFISP (IN nº 52/2024) - Termo Aditivo nº 3,2025-12-22,2027-11-30,750.0,UN,20247218.0
+3778122,956085,9,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 70/2026) - Termo Aditivo nº 04,2026-04-15,2027-11-30,3033.0,UN,23167327.86
+3798009,956085,10,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 70/2026) - Parte 1 (Sobras de ISS),2025-12-22,2027-11-30,233.0,UN,1782945.13
+3798803,956085,11,Rendimentos,Implementação de cisternas de placas de 16 mil litros (IN nº 70/2026) - Parte 2 (Rendimentos),2025-12-22,2027-11-30,378.0,UN,2884129.49
+3376378,956098,1,Normal,Implementação de cisternas de placas de 16 mil litros,2024-05-22,2027-11-22,9503.0,UN,72778915.96
+3376380,956098,2,Normal,Implementação de cisterna de enxurradas de 52 mil litros com SAFISP (IN nº 53/2024),2024-05-22,2027-11-22,952.0,UN,21588818.2
+3858319,956098,3,Rendimentos,Implementação de cisternas de placas de 16 mil litros (IN nº 70/2026) - Complemento da Meta 1.,2026-10-15,2027-11-22,591.0,UN,4722722.71
+3383747,958647,1,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 9/2023),2024-07-04,2026-09-30,161.0,UN,929622.05
+3796709,958647,2,Rendimentos,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024 - Parte 2,2024-07-04,2026-07-04,7.45,UN,48647.68
+3799583,958647,3,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024) - Parte 1,2024-07-04,2026-09-30,56.55,UN,369539.2
+3405671,964769,1,Normal,Implementação de  Microssistemas de Abastecimento de Água com Pontos de Uso Coletivo,2024-07-11,2026-09-30,30.0,UN,3327056.9
+3409601,964769,2,Normal,Implementação de Microssistemas de Abastecimento de Água com Pontos de Uso Coletivo - Complemento da Meta 1,2024-07-11,2026-09-30,2.0,UN,89845.0
+3409653,964769,3,Normal,Planejamento e gestão do projeto,2024-07-11,2026-09-30,14.0,UN,3035197.75
+3409657,964769,4,Normal,Encontros de avaliação do projeto,2024-07-11,2026-09-30,2.0,UN,89845.0
+3409661,964769,5,Normal,Comunicação do projeto,2024-07-11,2026-09-30,14.0,UN,170800.0
+3510469,964769,6,Rendimentos,Planejamento e gestão do projeto - Mapa de Processos e Resultados,2024-11-04,2024-11-06,1.0,UN,13978.8
+3590518,964769,7,Rendimentos,Gestão do projeto - apoio operacional - Seminário Acesso à Água na Amazônia no contexto de mudanças climáticas.,2025-07-15,2025-07-21,1.0,UN,12762.39
+3483906,970030,1,Normal,Implementação de cisternas de ferrocimento de 16 mil litros (IN nº 55/2024),2024-12-24,2027-06-30,665.0,UN,6979726.95
+3514398,973859,1,Normal,SERVIÇO PARA IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS,2025-05-29,2027-08-31,52974.0,UN,460297288.47
+3514399,973859,2,Normal,OFICINAS/CAPACITAÇÕES,2025-05-29,2027-08-31,40.0,UN,6479719.5
+3514400,973859,3,Normal,CUSTEIO DE MONITORAMENTO DO PROJETO,2025-05-29,2027-08-31,20.0,UN,15296318.51
+3514401,973859,4,Normal,EVENTOS DE AVALIAÇÃO DOS PROGRAMAS,2025-05-29,2027-08-31,39.0,UN,4206816.5
+3514402,973859,5,Normal,COMUNICAÇÃO,2025-05-29,2027-08-31,10019.0,UN,182340.0
+3802516,973859,6,Normal,SERVIÇO PARA IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS - ADITIVO,2025-05-29,2027-08-31,10708.0,UN,104079284.37
+3802518,973859,7,Normal,OFICINAS/CAPACITAÇÕES - ADITIVO,2025-05-29,2027-08-31,3.0,UN,852348.5
+3802524,973859,8,Normal,CUSTEIO DE MONITORAMENTO DO PROJETO - ADITIVO,2025-05-29,2027-08-31,14.0,UN,8101110.62
+3802526,973859,9,Normal,EVENTOS DE AVALIAÇÃO DOS PROGRAMAS - ADITIVO,2025-05-29,2027-08-31,1.0,UN,417806.0
+3802527,973859,10,Normal,COMUNICAÇÃO - ADITIVO,2025-05-29,2027-08-31,11.0,UN,88240.0
+3856787,973859,11,Normal,SERVIÇO PARA IMPLEMENTAÇÃO DE TECNOLOGIAS SOCIAIS - 2º ADITIVO,2025-05-29,2027-08-31,321.0,UN,10024961.77
+3580573,979056,1,Normal,Implementação de cisternas de placas de 16 mil litros (IN nº 51/2024),2025-10-07,2027-05-07,211.0,UN,1378710.8
+3679750,986621,1,Normal,Implementação de cisternas telhadão multiuso de 16 mil litroscom galpão de 40 m²,2025-12-10,2027-04-01,120.0,UN,1977607.2
+3699321,992329,1,Normal,Implementação de microssistema comunitário de abastecimento de água simplificado (IN nº 63/2025),2026-02-13,2028-02-13,180.0,UN,1390033.8
+3761258,996485,1,Normal,Implementação de cisternas de ferrocimento de 16 mil litros (IN nº 55/2024),2026-05-21,2027-07-21,40.0,UN,400000.0

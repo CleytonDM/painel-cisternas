@@ -1,0 +1,63 @@
+name: Atualizar e publicar o painel
+
+on:
+  schedule:
+    - cron: "0 10 * * *"  # 7h em Brasília (UTC-3)
+  workflow_dispatch:       # rodar à mão pela aba Actions
+  push:                    # mudança no painel: publica de novo sem baixar dados
+    branches: [main]
+    paths: ["painel/index.html", "site/**"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: painel
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Baixar a carga do Transferegov e gerar os CSVs
+        if: github.event_name != 'push'
+        run: python atualizar_dados.py
+
+      - name: Guardar os CSVs no repositório
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dados
+          if git diff --cached --quiet; then
+            echo "Sem mudança nos dados."
+          else
+            carga=$(python -c "import csv; print(next(csv.DictReader(open('dados/instrumentos.csv', encoding='utf-8')))['data_carga'][:10])")
+            git commit -m "Carga do Transferegov de $carga"
+            git push
+          fi
+
+      - name: Montar o site
+        run: python site/montar_site.py
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,75 @@
+/* Tokens de tema que o painel herda do runtime de painéis do Claude, com valores próprios para o
+   site estático. Claro e escuro seguem a preferência do sistema. */
+:root {
+  color-scheme: light;
+  --font-anthropic-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-anthropic-serif: Georgia, 'Times New Roman', serif;
+
+  --color-bg: #f3f6f8;
+  --color-panel: #ffffff;
+  --color-fg: #1d2731;
+  --color-fg-muted: #5a6875;
+  --color-border-line: #d9e1e7;
+  --color-ok: #2e7d4f;
+  --color-warn: #b06a00;
+  --color-bad: #c62f2f;
+
+  --cds-border: var(--color-border-line);
+  --cds-text-secondary: var(--color-fg-muted);
+  --cds-surface-popover: #eef3f6;
+  --cds-shadow-popover: 0 4px 16px rgb(16 32 48 / .14);
+  --cds-chart-axis: #7d8a96;
+  --cds-chart-grid: #e3e9ee;
+  --cds-chart-muted: #b9c4cd;
+  --cds-chart-reference: #7d8a96;
+
+  --cds-font-size-caption: .8125rem;
+  --cds-font-size-body: .9375rem;
+  --cds-font-size-heading: 1.0625rem;
+  --cds-font-size-title: 1.75rem;
+  --cds-font-weight-medium: 500;
+
+  --cds-gap-xs: .25rem; --cds-gap-sm: .5rem; --cds-gap-md: .75rem; --cds-gap-lg: 1rem; --cds-gap-xl: 1.5rem;
+  --cds-pad-xs: .25rem; --cds-pad-sm: .5rem; --cds-pad-md: .875rem; --cds-pad-lg: 1.125rem; --cds-pad-xl: 1.5rem;
+  --cds-radius: 10px;
+  --cds-dur-slow: .3s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-bg: #0f171e;
+    --color-panel: #17222b;
+    --color-fg: #e6edf2;
+    --color-fg-muted: #9aa9b5;
+    --color-border-line: #2b3a46;
+    --color-ok: #5cc185;
+    --color-warn: #e3a54a;
+    --color-bad: #ef6b6b;
+    --cds-surface-popover: #22313c;
+    --cds-shadow-popover: 0 4px 16px rgb(0 0 0 / .45);
+    --cds-chart-axis: #8796a2;
+    --cds-chart-grid: #26343f;
+    --cds-chart-muted: #4a5b68;
+    --cds-chart-reference: #8796a2;
+  }
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--color-bg); color: var(--color-fg);
+  font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); line-height: 1.45;
+}
+#dash-root { padding: var(--cds-pad-lg) 16px var(--cds-pad-xl); }
+@media (min-width: 48rem) { #dash-root { padding-inline: var(--cds-pad-xl); } }
+
+.site-erro {
+  max-width: 88rem; margin: 0 auto var(--cds-gap-lg); padding: var(--cds-pad-sm) var(--cds-pad-md);
+  border: 1px solid var(--color-bad); border-left-width: 4px; border-radius: var(--cds-radius);
+  background: color-mix(in srgb, var(--color-bad) 8%, var(--color-panel));
+}
+.site-rodape {
+  max-width: 88rem; margin: var(--cds-gap-xl) auto 0; padding-top: var(--cds-pad-md);
+  border-top: 1px solid var(--color-border-line); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption);
+}
+.site-rodape a { color: inherit; }
