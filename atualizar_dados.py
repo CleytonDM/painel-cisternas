@@ -237,7 +237,7 @@ def main():
         "data_carga": data_carga,
     })
     inst["acompanhamento"] = ~inst.situacao.isin(SITUACOES_ENCERRADAS)
-    inst = inst.sort_values(["acompanhamento", "fim_vigencia"], ascending=[False, False])
+    inst = inst.sort_values(["acompanhamento", "fim_vigencia", "nr"], ascending=[False, False, True])
     inst.to_csv(DADOS / "instrumentos.csv", index=False)
 
     acomp = set(inst.loc[inst.acompanhamento, "nr"])
@@ -254,14 +254,14 @@ def main():
         "nr_comprovante": p.NR_DL,
         "forma": p.TP_MOV_FINANCEIRA.str.replace("PAGAMENTO A FAVORECIDO", "Pagamento", regex=False).str.replace("COM OBTV", "com OBTV", regex=False),
         "valor": p.valor.round(2),
-    }).sort_values(["nr", "data"], ascending=[True, False]).to_csv(DADOS / "pagamentos.csv", index=False)
+    }).sort_values(["nr", "data", "id"], ascending=[True, False, True]).to_csv(DADOS / "pagamentos.csv", index=False)
 
     # --- repasses do MDS (ordens bancárias)
     d = des[des.NR_CONVENIO.isin(acomp)]
     pd.DataFrame({
         "id": d.ID_DESEMBOLSO, "nr": d.NR_CONVENIO, "data": d.data,
         "ordem_bancaria": d.NR_SIAFI, "valor": d.valor.round(2),
-    }).sort_values(["nr", "data"]).to_csv(DADOS / "repasses.csv", index=False)
+    }).sort_values(["nr", "data", "id"]).to_csv(DADOS / "repasses.csv", index=False)
 
     # --- cronograma de desembolso (parcelas previstas)
     c = cro[cro.NR_CONVENIO.isin(acomp)]
@@ -272,7 +272,7 @@ def main():
         "mes": c.ANO_CRONO_DESEMBOLSO + "-" + mes.map("{:02d}".format),
         "responsavel": c.TIPO_RESP_CRONO_DESEMBOLSO,
         "valor": valor_br(c.VALOR_PARCELA_CRONO_DESEMBOLSO),
-    }).sort_values(["nr", "mes", "parcela"]).to_csv(DADOS / "cronograma.csv", index=False)
+    }).sort_values(["nr", "mes", "parcela", "responsavel", "valor"]).to_csv(DADOS / "cronograma.csv", index=False)
 
     # --- cronograma físico (metas). As metas nascem na proposta, antes de existir o número do instrumento.
     nr_por_proposta = inst.loc[inst.acompanhamento].set_index("id_proposta").nr
@@ -292,7 +292,7 @@ def main():
         "quantidade": valor_br(m.QTD_META),
         "unidade": m.UND_FORNECIMENTO_META,
         "valor": valor_br(m.VL_META).round(2),
-    }).sort_values(["nr", "meta"])
+    }).sort_values(["nr", "meta", "id"])
     metas.to_csv(DADOS / "metas.csv", index=False)
 
     # --- tecnologias por UF, das etapas de cada meta. UF e tecnologia só existem no texto da etapa.
@@ -333,7 +333,7 @@ def main():
     tec.loc[tec.ajuste == "meta", "quantidade"] = tec.qtd_meta
     tec["id"] = tec.id_meta + "-" + tec.uf + "-" + tec.tecnologia
     tec[["id", "nr", "meta", "uf", "tecnologia", "quantidade", "valor", "etapas", "qtd_meta", "soma_etapas", "ajuste"]] \
-        .sort_values(["nr", "meta", "uf"]).to_csv(DADOS / "tecnologias.csv", index=False)
+        .sort_values(["nr", "meta", "uf", "id"]).to_csv(DADOS / "tecnologias.csv", index=False)
 
     # --- histórico do saldo: o Transferegov só dá o saldo do dia, então guardamos uma foto por carga
     hist_path = DADOS / "historico_saldo.csv"
@@ -343,7 +343,7 @@ def main():
         hist = pd.concat([hist[hist.data_carga != data_carga], foto])
     else:
         hist = foto
-    hist.to_csv(hist_path, index=False)
+    hist.sort_values(["data_carga", "nr"]).to_csv(hist_path, index=False)
 
     print(f"carga {data_carga}: {len(inst)} instrumentos, {len(acomp)} em acompanhamento, "
           f"{len(p)} pagamentos, {len(d)} repasses, {len(c)} parcelas, {len(m)} metas")
