@@ -1,7 +1,7 @@
 """Baixa os dados abertos do Transferegov (módulo Discricionárias) e gera a base
 do Painel Cisternas: um arquivo por bloco do painel (inclusive as metas do
-cronograma físico), só com os instrumentos do
-Programa Cisternas (MDS, ações 8948/11V1).
+cronograma físico, os prazos e alterações, o histórico de situação, os empenhos
+e os rendimentos), só com os instrumentos do Programa Cisternas (MDS, ações 8948/11V1).
 
 Uso: python atualizar_dados.py [--sem-download]
 Saída: cisternas/dados/*.csv (+ historico_saldo.csv acumulado a cada carga)
@@ -54,7 +54,43 @@ ARQUIVOS = [
     "siconv_cronograma_desembolso",
     "siconv_meta_crono_fisico",
     "siconv_etapa_crono_fisico",
+    "siconv_termo_aditivo",
+    "siconv_prorroga_oficio",
+    "siconv_solicitacao_alteracao",
+    "siconv_historico_situacao",
+    "siconv_empenho",
+    "siconv_empenho_desembolso",
+    "siconv_solicitacao_rendimento_aplicacao",
 ]
+
+# Situações do histórico (siconv_historico_situacao) com o nome que o Transferegov mostra
+SITUACOES = {
+    "PROPOSTA_CADASTRADA": "Proposta cadastrada",
+    "PROPOSTA_ENVIADA_ANALISE": "Proposta enviada para análise",
+    "PROPOSTA_EM_ANALISE": "Proposta em análise",
+    "PROPOSTA_EM_COMPLEMENTACAO": "Proposta em complementação",
+    "PROPOSTA_COMPLEMENTADA_ENVIADA_ANALISE": "Proposta complementada enviada para análise",
+    "PROPOSTA_COMPLEMENTADA_EM_ANALISE": "Proposta complementada em análise",
+    "PROPOSTA_APROVADA_AGUARDANDO_PLANO_TRABALHO": "Proposta aprovada, aguardando plano de trabalho",
+    "EM_CHAMAMENTO_PUBLICO_ENVIADA_PARA_ANALISE_PRELIMINAR": "Chamamento público: enviada para análise preliminar",
+    "EM_CHAMAMENTO_PUBLICO_CLASSIFICADA_ANALISE_PRELIMINAR": "Chamamento público: classificada na análise preliminar",
+    "PLANO_TRABALHO_ENVIADO_ANALISE": "Plano de trabalho enviado para análise",
+    "PLANO_TRABALHO_EM_ANALISE": "Plano de trabalho em análise",
+    "PLANO_TRABALHO_EM_COMPLEMENTACAO": "Plano de trabalho em complementação",
+    "PLANO_TRABALHO_COMPLEMENTADO_ENVIADO_ANALISE": "Plano de trabalho complementado enviado para análise",
+    "PLANO_TRABALHO_COMPLEMENTADO_EM_ANALISE": "Plano de trabalho complementado em análise",
+    "PLANO_TRABALHO_APROVADO": "Plano de trabalho aprovado",
+    "ASSINATURA_PENDENTE_REGISTRO_TV_SIAFI": "Assinatura pendente de registro no SIAFI",
+    "ASSINADA": "Assinado",
+    "EM_EXECUCAO": "Em execução",
+    "INADIMPLENTE": "Inadimplente",
+    "AGUARDANDO_PRESTACAO_CONTAS": "Aguardando prestação de contas",
+    "PRESTACAO_CONTAS_ENVIADA_ANALISE": "Prestação de contas enviada para análise",
+    "PRESTACAO_CONTAS_EM_ANALISE": "Prestação de contas em análise",
+    "PRESTACAO_CONTAS_EM_COMPLEMENTACAO": "Prestação de contas em complementação",
+    "PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE": "Prestação de contas comprovada em análise",
+    "PRESTACAO_CONTAS_REJEITADA": "Prestação de contas rejeitada",
+}
 
 
 UFS = {
@@ -216,6 +252,7 @@ def main():
         "assinatura": data_br(i.DIA_ASSIN_CONV.fillna("")),
         "inicio_vigencia": data_br(i.DIA_INIC_VIGENC_CONV.fillna("")),
         "fim_vigencia": data_br(i.DIA_FIM_VIGENC_CONV.fillna("")),
+        "fim_vigencia_original": data_br(i.DIA_FIM_VIGENC_ORIGINAL_CONV.fillna("")),
         "limite_prestacao_contas": data_br(i.DIA_LIMITE_PREST_CONTAS.fillna("")),
         "banco": i.NM_BANCO,
         "agencia": i.CD_AGENCIA,
@@ -223,6 +260,7 @@ def main():
         "qtd_aditivos": pd.to_numeric(i.QTD_TA, errors="coerce"),
         "qtd_prorrogacoes": pd.to_numeric(i.QTD_PRORROGA, errors="coerce"),
         "vl_global": valor_br(i.VL_GLOBAL_CONV),
+        "vl_global_original": valor_br(i.VALOR_GLOBAL_ORIGINAL_CONV),
         "vl_repasse": valor_br(i.VL_REPASSE_CONV),
         "vl_contrapartida": valor_br(i.VL_CONTRAPARTIDA_CONV),
         "vl_empenhado": valor_br(i.VL_EMPENHADO_CONV),
@@ -334,6 +372,83 @@ def main():
     tec["id"] = tec.id_meta + "-" + tec.uf + "-" + tec.tecnologia
     tec[["id", "nr", "meta", "uf", "tecnologia", "quantidade", "valor", "etapas", "qtd_meta", "soma_etapas", "ajuste"]] \
         .sort_values(["nr", "meta", "uf", "id"]).to_csv(DADOS / "tecnologias.csv", index=False)
+
+    # --- prazos e alterações: termos aditivos, prorrogações de ofício e solicitações de alteração
+    sol = ler("siconv_solicitacao_alteracao", filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])
+    ta = ler("siconv_termo_aditivo", filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])
+    po = ler("siconv_prorroga_oficio", filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])
+    nr_sol = sol.drop_duplicates("ID_SOLICITACAO").set_index("ID_SOLICITACAO").NR_SOLICITACAO
+    dias_po = pd.to_numeric(po.DIAS_PRORROGA, errors="coerce")
+    prazos = pd.concat([
+        pd.DataFrame({
+            "id": "ta-" + ta.NUMERO_TA, "nr": ta.NR_CONVENIO, "tipo": "Termo aditivo", "numero": ta.NUMERO_TA,
+            "data": data_br(ta.DT_ASSINATURA_TA.fillna("")), "descricao": ta.TIPO_TA, "situacao": "",
+            "fim": data_br(ta.DT_FIM_TA.fillna("")), "dias": None, "valor": valor_br(ta.VL_GLOBAL_TA),
+            "solicitacao": ta.ID_SOLICITACAO.map(nr_sol), "detalhe": ta.JUSTIFICATIVA_TA.str.slice(0, 600),
+        }),
+        pd.DataFrame({
+            "id": "po-" + po.NR_PRORROGA, "nr": po.NR_CONVENIO, "tipo": "Prorrogação de ofício",
+            "numero": po.NR_PRORROGA.str.lstrip("0"), "data": data_br(po.DT_ASSINATURA_PRORROGA.fillna("")),
+            "descricao": "Prorrogação de " + dias_po.map("{:.0f}".format) + " dias",
+            "situacao": po.SIT_PRORROGA.str.capitalize(), "fim": data_br(po.DT_FIM_PRORROGA.fillna("")),
+            "dias": dias_po, "valor": None, "solicitacao": None, "detalhe": None,
+        }),
+        pd.DataFrame({
+            "id": "sa-" + sol.ID_SOLICITACAO, "nr": sol.NR_CONVENIO, "tipo": "Solicitação de alteração",
+            "numero": sol.NR_SOLICITACAO, "data": sol.DATA_SOLICITACAO.str.slice(0, 10),
+            "descricao": "Solicitação de alteração", "situacao": sol.SITUACAO_SOLICITACAO, "fim": None,
+            "dias": None, "valor": None, "solicitacao": None, "detalhe": sol.OBJETO_SOLICITACAO.str.slice(0, 600),
+        }),
+    ])
+    # O número do aditivo ou da prorrogação pode se repetir no mesmo instrumento; a data desempata
+    prazos["id"] = prazos.id + "-" + prazos.data.fillna("")
+    prazos.sort_values(["nr", "data", "id"], ascending=[True, False, True]).to_csv(DADOS / "prazos.csv", index=False)
+
+    # --- histórico de situação: o Transferegov registra a situação a cada evento; aqui fica um
+    # trecho por mudança, com o dia em que o instrumento entrou e saiu de cada situação
+    hs = ler("siconv_historico_situacao", ["NR_CONVENIO", "DIA_HISTORICO_SIT", "HISTORICO_SIT"],
+             filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])
+    hs["quando"] = pd.to_datetime(hs.DIA_HISTORICO_SIT, format="%d/%m/%Y %H:%M:%S", errors="coerce")
+    hs = hs.dropna(subset=["quando"]).sort_values(["NR_CONVENIO", "quando", "HISTORICO_SIT"])
+    muda = (hs.HISTORICO_SIT != hs.groupby("NR_CONVENIO").HISTORICO_SIT.shift())
+    tr = hs[muda].copy()
+    tr["ate"] = tr.groupby("NR_CONVENIO").quando.shift(-1)
+    fim_trecho = tr.ate.fillna(pd.Timestamp(data_carga))
+    pd.DataFrame({
+        "nr": tr.NR_CONVENIO,
+        "inicio": tr.quando.dt.strftime("%Y-%m-%d"),
+        "fim": tr.ate.dt.strftime("%Y-%m-%d"),
+        "situacao": tr.HISTORICO_SIT.map(SITUACOES).fillna(tr.HISTORICO_SIT.str.replace("_", " ").str.capitalize()),
+        "codigo": tr.HISTORICO_SIT,
+        "dias": (fim_trecho.dt.normalize() - tr.quando.dt.normalize()).dt.days,
+        "atual": tr.ate.isna(),
+    }).to_csv(DADOS / "situacoes.csv", index=False)
+
+    # --- notas de empenho do MDS, com o que já foi repassado por cada uma
+    emp = ler("siconv_empenho", filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])
+    emp["chave"] = emp.ID_EMPENHO + "-" + emp.CD_ORIGEM_EMPENHO
+    ed = ler("siconv_empenho_desembolso", filtro=lambda b: b[(b.ID_EMPENHO + "-" + b.CD_ORIGEM_EMPENHO).isin(set(emp.chave))])
+    rep_emp = ed.assign(valor=valor_br(ed.VALOR_GRUPO)).groupby(ed.ID_EMPENHO + "-" + ed.CD_ORIGEM_EMPENHO).valor.sum()
+    nat = emp.NATUREZA_DESPESA.fillna("")
+    pd.DataFrame({
+        "id": emp.chave, "nr": emp.NR_CONVENIO, "empenho": emp.NR_EMPENHO, "data": data_br(emp.DATA_EMISSAO.fillna("")),
+        "tipo": emp.DESC_TIPO_NOTA, "situacao": emp.DESC_SITUACAO_EMPENHO,
+        # 335041 -> 3.3.50.41; as notas antigas trazem o subelemento (44404109 -> 4.4.40.41.09)
+        "natureza": nat.str.replace(r"^(\d)(\d)(\d\d)(\d\d)((?:\d\d)?)$", r"\1.\2.\3.\4.\5", regex=True).str.rstrip("."),
+        "grupo": nat.str[0].map({"3": "Custeio", "4": "Investimento"}),
+        "valor": valor_br(emp.VALOR_EMPENHO).round(2), "repassado": emp.chave.map(rep_emp).fillna(0).round(2),
+        "observacao": emp.OBSERVACAO_EMPENHO.str.slice(0, 400),
+    }).sort_values(["nr", "data", "empenho", "id"], ascending=[True, False, True, True]).to_csv(DADOS / "empenhos.csv", index=False)
+
+    # --- pedidos para usar os rendimentos da aplicação financeira
+    ra = ler("siconv_solicitacao_rendimento_aplicacao", filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])
+    pd.DataFrame({
+        "id": ra.ID_SOLICITACAO_REND_APLICACAO, "nr": ra.NR_CONVENIO,
+        "numero": pd.to_numeric(ra.NR_SOLICITACAO_REND_APLICACAO, errors="coerce"),
+        "data": ra.DATA_SOLICITACAO_REND_APLICACAO.str.slice(0, 10), "situacao": ra.STATUS_SOLICITACAO_REND_APLICACAO,
+        "valor_solicitado": valor_br(ra.VALOR_SOLICITACAO_REND_APLICACAO).round(2),
+        "valor_aprovado": valor_br(ra.VALOR_APROVADO_SOLICITACAO_REND_APLICACAO).round(2),
+    }).sort_values(["nr", "numero", "id"]).to_csv(DADOS / "rendimentos.csv", index=False)
 
     # --- histórico do saldo: o Transferegov só dá o saldo do dia, então guardamos uma foto por carga
     hist_path = DADOS / "historico_saldo.csv"

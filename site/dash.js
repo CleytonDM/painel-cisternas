@@ -2,7 +2,8 @@
 // Implementa só o que painel/index.html usa: dash.data, dash.calc, dash.draw, dash.params e
 // dash.setParams. Os conjuntos de dados são os CSVs de dados/, lidos como texto (como no Claude).
 (() => {
-  const FONTES = ['instrumentos', 'pagamentos', 'repasses', 'cronograma', 'metas', 'tecnologias'];
+  const FONTES = ['instrumentos', 'pagamentos', 'repasses', 'cronograma', 'metas', 'tecnologias',
+    'prazos', 'situacoes', 'empenhos', 'rendimentos'];
   const dados = {};
   const calcs = [];
   const desenhos = new Map();

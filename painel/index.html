@@ -143,6 +143,23 @@
   .cis-sw.s1 { background: var(--cis-s1); }
   .cis-sw.s2 { background: var(--cis-s2); }
   .cis-sw.dash { background: none; border-top: 2px dashed var(--cds-chart-reference); height: 0; }
+  .cis-sw.fim { background: var(--color-warn); }
+  .cis-sw.bloco { height: .6rem; border-radius: 2px; }
+  .cis-sw.f-plano { background: var(--cds-chart-muted); }
+  .cis-sw.f-exec { background: var(--cis-s1); }
+  .cis-sw.f-pc { background: var(--cis-s2); }
+  .cis-sw.f-bad { background: var(--color-bad); }
+  .cis-mk { color: var(--cis-medio); font-size: .8rem; line-height: 1; }
+  .cis-mk.analise { color: var(--color-warn); }
+  .cis-mk.recusada { color: var(--color-bad); }
+  .cis-chart.cis-linha { min-height: 120px; }
+  .cis-mais summary { cursor: pointer; font-size: var(--cds-font-size-caption); color: var(--cis-titulo); font-weight: var(--cds-font-weight-medium); padding: var(--cds-pad-xs) 0; }
+  .cis-mais[open] summary { margin-bottom: var(--cds-gap-xs); }
+  .cis-resumo { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-sm); }
+  .cis-table td.detalhe { color: var(--color-fg-muted); min-width: 16rem; }
+  .cis-table td.recusada { color: var(--color-bad); }
+  .cis-table td.analise { color: var(--color-warn); font-weight: var(--cds-font-weight-medium); }
+  .cis-table tr.anula td { color: var(--color-fg-muted); }
   .cis-chart { position: relative; min-height: 260px; }
   .cis-chart svg { display: block; overflow: visible; }
   .cis-tip {
@@ -266,7 +283,7 @@
       <span class="cis-badge" data-draw="alertas-n" data-source="alertas">—</span>
     </div>
     <ul class="cis-callouts" data-draw="alertas-inst" data-source="alertas"></ul>
-    <p class="cis-muted">Alerta quando faltam até <span data-draw="regra" data-source="regras" data-field="vigencia_dias" data-row="0">—</span> dias de vigência, quando passam mais de <span data-draw="regra" data-source="regras" data-field="sem_pagamento_dias" data-row="0">—</span> dias sem pagamento, quando o saldo em conta passa de <span data-draw="regra" data-source="regras" data-field="saldo_parado_pct" data-row="0" data-fmt="pct">—</span> do repassado, quando o MDS repassou menos do que o cronograma previa até o mês anterior à carga e quando a prestação de contas venceu. Datas contadas a partir da carga.</p>
+    <p class="cis-muted">Alerta quando faltam até <span data-draw="regra" data-source="regras" data-field="vigencia_dias" data-row="0">—</span> dias de vigência, quando passam mais de <span data-draw="regra" data-source="regras" data-field="sem_pagamento_dias" data-row="0">—</span> dias sem pagamento, quando o saldo em conta passa de <span data-draw="regra" data-source="regras" data-field="saldo_parado_pct" data-row="0" data-fmt="pct">—</span> do repassado, quando o MDS repassou menos do que o cronograma previa até o mês anterior à carga, quando a prestação de contas venceu, quando a prestação de contas está em análise no MDS há mais de <span data-draw="regra" data-source="regras" data-field="analise_pc_dias" data-row="0">—</span> dias e quando uma solicitação de alteração está em análise há mais de <span data-draw="regra" data-source="regras" data-field="solicitacao_dias" data-row="0">—</span> dias. Datas contadas a partir da carga.</p>
   </section>
 
   <div class="cis-grid">
@@ -283,8 +300,11 @@
         <div><dt>Assinatura</dt><dd data-draw="campo" data-source="instrumentos" data-field="assinatura" data-fmt="data">—</dd></div>
         <div><dt>Início da vigência</dt><dd data-draw="campo" data-source="instrumentos" data-field="inicio_vigencia" data-fmt="data">—</dd></div>
         <div><dt>Fim da vigência</dt><dd data-draw="campo" data-source="instrumentos" data-field="fim_vigencia" data-fmt="data">—</dd></div>
+        <div><dt>Fim da vigência original</dt><dd data-draw="campo" data-source="instrumentos" data-field="fim_vigencia_original" data-fmt="data">—</dd></div>
         <div><dt>Prazo da prestação de contas</dt><dd data-draw="campo" data-source="instrumentos" data-field="limite_prestacao_contas" data-fmt="data">—</dd></div>
         <div><dt>Termos aditivos</dt><dd data-draw="campo" data-source="instrumentos" data-field="qtd_aditivos" data-fmt="int">—</dd></div>
+        <div><dt>Prorrogações de ofício</dt><dd data-draw="campo" data-source="instrumentos" data-field="qtd_prorrogacoes" data-fmt="int">—</dd></div>
+        <div><dt>Valor global original</dt><dd data-draw="campo" data-source="instrumentos" data-field="vl_global_original" data-fmt="brl">—</dd></div>
         <div><dt>Banco</dt><dd data-draw="campo" data-source="instrumentos" data-field="banco">—</dd></div>
         <div><dt>Agência</dt><dd data-draw="campo" data-source="instrumentos" data-field="agencia">—</dd></div>
         <div><dt>Conta</dt><dd data-draw="campo" data-source="instrumentos" data-field="conta">—</dd></div>
@@ -302,6 +322,58 @@
       </div>
     </section>
   </div>
+
+  <section class="cis-card" id="prazos">
+    <h2>Prazos, alterações e situação</h2>
+    <p class="cis-muted" data-draw="prazo-resumo" data-source="instrumentos prazos situacoes">—</p>
+    <ul class="cis-legend">
+      <li><span class="cis-sw bloco f-plano"></span>Proposta e plano de trabalho</li>
+      <li><span class="cis-sw bloco f-exec"></span>Execução</li>
+      <li><span class="cis-sw bloco f-pc"></span>Prestação de contas</li>
+      <li><span class="cis-sw bloco f-bad"></span>Inadimplência ou contas rejeitadas</li>
+      <li><span class="cis-mk">●</span>Termo aditivo</li>
+      <li><span class="cis-mk">◆</span>Prorrogação de ofício</li>
+      <li><span class="cis-mk">■</span>Solicitação de alteração</li>
+      <li><span class="cis-mk analise">■</span>em análise</li>
+      <li><span class="cis-mk recusada">■</span>recusada</li>
+      <li><span class="cis-sw dash"></span>Fim da vigência original</li>
+      <li><span class="cis-sw fim"></span>Fim da vigência atual</li>
+    </ul>
+    <div class="cis-chart cis-linha" data-draw="linha" data-source="situacoes prazos instrumentos"></div>
+    <div class="cis-tablebox">
+      <table class="cis-table" data-source="prazos" data-row-key="id">
+        <thead>
+          <tr>
+            <th data-field="data">Data</th>
+            <th data-field="tipo">Tipo</th>
+            <th data-field="numero" class="cis-hide-narrow">Nº</th>
+            <th data-field="descricao">O que muda</th>
+            <th data-field="situacao">Situação</th>
+            <th data-field="fim">Novo fim da vigência</th>
+            <th data-field="detalhe" class="cis-hide-narrow">Justificativa ou pedido</th>
+          </tr>
+        </thead>
+        <tbody data-draw="prazotab"></tbody>
+      </table>
+    </div>
+    <details class="cis-mais">
+      <summary data-draw="sit-resumo" data-source="situacoes">Histórico de situação</summary>
+      <div class="cis-tablebox">
+        <table class="cis-table" data-source="situacoes" data-row-key="inicio">
+          <thead>
+            <tr>
+              <th data-field="situacao">Situação</th>
+              <th data-field="inicio">De</th>
+              <th data-field="fim">Até</th>
+              <th data-field="dias" class="num">Dias</th>
+            </tr>
+          </thead>
+          <tbody data-draw="sittab"></tbody>
+        </table>
+      </div>
+    </details>
+    <p class="cis-origem">Fonte: Transferegov, dados abertos siconv_termo_aditivo, siconv_prorroga_oficio, siconv_solicitacao_alteracao e siconv_historico_situacao. O histórico guarda uma linha por evento; aqui cada linha é uma mudança de situação.</p>
+  </section>
 
   <section class="cis-card" id="fisico">
     <div class="cis-cardhead">
@@ -364,6 +436,49 @@
     <div class="cis-chart" data-draw="fluxo" data-source="cronograma repasses pagamentos"></div>
   </section>
 
+  <section class="cis-card" id="empenhos">
+    <h2>Empenhos do MDS</h2>
+    <p class="cis-muted" data-draw="emp-resumo" data-source="empenhos instrumentos">—</p>
+    <div class="cis-resumo" data-draw="emp-grupos" data-source="empenhos"></div>
+    <div class="cis-tablebox">
+      <table class="cis-table" data-source="empenhos" data-row-key="id">
+        <thead>
+          <tr>
+            <th data-field="data">Data</th>
+            <th data-field="empenho">Nota de empenho</th>
+            <th data-field="tipo">Tipo</th>
+            <th data-field="natureza" class="cis-hide-narrow">Natureza</th>
+            <th data-field="valor" class="num">Valor</th>
+            <th data-field="repassado" class="num">Repassado</th>
+            <th data-field="observacao" class="cis-hide-narrow">Observação</th>
+          </tr>
+        </thead>
+        <tbody data-draw="emptab"></tbody>
+      </table>
+    </div>
+    <p class="cis-origem">Fonte: Transferegov, dados abertos siconv_empenho e siconv_empenho_desembolso. Repassado é a soma das ordens bancárias do MDS pagas com cada nota. Anulações e cancelamentos de restos a pagar entram com valor negativo.</p>
+  </section>
+
+  <section class="cis-card" id="rendimentos">
+    <h2>Rendimentos de aplicação</h2>
+    <p class="cis-muted" data-draw="rend-resumo" data-source="rendimentos instrumentos">—</p>
+    <div class="cis-tablebox">
+      <table class="cis-table" data-source="rendimentos" data-row-key="id">
+        <thead>
+          <tr>
+            <th data-field="numero">Pedido</th>
+            <th data-field="data">Data</th>
+            <th data-field="situacao">Situação</th>
+            <th data-field="valor_solicitado" class="num">Solicitado</th>
+            <th data-field="valor_aprovado" class="num">Aprovado</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rendtab"></tbody>
+      </table>
+    </div>
+    <p class="cis-origem">Fonte: Transferegov, dados abertos siconv_solicitacao_rendimento_aplicacao. No Transferegov, o uso dos rendimentos da conta no objeto passa por um pedido do parceiro, analisado pelo MDS, que ajusta o plano de trabalho.</p>
+  </section>
+
   <section class="cis-card" id="pagamentos">
     <h2>Pagamentos feitos pelo parceiro</h2>
     <p class="cis-muted"><span data-draw="campo" data-source="instrumentos" data-field="qtd_pagamentos" data-fmt="int">—</span> pagamentos registrados, somando <span data-draw="campo" data-source="instrumentos" data-field="vl_pago" data-fmt="brl">—</span>. Último em <span data-draw="campo" data-source="instrumentos" data-field="ult_pagamento" data-fmt="data">—</span>. Gráfico dos últimos 24 meses até a carga; CPF de pessoa física aparece mascarado.</p>
@@ -397,6 +512,7 @@
             <th data-field="parceiro">Parceiro</th>
             <th data-field="uf">UF</th>
             <th data-field="situacao" class="cis-hide-narrow">Situação</th>
+            <th data-field="dias_situacao" class="num cis-hide-narrow">Dias na situação</th>
             <th data-field="fim_vigencia" class="cis-hide-narrow">Fim da vigência</th>
             <th data-field="vl_saldo_conta" class="num">Saldo em conta</th>
             <th data-field="alertas">Alertas</th>
@@ -445,7 +561,7 @@
     inputs: ['instrumentos'],
     title: 'Regras dos alertas',
     description: 'Limites usados nos alertas do painel; mude aqui para ajustar.',
-    fn: (instrumentos) => [{vigencia_dias: 90, sem_pagamento_dias: 60, saldo_parado_pct: 0.5}],
+    fn: (instrumentos) => [{vigencia_dias: 90, sem_pagamento_dias: 60, saldo_parado_pct: 0.5, analise_pc_dias: 150, solicitacao_dias: 60}],
   });
 
   dash.calc('indicadores', {
@@ -467,10 +583,13 @@
   });
 
   dash.calc('alertas', {
-    inputs: ['instrumentos', 'cronograma', 'repasses', 'regras'],
+    inputs: ['instrumentos', 'cronograma', 'repasses', 'regras', 'situacoes', 'prazos'],
     title: 'Alertas por instrumento',
     description: 'Regras aplicadas a cada instrumento em acompanhamento, contando os dias a partir da data da carga.',
-    fn: (instrumentos, cronograma, repasses, regras) => {
+    fn: (instrumentos, cronograma, repasses, regras, situacoes, prazos) => {
+      // Etapas em que a prestação de contas está com o MDS; o prazo de análise conta do início
+      // do trecho contínuo nessas etapas (indo e voltando entre elas sem sair para o parceiro)
+      const ANALISE_PC = ['PRESTACAO_CONTAS_ENVIADA_ANALISE', 'PRESTACAO_CONTAS_EM_ANALISE', 'PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE'];
       const r = regras[0];
       const v = (x) => (x === '' || x == null ? 0 : Number(x));
       const t = (s) => Date.parse(s.slice(0, 10) + 'T00:00:00Z');
@@ -493,9 +612,19 @@
         if (exec && v(i.vl_repassado) > 0 && (diasPag === null || diasPag > r.sem_pagamento_dias)) lista.push(['warn', diasPag === null ? 'Nenhum pagamento registrado' : diasPag + ' dias sem pagamento']);
         if (exec && pctSaldo !== null && pctSaldo >= r.saldo_parado_pct) lista.push(['warn', 'Saldo em conta é ' + Math.round(pctSaldo * 100) + '% do repassado']);
         if (exec && atraso >= 1) lista.push(['warn', 'Repasse abaixo do cronograma em ' + real.format(atraso)]);
+        const trechos = situacoes.filter((s) => s.nr === i.nr);
+        const ultimo = trechos[trechos.length - 1];
+        const diasSit = ultimo ? Math.round((carga - t(ultimo.inicio)) / 864e5) : null;
+        let k = trechos.length - 1;
+        while (k > 0 && ANALISE_PC.includes(trechos[k - 1].codigo) && ANALISE_PC.includes(trechos[k].codigo)) k--;
+        const diasAnalise = ultimo && ANALISE_PC.includes(ultimo.codigo) ? Math.round((carga - t(trechos[k].inicio)) / 864e5) : null;
+        if (diasAnalise !== null && diasAnalise > r.analise_pc_dias) lista.push(['warn', 'Prestação de contas em análise no MDS há ' + int.format(diasAnalise) + ' dias, desde ' + fmt.data(trechos[k].inicio)]);
+        prazos.filter((p) => p.nr === i.nr && p.tipo === 'Solicitação de alteração' && p.situacao === 'Em Análise' && p.data)
+          .map((p) => Math.round((carga - t(p.data)) / 864e5)).filter((d) => d > r.solicitacao_dias)
+          .forEach((d) => lista.push(['warn', 'Solicitação de alteração em análise há ' + int.format(d) + ' dias']));
         const nivel = lista.some((a) => a[0] === 'bad') ? 'bad' : lista.length ? 'warn' : 'ok';
         return {
-          nr: i.nr, parceiro: i.parceiro, uf: i.uf, situacao: i.situacao, fim_vigencia: i.fim_vigencia,
+          nr: i.nr, parceiro: i.parceiro, uf: i.uf, situacao: i.situacao, dias_situacao: diasSit, dias_analise_pc: diasAnalise, fim_vigencia: i.fim_vigencia,
           vl_saldo_conta: v(i.vl_saldo_conta), dias_para_fim: diasFim, dias_sem_pagamento: diasPag,
           previsto_ate_mes_anterior: previsto, repassado_total: repassado, repasse_atrasado: atraso,
           pct_saldo: pctSaldo, nivel, peso: peso[nivel], n_alertas: lista.length,
@@ -984,6 +1113,212 @@
     });
   });
 
+  // --- prazos, alterações e situação
+  const tDia = (s) => Date.parse(s.slice(0, 10) + 'T00:00:00Z');
+  const plural = (q, um, varios) => fmt.int(q) + ' ' + (q === 1 ? um : varios);
+  const linhaVazia = (tb, cols, txt) => {
+    const tr = document.createElement('tr');
+    tr.append(celula('td', txt, {colspan: cols, class: 'detalhe'}));
+    tb.append(tr);
+  };
+  // Fase de cada situação do histórico, para a cor da linha do tempo
+  const fase = (c) => (/INADIMPLENTE|REJEITADA/.test(c) ? 'bad' : /PRESTACAO_CONTAS/.test(c) ? 'pc' : /^(EM_EXECUCAO|ASSINADA)$/.test(c) ? 'exec' : 'plano');
+  const COR_FASE = {plano: 'var(--cds-chart-muted)', exec: 'var(--cis-s1)', pc: 'var(--cis-s2)', bad: 'var(--color-bad)'};
+  const classeSit = (s) => (/Recusad|Reprovad|Cancelad/.test(s ?? '') ? 'recusada' : /Em Análise|Cadastrad/.test(s ?? '') ? 'analise' : '');
+
+  dash.draw('prazo-resumo', (el) => {
+    const i = aberto(), p = dash.data('prazos'), s = dash.data('situacoes');
+    if (!i || p.status !== 'ok' || s.status !== 'ok') { el.textContent = '—'; return; }
+    const partes = [];
+    if (i.fim_vigencia) {
+      const ext = i.fim_vigencia_original ? Math.round((tDia(i.fim_vigencia) - tDia(i.fim_vigencia_original)) / 864e5) : 0;
+      partes.push(ext > 0
+        ? `Vigência original até ${fmt.data(i.fim_vigencia_original)}; hoje vai até ${fmt.data(i.fim_vigencia)}, ${plural(ext, 'dia', 'dias')} a mais.`
+        : `Vigência até ${fmt.data(i.fim_vigencia)}, a mesma da assinatura.`);
+    }
+    const ev = p.data.filter((x) => x.nr === i.nr);
+    const sol = ev.filter((x) => x.tipo === 'Solicitação de alteração');
+    const porSit = [...d3.rollup(sol, (v) => v.length, (x) => x.situacao)]
+      .map(([sit, q]) => fmt.int(q) + ' ' + (sit === 'Em Análise' ? 'em análise' : sit.toLowerCase() + (q > 1 ? 's' : '')));
+    partes.push(!ev.length ? 'Nenhum termo aditivo, prorrogação de ofício ou solicitação de alteração registrado.'
+      : plural(ev.filter((x) => x.tipo === 'Termo aditivo').length, 'termo aditivo', 'termos aditivos') + ', '
+        + plural(ev.filter((x) => x.tipo === 'Prorrogação de ofício').length, 'prorrogação de ofício', 'prorrogações de ofício') + ' e '
+        + plural(sol.length, 'solicitação de alteração', 'solicitações de alteração') + (porSit.length ? ' (' + porSit.join(', ') + ')' : '') + '.');
+    const tr = s.data.filter((x) => x.nr === i.nr);
+    const u = tr[tr.length - 1];
+    if (u) partes.push(`Na situação "${u.situacao}" desde ${fmt.data(u.inicio)}, há ${plural(Math.round((tDia(i.data_carga) - tDia(u.inicio)) / 864e5), 'dia', 'dias')}.`);
+    el.textContent = partes.join(' ');
+  });
+
+  dash.draw('linha', (el) => {
+    const s = dash.data('situacoes'), p = dash.data('prazos'), i = aberto();
+    el.querySelectorAll('svg, .cis-tip, .cis-muted').forEach((x) => x.remove());
+    if (!i || s.status !== 'ok' || p.status !== 'ok') return;
+    const carga = dia(i.data_carga);
+    const tr = s.data.filter((x) => x.nr === i.nr).map((x) => ({...x, d0: dia(x.inicio), d1: x.fim ? dia(x.fim) : carga}));
+    const ev = p.data.filter((x) => x.nr === i.nr && x.data).map((x) => ({...x, d: dia(x.data)}));
+    if (!tr.length && !ev.length) {
+      el.append(celula('p', 'Este instrumento não tem histórico de situação nem alterações registradas.', {class: 'cis-muted'}));
+      return;
+    }
+    const marcos = [i.fim_vigencia_original, i.fim_vigencia].filter(Boolean).map(dia);
+    const todas = [...tr.flatMap((x) => [x.d0, x.d1]), ...ev.map((x) => x.d), ...marcos, carga];
+    const W = el.clientWidth, HL = 120, ml = 84, mr = 12, eixo = HL - 26;
+    const x = d3.scaleUtc([d3.min(todas), d3.max(todas)], [ml, W - mr]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${HL}`);
+    [['Situação', 32], ['Alterações', 74]].forEach(([txt, y]) => svg.append('text').attr('x', 0).attr('y', y)
+      .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(txt));
+    const tip = tooltip(el);
+    const mostra = (e, titulo, linhas) => { const [mx, my] = d3.pointer(e, el); tipLinhas(tip, titulo, linhas); placeTip(el, tip, mx, my); };
+    svg.append('g').selectAll('rect').data(tr).join('rect')
+      .attr('x', (d) => x(d.d0)).attr('width', (d) => Math.max(2, x(d.d1) - x(d.d0))).attr('y', 16).attr('height', 24)
+      .style('fill', (d) => COR_FASE[fase(d.codigo)]).style('stroke', 'var(--color-panel)').style('stroke-width', 0.5)
+      .on('pointermove', (e, d) => mostra(e, d.situacao, [[null, 'De', fmt.data(d.inicio)], [null, 'Até', d.fim ? fmt.data(d.fim) : 'hoje'], [null, 'Dias', fmt.int(d.dias)]]))
+      .on('pointerleave', () => { tip.hidden = true; });
+    const ref = (d, cor, tracejado, nome) => {
+      if (!d) return;
+      svg.append('line').attr('x1', x(d)).attr('x2', x(d)).attr('y1', 8).attr('y2', eixo)
+        .style('stroke', cor).style('stroke-width', 2).style('stroke-dasharray', tracejado ? '4 3' : null)
+        .append('title').text(nome + ': ' + fmt.data(d.toISOString()));
+    };
+    if (i.fim_vigencia_original && i.fim_vigencia_original !== i.fim_vigencia) ref(dia(i.fim_vigencia_original), 'var(--cds-chart-reference)', true, 'Fim da vigência original');
+    if (i.fim_vigencia) ref(dia(i.fim_vigencia), 'var(--color-warn)', false, 'Fim da vigência atual');
+    const SIMBOLO = {'Termo aditivo': d3.symbolCircle, 'Prorrogação de ofício': d3.symbolDiamond, 'Solicitação de alteração': d3.symbolSquare};
+    const COR_SIT = {recusada: 'var(--color-bad)', analise: 'var(--color-warn)'};
+    svg.append('g').selectAll('path').data(ev).join('path')
+      .attr('transform', (d) => `translate(${x(d.d)},70)`).attr('d', (d) => d3.symbol(SIMBOLO[d.tipo] ?? d3.symbolCircle, 70)())
+      .style('fill', (d) => COR_SIT[classeSit(d.situacao)] ?? 'var(--cis-medio)').style('stroke', 'var(--color-panel)').style('stroke-width', 1)
+      .on('pointermove', (e, d) => mostra(e, d.tipo + (d.numero ? ' ' + d.numero : '') + ' · ' + fmt.data(d.data),
+        [[null, 'O que muda', d.descricao], ...(d.situacao ? [[null, 'Situação', d.situacao]] : []), ...(d.fim ? [[null, 'Novo fim da vigência', fmt.data(d.fim)]] : [])]))
+      .on('pointerleave', () => { tip.hidden = true; });
+    svg.append('g').attr('transform', `translate(0,${eixo})`)
+      .call(d3.axisBottom(x).ticks(Math.max(2, Math.floor((W - ml) / 80))).tickFormat(mesLabel).tickSizeOuter(0))
+      .attr('font-size', null).attr('font-family', null)
+      .call((g) => g.select('.domain').style('stroke', 'var(--cds-chart-axis)'))
+      .call((g) => g.selectAll('line').style('stroke', 'var(--cds-chart-axis)'))
+      .call((g) => g.selectAll('text').style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)'));
+  });
+
+  dash.draw('prazotab', (tb) => {
+    const p = dash.data('prazos');
+    const nr = atual();
+    tb.replaceChildren();
+    if (p.status !== 'ok' || !nr) return;
+    const linhas = p.data.filter((x) => x.nr === nr);
+    if (!linhas.length) { linhaVazia(tb, 7, 'Nenhum termo aditivo, prorrogação de ofício ou solicitação de alteração registrado.'); return; }
+    linhas.forEach((x) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = x.id;
+      tr.append(celula('td', x.data ? fmt.data(x.data) : '', {class: 'nowrap'}), celula('td', x.tipo),
+        celula('td', x.numero ?? '', {class: 'nowrap cis-hide-narrow'}),
+        celula('td', (x.descricao ?? '') + (x.solicitacao ? ' (atende à solicitação ' + x.solicitacao + ')' : '')),
+        celula('td', x.situacao ?? '', {class: classeSit(x.situacao)}), celula('td', x.fim ? fmt.data(x.fim) : '', {class: 'nowrap'}),
+        celula('td', x.detalhe ?? '', {class: 'detalhe cis-hide-narrow'}));
+      tb.append(tr);
+    });
+  });
+
+  dash.draw('sit-resumo', (el) => {
+    const s = dash.data('situacoes');
+    const nr = atual();
+    const tr = s.status === 'ok' && nr ? s.data.filter((x) => x.nr === nr) : [];
+    el.textContent = tr.length ? `Histórico de situação: ${plural(tr.length, 'trecho', 'trechos')} desde ${fmt.data(tr[0].inicio)}` : 'Histórico de situação: sem registros';
+  });
+
+  dash.draw('sittab', (tb) => {
+    const s = dash.data('situacoes');
+    const nr = atual();
+    tb.replaceChildren();
+    if (s.status !== 'ok' || !nr) return;
+    s.data.filter((x) => x.nr === nr).reverse().forEach((x) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = x.inicio;
+      tr.append(celula('td', x.situacao), celula('td', fmt.data(x.inicio), {class: 'nowrap'}),
+        celula('td', x.fim ? fmt.data(x.fim) : 'hoje', {class: 'nowrap'}), celula('td', fmt.int(x.dias), {class: 'num'}));
+      tb.append(tr);
+    });
+  });
+
+  // --- empenhos e rendimentos
+  const doAberto = (fonte) => {
+    const d = dash.data(fonte);
+    const nr = atual();
+    return d.status === 'ok' && nr ? d.data.filter((x) => x.nr === nr) : null;
+  };
+  const soma = (linhas, campo) => linhas.reduce((s, x) => s + (n(x[campo]) ?? 0), 0);
+
+  dash.draw('emp-resumo', (el) => {
+    const e = doAberto('empenhos'), i = aberto();
+    if (!e || !i) { el.textContent = '—'; return; }
+    if (!e.length) { el.textContent = 'Nenhuma nota de empenho registrada para este instrumento.'; return; }
+    const anulado = e.filter((x) => n(x.valor) < 0).reduce((s, x) => s + n(x.valor), 0);
+    const semValor = e.filter((x) => n(x.valor) === 0).length;
+    const rep = soma(e, 'repassado');
+    let txt = semValor === e.length
+      ? plural(e.length, 'nota de empenho', 'notas de empenho') + ', todas sem valor no Transferegov (o empenhado deste instrumento aparece zerado). Repassado com essas notas, pelas ordens bancárias ligadas a cada uma: ' + fmt.brl(rep) + '.'
+      : plural(e.length, 'nota de empenho', 'notas de empenho') + '. Empenhado líquido: ' + fmt.brl(soma(e, 'valor'))
+        + (anulado < 0 ? ', já descontados ' + fmt.brl(-anulado) + ' de anulações e cancelamentos' : '') + '. Repassado com essas notas: ' + fmt.brl(rep) + '.'
+        + (semValor ? ' ' + plural(semValor, 'nota vem', 'notas vêm') + ' sem valor no Transferegov.' : '');
+    if (Math.abs(rep - (n(i.vl_repassado) ?? 0)) >= 1) txt += ' O total repassado ao instrumento é ' + fmt.brl(n(i.vl_repassado) ?? 0) + '; a diferença são ordens bancárias que os dados abertos não ligam a nenhuma nota.';
+    el.textContent = txt;
+  });
+
+  dash.draw('emp-grupos', (el) => {
+    const e = doAberto('empenhos');
+    el.replaceChildren();
+    if (!e || !e.length) return;
+    const comValor = e.some((x) => n(x.valor) !== 0);
+    [...d3.group(e, (x) => x.grupo || 'Sem natureza')].sort((a, b) => a[0].localeCompare(b[0])).forEach(([grupo, linhas]) => {
+      const emp = soma(linhas, 'valor'), rep = soma(linhas, 'repassado');
+      const box = celula('div', '', {class: 'cis-kpi'});
+      const nat = [...new Set(linhas.map((x) => x.natureza).filter(Boolean))].join(', ');
+      box.append(celula('span', grupo + (nat ? ' (' + nat + ')' : ''), {class: 'lab'}),
+        celula('span', comValor ? fmt.brlc(emp) : fmt.brlc(rep), {class: 'val'}),
+        celula('span', comValor ? 'empenhado · ' + fmt.brlc(rep) + ' repassado' + (emp - rep >= 1 ? ' · ' + fmt.brlc(emp - rep) + ' a repassar' : '') : 'repassado; empenho sem valor', {class: 'sub'}));
+      el.append(box);
+    });
+  });
+
+  dash.draw('emptab', (tb) => {
+    const e = doAberto('empenhos');
+    tb.replaceChildren();
+    if (!e) return;
+    if (!e.length) { linhaVazia(tb, 7, 'Nenhuma nota de empenho registrada.'); return; }
+    e.forEach((x) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = x.id;
+      if (n(x.valor) < 0) tr.className = 'anula';
+      tr.append(celula('td', x.data ? fmt.data(x.data) : '', {class: 'nowrap'}), celula('td', x.empenho ?? '', {class: 'nowrap'}), celula('td', x.tipo ?? ''),
+        celula('td', x.natureza ?? '', {class: 'nowrap cis-hide-narrow'}), celula('td', n(x.valor) ? fmt.brl(x.valor) : '—', {class: 'num'}),
+        celula('td', n(x.repassado) ? fmt.brl(x.repassado) : '—', {class: 'num'}), celula('td', x.observacao ?? '', {class: 'detalhe cis-hide-narrow'}));
+      tb.append(tr);
+    });
+  });
+
+  dash.draw('rend-resumo', (el) => {
+    const r = doAberto('rendimentos'), i = aberto();
+    if (!r || !i) { el.textContent = '—'; return; }
+    const aprov = r.filter((x) => /Aprovado/.test(x.situacao ?? ''));
+    el.textContent = 'Rendimentos registrados na conta: ' + fmt.brl(n(i.vl_rendimentos) ?? 0) + '. '
+      + (r.length ? plural(r.length, 'pedido', 'pedidos') + ' para usar os rendimentos no objeto: ' + fmt.brl(soma(r, 'valor_solicitado')) + ' solicitados e '
+        + fmt.brl(soma(aprov, 'valor_aprovado')) + ' aprovados.' : 'Nenhum pedido para usar os rendimentos no objeto.');
+  });
+
+  dash.draw('rendtab', (tb) => {
+    const r = doAberto('rendimentos');
+    tb.replaceChildren();
+    if (!r) return;
+    if (!r.length) { linhaVazia(tb, 5, 'Nenhum pedido registrado.'); return; }
+    [...r].reverse().forEach((x) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = x.id;
+      tr.append(celula('td', x.numero ?? ''), celula('td', x.data ? fmt.data(x.data) : '', {class: 'nowrap'}),
+        celula('td', x.situacao ?? '', {class: classeSit(x.situacao)}), celula('td', x.valor_solicitado === '' ? '' : fmt.brl(x.valor_solicitado), {class: 'num'}),
+        celula('td', x.valor_aprovado === '' ? '' : fmt.brl(x.valor_aprovado), {class: 'num'}));
+      tb.append(tr);
+    });
+  });
+
   dash.draw('cart', (tb) => {
     const d = dash.data('alertas');
     const nr = atual();
@@ -993,6 +1328,7 @@
       const tr = document.createElement('tr');
       tr.className = x.nivel + (x.nr === nr ? ' atual' : '');
       [[x.nr, 'nowrap'], [x.parceiro ?? '', ''], [x.uf ?? '', ''], [x.situacao ?? '', 'cis-hide-narrow'],
+       [x.dias_situacao == null ? '' : fmt.int(x.dias_situacao), 'num cis-hide-narrow'],
        [x.fim_vigencia ? fmt.data(x.fim_vigencia) : '', 'nowrap cis-hide-narrow'], [fmt.brl(x.vl_saldo_conta), 'num'], [x.alertas, 'alertas']]
         .forEach(([txt, cls]) => { const td = document.createElement('td'); td.className = cls; td.textContent = txt; tr.append(td); });
       tr.onclick = () => {
