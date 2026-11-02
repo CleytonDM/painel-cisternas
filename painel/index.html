@@ -129,6 +129,8 @@
   .cis-ficha .wide { grid-column: 1 / -1; }
   .cis-ficha dt { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
   .cis-ficha dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+  .cis-vermais { margin-left: .35em; padding: 0; border: 0; background: none; color: var(--color-fg-muted); font: inherit; font-size: var(--cds-font-size-caption); text-decoration: underline; cursor: pointer; }
+  .cis-vermais:hover { color: var(--cis-titulo); }
   .cis-saldo { display: grid; gap: var(--cds-gap-xs); padding-top: var(--cds-pad-sm); border-top: 1px solid var(--color-border-line); }
   .cis-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
   .cis-funil { display: grid; gap: var(--cds-gap-sm); min-height: 11rem; }
@@ -296,8 +298,6 @@
         <div><dt>Situação</dt><dd data-draw="campo" data-source="instrumentos" data-field="situacao">—</dd></div>
         <div><dt>CNPJ</dt><dd data-draw="campo" data-source="instrumentos" data-field="cnpj" data-fmt="cnpj">—</dd></div>
         <div><dt>UF</dt><dd data-draw="campo" data-source="instrumentos" data-field="uf">—</dd></div>
-        <div><dt>Município sede</dt><dd data-draw="campo" data-source="instrumentos" data-field="municipio">—</dd></div>
-        <div><dt>Assinatura</dt><dd data-draw="campo" data-source="instrumentos" data-field="assinatura" data-fmt="data">—</dd></div>
         <div><dt>Início da vigência</dt><dd data-draw="campo" data-source="instrumentos" data-field="inicio_vigencia" data-fmt="data">—</dd></div>
         <div><dt>Fim da vigência</dt><dd data-draw="campo" data-source="instrumentos" data-field="fim_vigencia" data-fmt="data">—</dd></div>
         <div><dt>Fim da vigência original</dt><dd data-draw="campo" data-source="instrumentos" data-field="fim_vigencia_original" data-fmt="data">—</dd></div>
@@ -305,11 +305,8 @@
         <div><dt>Termos aditivos</dt><dd data-draw="campo" data-source="instrumentos" data-field="qtd_aditivos" data-fmt="int">—</dd></div>
         <div><dt>Prorrogações de ofício</dt><dd data-draw="campo" data-source="instrumentos" data-field="qtd_prorrogacoes" data-fmt="int">—</dd></div>
         <div><dt>Valor global original</dt><dd data-draw="campo" data-source="instrumentos" data-field="vl_global_original" data-fmt="brl">—</dd></div>
-        <div><dt>Banco</dt><dd data-draw="campo" data-source="instrumentos" data-field="banco">—</dd></div>
-        <div><dt>Agência</dt><dd data-draw="campo" data-source="instrumentos" data-field="agencia">—</dd></div>
-        <div><dt>Conta</dt><dd data-draw="campo" data-source="instrumentos" data-field="conta">—</dd></div>
         <div><dt>Processo</dt><dd data-draw="campo" data-source="instrumentos" data-field="processo">—</dd></div>
-        <div class="wide"><dt>Objeto</dt><dd data-draw="campo" data-source="instrumentos" data-field="objeto">—</dd></div>
+        <div class="wide"><dt>Objeto</dt><dd data-draw="objeto" data-source="instrumentos">—</dd></div>
       </dl>
     </section>
 
@@ -322,58 +319,6 @@
       </div>
     </section>
   </div>
-
-  <section class="cis-card" id="prazos">
-    <h2>Prazos, alterações e situação</h2>
-    <p class="cis-muted" data-draw="prazo-resumo" data-source="instrumentos prazos situacoes">—</p>
-    <ul class="cis-legend">
-      <li><span class="cis-sw bloco f-plano"></span>Proposta e plano de trabalho</li>
-      <li><span class="cis-sw bloco f-exec"></span>Execução</li>
-      <li><span class="cis-sw bloco f-pc"></span>Prestação de contas</li>
-      <li><span class="cis-sw bloco f-bad"></span>Inadimplência ou contas rejeitadas</li>
-      <li><span class="cis-mk">●</span>Termo aditivo</li>
-      <li><span class="cis-mk">◆</span>Prorrogação de ofício</li>
-      <li><span class="cis-mk">■</span>Solicitação de alteração</li>
-      <li><span class="cis-mk analise">■</span>em análise</li>
-      <li><span class="cis-mk recusada">■</span>recusada</li>
-      <li><span class="cis-sw dash"></span>Fim da vigência original</li>
-      <li><span class="cis-sw fim"></span>Fim da vigência atual</li>
-    </ul>
-    <div class="cis-chart cis-linha" data-draw="linha" data-source="situacoes prazos instrumentos"></div>
-    <div class="cis-tablebox">
-      <table class="cis-table" data-source="prazos" data-row-key="id">
-        <thead>
-          <tr>
-            <th data-field="data">Data</th>
-            <th data-field="tipo">Tipo</th>
-            <th data-field="numero" class="cis-hide-narrow">Nº</th>
-            <th data-field="descricao">O que muda</th>
-            <th data-field="situacao">Situação</th>
-            <th data-field="fim">Novo fim da vigência</th>
-            <th data-field="detalhe" class="cis-hide-narrow">Justificativa ou pedido</th>
-          </tr>
-        </thead>
-        <tbody data-draw="prazotab"></tbody>
-      </table>
-    </div>
-    <details class="cis-mais">
-      <summary data-draw="sit-resumo" data-source="situacoes">Histórico de situação</summary>
-      <div class="cis-tablebox">
-        <table class="cis-table" data-source="situacoes" data-row-key="inicio">
-          <thead>
-            <tr>
-              <th data-field="situacao">Situação</th>
-              <th data-field="inicio">De</th>
-              <th data-field="fim">Até</th>
-              <th data-field="dias" class="num">Dias</th>
-            </tr>
-          </thead>
-          <tbody data-draw="sittab"></tbody>
-        </table>
-      </div>
-    </details>
-    <p class="cis-origem">Fonte: Transferegov, dados abertos siconv_termo_aditivo, siconv_prorroga_oficio, siconv_solicitacao_alteracao e siconv_historico_situacao. O histórico guarda uma linha por evento; aqui cada linha é uma mudança de situação.</p>
-  </section>
 
   <section class="cis-card" id="fisico">
     <div class="cis-cardhead">
@@ -436,47 +381,95 @@
     <div class="cis-chart" data-draw="fluxo" data-source="cronograma repasses pagamentos"></div>
   </section>
 
-  <section class="cis-card" id="empenhos">
-    <h2>Empenhos do MDS</h2>
-    <p class="cis-muted" data-draw="emp-resumo" data-source="empenhos instrumentos">—</p>
-    <div class="cis-resumo" data-draw="emp-grupos" data-source="empenhos"></div>
+  <section class="cis-card" id="prazos">
+    <h2>Prazos, alterações e situação</h2>
+    <p class="cis-muted" data-draw="prazo-resumo" data-source="instrumentos prazos situacoes">—</p>
+    <ul class="cis-legend">
+      <li><span class="cis-sw bloco f-plano"></span>Proposta e plano de trabalho</li>
+      <li><span class="cis-sw bloco f-exec"></span>Execução</li>
+      <li><span class="cis-sw bloco f-pc"></span>Prestação de contas</li>
+      <li><span class="cis-sw bloco f-bad"></span>Inadimplência ou contas rejeitadas</li>
+      <li><span class="cis-mk">●</span>Termo aditivo</li>
+      <li><span class="cis-mk">◆</span>Prorrogação de ofício</li>
+      <li><span class="cis-mk">■</span>Solicitação de alteração</li>
+      <li><span class="cis-mk analise">■</span>em análise</li>
+      <li><span class="cis-mk recusada">■</span>recusada</li>
+      <li><span class="cis-sw dash"></span>Fim da vigência original</li>
+      <li><span class="cis-sw fim"></span>Fim da vigência atual</li>
+    </ul>
+    <div class="cis-chart cis-linha" data-draw="linha" data-source="situacoes prazos instrumentos"></div>
     <div class="cis-tablebox">
-      <table class="cis-table" data-source="empenhos" data-row-key="id">
+      <table class="cis-table" data-source="prazos" data-row-key="id">
         <thead>
           <tr>
             <th data-field="data">Data</th>
-            <th data-field="empenho">Nota de empenho</th>
             <th data-field="tipo">Tipo</th>
-            <th data-field="natureza" class="cis-hide-narrow">Natureza</th>
-            <th data-field="valor" class="num">Valor</th>
-            <th data-field="repassado" class="num">Repassado</th>
-            <th data-field="observacao" class="cis-hide-narrow">Observação</th>
+            <th data-field="numero" class="cis-hide-narrow">Nº</th>
+            <th data-field="descricao">O que muda</th>
+            <th data-field="situacao">Situação</th>
+            <th data-field="fim">Novo fim da vigência</th>
+            <th data-field="detalhe" class="cis-hide-narrow">Justificativa ou pedido</th>
           </tr>
         </thead>
-        <tbody data-draw="emptab"></tbody>
+        <tbody data-draw="prazotab"></tbody>
       </table>
     </div>
-    <p class="cis-origem">Fonte: Transferegov, dados abertos siconv_empenho e siconv_empenho_desembolso. Repassado é a soma das ordens bancárias do MDS pagas com cada nota. Anulações e cancelamentos de restos a pagar entram com valor negativo.</p>
+    <details class="cis-mais">
+      <summary data-draw="sit-resumo" data-source="situacoes">Histórico de situação</summary>
+      <div class="cis-tablebox">
+        <table class="cis-table" data-source="situacoes" data-row-key="inicio">
+          <thead>
+            <tr>
+              <th data-field="situacao">Situação</th>
+              <th data-field="inicio">De</th>
+              <th data-field="fim">Até</th>
+              <th data-field="dias" class="num">Dias</th>
+            </tr>
+          </thead>
+          <tbody data-draw="sittab"></tbody>
+        </table>
+      </div>
+    </details>
+    <p class="cis-origem">Fonte: Transferegov, dados abertos siconv_termo_aditivo, siconv_prorroga_oficio, siconv_solicitacao_alteracao e siconv_historico_situacao. O histórico guarda uma linha por evento; aqui cada linha é uma mudança de situação.</p>
   </section>
 
-  <section class="cis-card" id="rendimentos">
-    <h2>Rendimentos de aplicação</h2>
-    <p class="cis-muted" data-draw="rend-resumo" data-source="rendimentos instrumentos">—</p>
-    <div class="cis-tablebox">
-      <table class="cis-table" data-source="rendimentos" data-row-key="id">
-        <thead>
-          <tr>
-            <th data-field="numero">Pedido</th>
-            <th data-field="data">Data</th>
-            <th data-field="situacao">Situação</th>
-            <th data-field="valor_solicitado" class="num">Solicitado</th>
-            <th data-field="valor_aprovado" class="num">Aprovado</th>
-          </tr>
-        </thead>
-        <tbody data-draw="rendtab"></tbody>
-      </table>
+  <section class="cis-card" id="empenhos">
+    <div class="cis-cardhead">
+      <h2>Empenhos do MDS</h2>
+      <span>
+        <span class="cis-aviso" data-aviso="ok" hidden>Copiada. Cole no Excel ou no SEI.</span>
+        <span class="cis-aviso" data-aviso="sel" hidden>Tabela selecionada: tecle Ctrl+C para copiar.</span>
+        <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
+      </span>
     </div>
-    <p class="cis-origem">Fonte: Transferegov, dados abertos siconv_solicitacao_rendimento_aplicacao. No Transferegov, o uso dos rendimentos da conta no objeto passa por um pedido do parceiro, analisado pelo MDS, que ajusta o plano de trabalho.</p>
+    <div class="cis-resumo" data-draw="emp-kpis" data-source="empenhos instrumentos"></div>
+    <p class="cis-muted" data-draw="emp-resumo" data-source="empenhos instrumentos">—</p>
+    <div class="cis-quadrobox">
+      <p class="cis-tabtit">Tabela 3: Empenhado e repassado pelo MDS no <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por grupo de despesa</p>
+      <table class="cis-quadro" data-draw="empquadro" data-source="empenhos instrumentos"></table>
+      <p class="cis-origem">Fonte: Transferegov, módulo Discricionárias (dados abertos siconv_empenho e siconv_empenho_desembolso), carga de <span data-draw="carga" data-source="instrumentos">—</span>. Elaboração: o repassado de cada nota é a soma das ordens bancárias do MDS pagas com ela; nas notas emitidas desde 2019, o empenhado é ao menos o que já foi repassado com a nota.</p>
+    </div>
+    <details class="cis-mais">
+      <summary data-draw="emp-qtd" data-source="empenhos">Notas de empenho</summary>
+      <div class="cis-tablebox">
+        <table class="cis-table" data-source="empenhos" data-row-key="id">
+          <thead>
+            <tr>
+              <th data-field="data">Data</th>
+              <th data-field="empenho">Nota de empenho</th>
+              <th data-field="tipo">Tipo</th>
+              <th data-field="natureza" class="cis-hide-narrow">Natureza</th>
+              <th data-field="valor" class="num">Valor na nota</th>
+              <th data-field="empenhado" class="num">Empenhado</th>
+              <th data-field="repassado" class="num">Repassado</th>
+              <th data-field="observacao" class="cis-hide-narrow">Observação</th>
+            </tr>
+          </thead>
+          <tbody data-draw="emptab"></tbody>
+        </table>
+      </div>
+      <p class="cis-origem">Anulações e cancelamentos de restos a pagar entram com valor negativo. Em destaque, as notas em que o repassado passa do valor registrado: o empenhado considerado é o repassado.</p>
+    </details>
   </section>
 
   <section class="cis-card" id="pagamentos">
@@ -499,6 +492,26 @@
         <tbody data-draw="pagtab"></tbody>
       </table>
     </div>
+  </section>
+
+  <section class="cis-card" id="rendimentos">
+    <h2>Rendimentos de aplicação</h2>
+    <p class="cis-muted" data-draw="rend-resumo" data-source="rendimentos instrumentos">—</p>
+    <div class="cis-tablebox">
+      <table class="cis-table" data-source="rendimentos" data-row-key="id">
+        <thead>
+          <tr>
+            <th data-field="numero">Pedido</th>
+            <th data-field="data">Data</th>
+            <th data-field="situacao">Situação</th>
+            <th data-field="valor_solicitado" class="num">Solicitado</th>
+            <th data-field="valor_aprovado" class="num">Aprovado</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rendtab"></tbody>
+      </table>
+    </div>
+    <p class="cis-origem">Fonte: Transferegov, dados abertos siconv_solicitacao_rendimento_aplicacao. No Transferegov, o uso dos rendimentos da conta no objeto passa por um pedido do parceiro, analisado pelo MDS, que ajusta o plano de trabalho.</p>
   </section>
 
   <section class="cis-card" id="carteira">
@@ -986,6 +999,26 @@
     'Cisterna comunitária', 'Cisterna de produção', 'Cisterna de 52 mil litros', 'Barragem subterrânea', 'Pequena barragem',
     'Barreiro trincheira', 'Tanque de pedra', "Bomba d'água popular", 'Sistema pluvial multiuso', 'Sistema de tratamento e reuso'];
 
+  // Objeto: primeiros 300 caracteres, com um link para abrir o texto inteiro
+  const OBJETO_MAX = 300;
+  dash.draw('objeto', (el) => {
+    const i = aberto();
+    const txt = (i?.objeto ?? '').trim();
+    el.replaceChildren();
+    if (!txt) { el.textContent = '—'; return; }
+    if (txt.length <= OBJETO_MAX) { el.textContent = txt; return; }
+    const curto = txt.slice(0, OBJETO_MAX).replace(/\s+\S*$/, '') + '…';
+    const span = celula('span', curto);
+    const btn = celula('button', 'ver texto integral', {type: 'button', class: 'cis-vermais', 'aria-expanded': 'false'});
+    btn.onclick = () => {
+      const abrir = btn.getAttribute('aria-expanded') === 'false';
+      span.textContent = abrir ? txt : curto;
+      btn.textContent = abrir ? 'mostrar menos' : 'ver texto integral';
+      btn.setAttribute('aria-expanded', String(abrir));
+    };
+    el.append(span, btn);
+  });
+
   dash.draw('situacao-tag', (el) => {
     const i = aberto();
     el.textContent = i ? i.situacao : '—';
@@ -1247,49 +1280,99 @@
   };
   const soma = (linhas, campo) => linhas.reduce((s, x) => s + (n(x[campo]) ?? 0), 0);
 
+  // Empenhado considerado: nas notas emitidas desde 2019 o Transferegov só traz o valor da emissão,
+  // então vale ao menos o que já foi repassado com a nota (coluna empenhado, calculada na carga).
+  const empenhado = (x) => n(x.empenhado) ?? n(x.valor) ?? 0;
+  const totaisEmp = (e, i) => {
+    const reg = soma(e, 'valor'), empNotas = e.reduce((s, x) => s + empenhado(x), 0), repNotas = soma(e, 'repassado');
+    const rep = n(i.vl_repassado) ?? 0;
+    // Ordens bancárias sem nota ligada também saíram de algum empenho: o empenhado é ao menos o repassado
+    const extra = Math.max(rep - empNotas, 0);
+    return {reg, emp: empNotas + extra, extra, repNotas, rep, semNota: rep - repNotas, pago: n(i.vl_pago) ?? 0, previsto: n(i.vl_repasse) ?? 0,
+      ajustadas: e.filter((x) => empenhado(x) - (n(x.valor) ?? 0) >= 1).length};
+  };
+
+  dash.draw('emp-kpis', (el) => {
+    const e = doAberto('empenhos'), i = aberto();
+    el.replaceChildren();
+    if (!e || !i || !e.length) return;
+    const t = totaisEmp(e, i);
+    const partePct = (a, b) => (b > 0 ? fmt.pct(a / b) : '—');
+    [['Empenhado pelo MDS', t.emp, partePct(t.emp, t.previsto) + ' do repasse previsto de ' + fmt.brlc(t.previsto)],
+     ['Repassado pelo MDS', t.rep, partePct(t.rep, t.emp) + ' do empenhado' + (t.emp - t.rep >= 100 ? ' · falta repassar ' + fmt.brlc(t.emp - t.rep) : '')],
+     ['Pago pelo parceiro', t.pago, partePct(t.pago, t.rep) + ' do repassado' + (t.pago > t.rep ? ' · inclui rendimentos e contrapartida' : '')],
+    ].forEach(([rotulo, valor, sub]) => {
+      const box = celula('div', '', {class: 'cis-kpi'});
+      box.append(celula('span', rotulo, {class: 'lab'}), celula('span', fmt.brlc(valor), {class: 'val', title: fmt.brl(valor)}), celula('span', sub, {class: 'sub'}));
+      el.append(box);
+    });
+  });
+
   dash.draw('emp-resumo', (el) => {
     const e = doAberto('empenhos'), i = aberto();
     if (!e || !i) { el.textContent = '—'; return; }
     if (!e.length) { el.textContent = 'Nenhuma nota de empenho registrada para este instrumento.'; return; }
+    const t = totaisEmp(e, i);
     const anulado = e.filter((x) => n(x.valor) < 0).reduce((s, x) => s + n(x.valor), 0);
-    const semValor = e.filter((x) => n(x.valor) === 0).length;
-    const rep = soma(e, 'repassado');
-    let txt = semValor === e.length
-      ? plural(e.length, 'nota de empenho', 'notas de empenho') + ', todas sem valor no Transferegov (o empenhado deste instrumento aparece zerado). Repassado com essas notas, pelas ordens bancárias ligadas a cada uma: ' + fmt.brl(rep) + '.'
-      : plural(e.length, 'nota de empenho', 'notas de empenho') + '. Empenhado líquido: ' + fmt.brl(soma(e, 'valor'))
-        + (anulado < 0 ? ', já descontados ' + fmt.brl(-anulado) + ' de anulações e cancelamentos' : '') + '. Repassado com essas notas: ' + fmt.brl(rep) + '.'
-        + (semValor ? ' ' + plural(semValor, 'nota vem', 'notas vêm') + ' sem valor no Transferegov.' : '');
-    if (Math.abs(rep - (n(i.vl_repassado) ?? 0)) >= 1) txt += ' O total repassado ao instrumento é ' + fmt.brl(n(i.vl_repassado) ?? 0) + '; a diferença são ordens bancárias que os dados abertos não ligam a nenhuma nota.';
+    let txt = plural(e.length, 'nota de empenho', 'notas de empenho') + (anulado < 0 ? ', já descontados ' + fmt.brl(-anulado) + ' de anulações e cancelamentos' : '') + '.';
+    if (t.ajustadas) {
+      txt += ' O Transferegov mostra ' + fmt.brl(t.reg) + ' empenhados, menos do que já foi repassado, porque nos dados abertos as notas emitidas desde 2019 trazem só o valor da emissão, sem os reforços feitos depois no SIAFI, e muitas vêm zeradas.'
+        + ' Em ' + plural(t.ajustadas, 'nota', 'notas') + ' o MDS já repassou mais do que o valor registrado; nelas o painel considera empenhado o que foi repassado, '
+        + fmt.brl(t.emp - t.reg) + ' a mais. O empenhado real pode ser maior, se ainda houver saldo a repassar nessas notas.';
+    }
+    if (Math.abs(t.semNota) >= 1) txt += ' O total repassado ao instrumento é ' + fmt.brl(t.rep) + ', e as ordens bancárias ligadas às notas somam ' + fmt.brl(t.repNotas) + '; a diferença são ordens bancárias que os dados abertos não ligam a nenhuma nota.'
+      + (t.semNota >= 1 ? ' Elas saíram do saldo de alguma nota, por isso a linha delas na Tabela 3 desconta o empenhado a repassar' + (t.extra >= 1 ? ' e soma ' + fmt.brl(t.extra) + ' ao empenhado, que é ao menos o repassado' : '') + '.' : '');
     el.textContent = txt;
   });
 
-  dash.draw('emp-grupos', (el) => {
-    const e = doAberto('empenhos');
-    el.replaceChildren();
-    if (!e || !e.length) return;
-    const comValor = e.some((x) => n(x.valor) !== 0);
-    [...d3.group(e, (x) => x.grupo || 'Sem natureza')].sort((a, b) => a[0].localeCompare(b[0])).forEach(([grupo, linhas]) => {
-      const emp = soma(linhas, 'valor'), rep = soma(linhas, 'repassado');
-      const box = celula('div', '', {class: 'cis-kpi'});
-      const nat = [...new Set(linhas.map((x) => x.natureza).filter(Boolean))].join(', ');
-      box.append(celula('span', grupo + (nat ? ' (' + nat + ')' : ''), {class: 'lab'}),
-        celula('span', comValor ? fmt.brlc(emp) : fmt.brlc(rep), {class: 'val'}),
-        celula('span', comValor ? 'empenhado · ' + fmt.brlc(rep) + ' repassado' + (emp - rep >= 1 ? ' · ' + fmt.brlc(emp - rep) + ' a repassar' : '') : 'repassado; empenho sem valor', {class: 'sub'}));
-      el.append(box);
+  dash.draw('empquadro', (tab) => {
+    const e = doAberto('empenhos'), i = aberto();
+    tab.replaceChildren();
+    if (!e || !i || !e.length) return;
+    const t = totaisEmp(e, i);
+    const mostraReg = t.ajustadas > 0;
+    const cab = ['Grupo de despesa', ...(mostraReg ? ['Registrado nas notas (R$)'] : []), 'Empenhado (R$)', 'Repassado pelo MDS (R$)', 'Empenhado a repassar (R$)'];
+    const v = (x) => (Math.abs(x) < 0.005 ? '-' : fmt.brl(x).replace(/R\$\s?/, ''));
+    const linha = (tag, rotulo, reg, emp, rep, falta) => {
+      const tr = document.createElement('tr');
+      tr.append(celula(tag, rotulo));
+      [...(mostraReg ? [reg] : []), emp, rep, falta].forEach((x) => tr.append(celula(tag, x == null ? '' : v(x), {class: 'nowrap'})));
+      return tr;
+    };
+    const thead = document.createElement('thead');
+    const h = document.createElement('tr');
+    cab.forEach((c) => h.append(celula('th', c)));
+    thead.append(h);
+    const tbody = document.createElement('tbody');
+    const ORDEM = ['Custeio', 'Investimento', 'Sem natureza'];
+    [...d3.group(e, (x) => x.grupo || 'Sem natureza')].sort((a, b) => ORDEM.indexOf(a[0]) - ORDEM.indexOf(b[0])).forEach(([grupo, linhas]) => {
+      const emp = linhas.reduce((s, x) => s + empenhado(x), 0), rep = soma(linhas, 'repassado');
+      tbody.append(linha('td', grupo, soma(linhas, 'valor'), emp, rep, Math.max(emp - rep, 0)));
     });
+    if (t.semNota >= 1) tbody.append(linha('td', 'Ordens bancárias sem nota ligada', null, t.extra, t.semNota, t.extra - t.semNota));
+    const tfoot = document.createElement('tfoot');
+    tfoot.append(linha('td', 'Total', t.reg, t.emp, t.rep, Math.max(t.emp - t.rep, 0)));
+    tab.append(thead, tbody, tfoot);
+  });
+
+  dash.draw('emp-qtd', (el) => {
+    const e = doAberto('empenhos');
+    el.textContent = e && e.length ? 'Ver as ' + plural(e.length, 'nota de empenho', 'notas de empenho') : 'Notas de empenho';
   });
 
   dash.draw('emptab', (tb) => {
     const e = doAberto('empenhos');
     tb.replaceChildren();
     if (!e) return;
-    if (!e.length) { linhaVazia(tb, 7, 'Nenhuma nota de empenho registrada.'); return; }
+    if (!e.length) { linhaVazia(tb, 8, 'Nenhuma nota de empenho registrada.'); return; }
     e.forEach((x) => {
       const tr = document.createElement('tr');
       tr.dataset.key = x.id;
       if (n(x.valor) < 0) tr.className = 'anula';
+      const ajustada = empenhado(x) - (n(x.valor) ?? 0) >= 1;
       tr.append(celula('td', x.data ? fmt.data(x.data) : '', {class: 'nowrap'}), celula('td', x.empenho ?? '', {class: 'nowrap'}), celula('td', x.tipo ?? ''),
         celula('td', x.natureza ?? '', {class: 'nowrap cis-hide-narrow'}), celula('td', n(x.valor) ? fmt.brl(x.valor) : '—', {class: 'num'}),
+        celula('td', empenhado(x) ? fmt.brl(empenhado(x)) : '—', ajustada ? {class: 'num analise', title: 'Valor na nota menor que o repassado: considerado o repassado'} : {class: 'num'}),
         celula('td', n(x.repassado) ? fmt.brl(x.repassado) : '—', {class: 'num'}), celula('td', x.observacao ?? '', {class: 'detalhe cis-hide-narrow'}));
       tb.append(tr);
     });

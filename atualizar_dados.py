@@ -246,7 +246,7 @@ def main():
         "uf": i.UF_PROPONENTE,
         "municipio": i.MUNIC_PROPONENTE,
         "natureza": i.NATUREZA_JURIDICA,
-        "objeto": i.OBJETO_PROPOSTA.str.slice(0, 600),
+        "objeto": i.OBJETO_PROPOSTA,
         "situacao": i.SIT_CONVENIO.fillna("Sem situação"),
         "processo": i.NR_PROCESSO,
         "assinatura": data_br(i.DIA_ASSIN_CONV.fillna("")),
@@ -276,7 +276,7 @@ def main():
     })
     inst["acompanhamento"] = ~inst.situacao.isin(SITUACOES_ENCERRADAS)
     inst = inst.sort_values(["acompanhamento", "fim_vigencia", "nr"], ascending=[False, False, True])
-    inst.to_csv(DADOS / "instrumentos.csv", index=False)
+    inst["vl_empenhado_registrado"] = inst.vl_empenhado
 
     acomp = set(inst.loc[inst.acompanhamento, "nr"])
 
@@ -430,7 +430,7 @@ def main():
     ed = ler("siconv_empenho_desembolso", filtro=lambda b: b[(b.ID_EMPENHO + "-" + b.CD_ORIGEM_EMPENHO).isin(set(emp.chave))])
     rep_emp = ed.assign(valor=valor_br(ed.VALOR_GRUPO)).groupby(ed.ID_EMPENHO + "-" + ed.CD_ORIGEM_EMPENHO).valor.sum()
     nat = emp.NATUREZA_DESPESA.fillna("")
-    pd.DataFrame({
+    notas = pd.DataFrame({
         "id": emp.chave, "nr": emp.NR_CONVENIO, "empenho": emp.NR_EMPENHO, "data": data_br(emp.DATA_EMISSAO.fillna("")),
         "tipo": emp.DESC_TIPO_NOTA, "situacao": emp.DESC_SITUACAO_EMPENHO,
         # 335041 -> 3.3.50.41; as notas antigas trazem o subelemento (44404109 -> 4.4.40.41.09)
@@ -438,7 +438,19 @@ def main():
         "grupo": nat.str[0].map({"3": "Custeio", "4": "Investimento"}),
         "valor": valor_br(emp.VALOR_EMPENHO).round(2), "repassado": emp.chave.map(rep_emp).fillna(0).round(2),
         "observacao": emp.OBSERVACAO_EMPENHO.str.slice(0, 400),
-    }).sort_values(["nr", "data", "empenho", "id"], ascending=[True, False, True, True]).to_csv(DADOS / "empenhos.csv", index=False)
+    })
+    # As notas do formato atual (origem NE, desde 2019) vêm só com o valor da emissão: os reforços e
+    # anulações feitos depois no SIAFI não entram nos dados abertos, e muitas vêm zeradas. Nelas, o
+    # empenhado é ao menos o que já foi repassado com a nota. As notas legadas trazem reforços e
+    # anulações em linhas próprias e ficam como estão.
+    notas["empenhado"] = notas.valor.where(emp.CD_ORIGEM_EMPENHO != "2", notas[["valor", "repassado"]].max(axis=1))
+    notas.sort_values(["nr", "data", "empenho", "id"], ascending=[True, False, True, True]).to_csv(DADOS / "empenhos.csv", index=False)
+    # Ordens bancárias sem nota ligada também saíram de algum empenho: o empenhado é ao menos o repassado
+    ajuste = (notas.empenhado - notas.valor).groupby(notas.nr).sum()
+    com_notas = inst.nr.isin(set(notas.nr))
+    inst["vl_empenhado"] = (inst.vl_empenhado + inst.nr.map(ajuste).fillna(0)).round(2)
+    inst.loc[com_notas, "vl_empenhado"] = inst.loc[com_notas, ["vl_empenhado", "vl_repassado"]].max(axis=1)
+    inst.to_csv(DADOS / "instrumentos.csv", index=False)
 
     # --- pedidos para usar os rendimentos da aplicação financeira
     ra = ler("siconv_solicitacao_rendimento_aplicacao", filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])
