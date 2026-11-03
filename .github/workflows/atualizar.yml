@@ -1,8 +1,11 @@
 name: Atualizar e publicar o painel
 
 on:
+  # O Transferegov publica a carga por volta das 6h30 de Brasília. O agendamento do GitHub atrasa
+  # horas (em 01 e 02/11 rodou às 13h40 e às 17h10), então há várias tentativas no dia, fora da hora
+  # cheia; cada uma só baixa os dados quando a carga mudou.
   schedule:
-    - cron: "0 10 * * *"  # 7h em Brasília (UTC-3)
+    - cron: "37 9,11,13,16,20 * * *"  # 6h37, 8h37, 10h37, 13h37 e 17h37 em Brasília (UTC-3)
   workflow_dispatch:       # rodar à mão pela aba Actions
   push:                    # mudança no painel: publica de novo sem baixar dados
     branches: [main]
@@ -18,7 +21,33 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    outputs:
+      nova: ${{ steps.carga.outputs.nova }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: dados/instrumentos.csv
+          sparse-checkout-cone-mode: false
+      - name: Comparar a carga do Transferegov com a do painel
+        id: carga
+        run: |
+          curl -sSfL --retry 3 -o dc.zip https://api-publica.transferegov.gestao.gov.br/downloads/dadosgov/data_carga_siconv.zip
+          python - >> "$GITHUB_OUTPUT" <<'PY'
+          import csv, io, sys, zipfile
+          from datetime import datetime
+          z = zipfile.ZipFile("dc.zip")
+          linhas = io.TextIOWrapper(z.open(z.namelist()[0]), encoding="utf-8-sig").read().split()
+          fonte = datetime.strptime(linhas[1], "%d/%m/%Y").strftime("%Y-%m-%d")
+          painel = next(csv.DictReader(open("dados/instrumentos.csv", encoding="utf-8")))["data_carga"][:10]
+          print(f"Transferegov {fonte}, painel {painel}", file=sys.stderr)
+          print("nova=" + str(fonte != painel).lower())
+          PY
+
   atualizar:
+    needs: verificar
+    if: github.event_name != 'schedule' || needs.verificar.outputs.nova == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     environment:
