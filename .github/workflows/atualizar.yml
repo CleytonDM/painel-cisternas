@@ -33,7 +33,7 @@ jobs:
       - name: Comparar a carga do Transferegov com a do painel
         id: carga
         run: |
-          curl -sSfL --retry 3 -o dc.zip https://api-publica.transferegov.gestao.gov.br/downloads/dadosgov/data_carga_siconv.zip
+          curl -sSfL --retry 3 -o dc.zip "https://api-publica.transferegov.gestao.gov.br/downloads/dadosgov/data_carga_siconv.zip?v=$(date +%s)"
           python - >> "$GITHUB_OUTPUT" <<'PY'
           import csv, io, sys, zipfile
           from datetime import datetime

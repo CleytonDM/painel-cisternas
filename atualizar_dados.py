@@ -10,6 +10,7 @@ import io
 import re
 import shutil
 import sys
+import time
 import unicodedata
 import urllib.request
 import zipfile
@@ -18,6 +19,7 @@ from pathlib import Path
 import pandas as pd
 
 BASE_URL = "https://api-publica.transferegov.gestao.gov.br/downloads/dadosgov/"
+EXECUCAO = int(time.time())
 AQUI = Path(__file__).resolve().parent
 BRUTOS = AQUI / "brutos"
 DADOS = AQUI / "dados"
@@ -167,7 +169,10 @@ def lote(g):
 
 def baixar(nome):
     destino = BRUTOS / f"{nome}.zip"
-    with urllib.request.urlopen(BASE_URL + f"{nome}.zip", timeout=600) as r, open(destino, "wb") as f:
+    # Os arquivos passam pelo cache da Cloudflare, que pode entregar a carga do dia anterior
+    # horas depois da publicação; um parâmetro novo a cada execução busca o arquivo na origem.
+    url = BASE_URL + f"{nome}.zip?v={EXECUCAO}"
+    with urllib.request.urlopen(url, timeout=600) as r, open(destino, "wb") as f:
         shutil.copyfileobj(r, f, 1 << 20)
     print(f"baixado {nome} ({destino.stat().st_size / 1e6:.1f} MB)")
 
