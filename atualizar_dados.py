@@ -114,17 +114,26 @@ TECNOLOGIAS = [
     (r"ENXURRAD", "Cisterna de enxurrada"),
     (r"CALCAD", "Cisterna calçadão"),
     (r"TELHADAO", "Cisterna telhadão"),
-    (r"ESCOLA", "Cisterna escolar"),
+    (r"ESCOLA|\bC\.? ?ESC\b", "Cisterna escolar"),
     (r"BARREIRO|TRINCHEIRA", "Barreiro trincheira"),
     (r"TANQUES? DE PEDRA", "Tanque de pedra"),
     (r"BOMBA", "Bomba d'água popular"),
-    (r"PLUVIAL MULTIUSO", "Sistema pluvial multiuso"),
+    (r"PLUVIAL MULTIUSO|\bSISTEMAS? +(AUTONOMO|COMUNITARIO)", "Sistema pluvial multiuso"),
     (r"CISTERNAS? COMUNITARIA", "Cisterna comunitária"),
     (r"CISTERNAS? DE PRODUCAO", "Cisterna de produção"),
     (r"CISTERNA.*52(\.000| ?MIL)", "Cisterna de 52 mil litros"),
-    (r"CISTERNA.*(16|PLACA|CONSUMO)|(16|PLACA).*CISTERNA", "Cisterna de 16 mil litros"),
+    (r"CISTERNA.*(16|PLACA|CONSUMO)|(16|PLACA).*CISTERNA|\bC(IST)?\.? ?16\.?000 ?L", "Cisterna de 16 mil litros"),
     (r"MICROSSISTEMA", "Microssistema de abastecimento"),
+    (r"LIMPEZA DE AGUADA", "Limpeza de aguadas"),
 ]
+# Etapa sem tecnologia no texto: vale a da meta, se a etapa não for de apoio ou gestão. Sem tecnologia
+# nem na meta, entra como não identificada quando o texto fala em implementar ou construir tecnologia.
+NAO_TEC = (r"APOIO|EQUIPE|\bTECNIC|COMBUST|VEICUL|ALUGUEL|LOCACAO|ASSESSORIA|COORDENA|DIARIA|SOBRA|RECOMPOSI|CAPACITA"
+           r"|SEMINARIO|CARTILHA|VISITA|AQUISICAO DE AGUA|APLICACAO FINANCEIRA|PUBLICIDADE|GRAFIC|COMUNICA|CUSTEIO OPERACIONAL"
+           r"|CUSTEIO DO PROJETO|FORTALECIMENTO|PEDREIRO|ANIMAIS|QUINTA|APRISCO|MELHORIA|REAJUSTE|BOMBA MANUAL"
+           r"|RECOMPO|CONTRATACAO D[EO] (ARTICULADOR|GERENTE|COORDENADOR)|ARTICULADOR|GERENTE|OBRIGACO|PATRONA|SALARI|ENCARGO|ADMINISTRATIV")
+IMPLEMENTA = r"IMPLEMENT|IMPLANT|CONSTRU|COSNTRU|CISTERN|TECNOLOGIA"
+TEC_INDEFINIDA = ("Cisterna – tipo não identificado", "Tecnologia não identificada")
 
 # Modelos de tecnologia social do Programa Cisternas (tabela do SIG Cisternas: nº do modelo e nome resumido)
 MODELOS = pd.read_csv(Path(__file__).parent / "referencias" / "modelos_tecnologia.csv", dtype=str) \
@@ -173,9 +182,10 @@ def uf_no_texto(t):
     for nome, sigla in UFS.items():
         if re.search(rf"\b{nome}\b", t):
             return sigla
-    # sigla no fim ("... - PE") ou no começo, depois da numeração ("1.1. AC. Sistema ...")
-    m = re.search(r"[-–]\s*([A-Z]{2})\s*$", t) or re.match(r"^\s*\d+(?:\.\d+)*[A-Z]?\.?\s+([A-Z]{2})\.\s", t)
-    return m.group(1) if m and m.group(1) in UFS.values() else None
+    # sigla no fim ("... - PE") ou no começo, depois da numeração ("1.1. AC. Sistema ...", "7.1 - AL - Serviço ...")
+    m = re.search(r"[-–]\s*([A-Z]{2})\s*$", t) or re.match(r"^\s*\d+(?:\.\d+)*[A-Z]?\.?\s+(?:[-–]\s*)?([A-Z]{2})\s*[.\-–]\s", t)
+    # a sigla PA vale (só o nome por extenso fica de fora)
+    return m.group(1) if m and m.group(1) in {*UFS.values(), "PA"} else None
 
 
 def tecnologia(t):
@@ -230,14 +240,32 @@ def modelo(t, tec):
         return {("52", None): "33", ("25", "40"): "10", ("25", "80"): "17", ("16", "80"): "18", ("16", "40"): "35"}.get(chave) \
             or ("10" if re.search(r"\bIO 2016\b", t) else None)
     if tec == "Cisterna comunitária":
-        return "30" if "AGROBIODIVERSIDADE" in t else None
+        return "30" if "AGROBIO" in t else None
     if tec == "Microssistema de abastecimento":
         for padrao, nu in [(r"SIMPLIFICADO", "36"), (r"ESCOLA", "19"), (r"PONTOS? DE USO COLETIVO", "29"),
                            (r"SUBTERRANE", "15"), (r"SUPERFICIA", "16")]:
             if re.search(padrao, t):
                 return nu
         return "34" if re.search(r"\bIN\b.*61/2025", t) else None
-    return {"Sistema de tratamento e reuso": "11", "Bomba d'água popular": "90", "Tanque de pedra": "94"}.get(tec)
+    return {"Sistema de tratamento e reuso": "11", "Bomba d'água popular": "90", "Tanque de pedra": "94",
+            "Limpeza de aguadas": "93"}.get(tec)
+
+
+def tecnologia_etapa(t, esp):
+    """Tecnologia da etapa (texto t), com a especificação da meta (esp) quando a etapa não diz."""
+    if tec := tecnologia(t):
+        return tec
+    if re.search(NAO_TEC, t):
+        return None
+    # Meta que complementa outra (parte X de um lote dividido em várias metas, rendimentos ou sobras
+    # usados "para a meta de...") só conta pelas próprias etapas, para o lote não entrar duas vezes
+    meta_propria = not re.search(r"PARTE (\d+|[IVX]+)\b|RENDIMENTO|SOBRA|COMPLEMENT", esp)
+    if meta_propria and (tec := tecnologia(esp)):
+        return tec
+    # complemento de valor (ISS, caráter produtivo...) sem tecnologia não é unidade nova
+    if parte(t) != "acessorio" and (re.search(IMPLEMENTA, t) or meta_propria and re.search(IMPLEMENTA, esp)):
+        return TEC_INDEFINIDA[0] if "CISTERN" in t + " " + esp else TEC_INDEFINIDA[1]
+    return None
 
 
 def parte(t):
@@ -433,7 +461,8 @@ def main():
                   left_on="ID_META", right_on="id")
     et = et.merge(inst[["nr", "uf"]].rename(columns={"uf": "uf_parceiro"}), on="nr")
     texto = et.DESC_ETAPA.map(sem_acento)
-    et["tecnologia"] = texto.map(tecnologia)
+    esp = et.especificacao.map(sem_acento)
+    et["tecnologia"] = [tecnologia_etapa(t, e) for t, e in zip(texto, esp)]
     et["uf"] = texto.map(uf_no_texto)
     # UF do texto só vale em instrumento com mais de um estado; senão é a do parceiro
     # (evita tomar município homônimo, como São Paulo do Potengi, por estado).
@@ -445,17 +474,28 @@ def main():
     et["conta"] = (et.valor >= 1) & ~texto.str.contains("NAO INTEGRA", regex=False)
     et["quantidade"] = et.qtd.where(et.conta, 0)
     et["parte"] = texto.map(parte)
-    et = et[et.tecnologia.notna() & ~et.especificacao.map(sem_acento).str.contains(META_NAO_TEC)].copy()
-    et["modelo"] = [modelo(t, tecn) for t, tecn in zip(texto[et.index], et.tecnologia)]
+    et = et[et.tecnologia.notna() & ~esp.str.contains(META_NAO_TEC)].copy()
+    # modelo pelo texto da etapa; se ela não disser, pela especificação da meta
+    et["modelo"] = [None if tecn in TEC_INDEFINIDA else modelo(t, tecn) or modelo(e, tecn)
+                    for t, e, tecn in zip(texto[et.index], esp[et.index], et.tecnologia)]
     # Partes do mesmo lote (custeio, ISS, material...) nem sempre repetem o modelo: na meta, UF e
     # tecnologia com um modelo só identificado, as etapas sem modelo ficam com ele
     unico = et.groupby(["id", "uf", "tecnologia"]).modelo.transform(lambda s: s.dropna().iloc[0] if s.nunique() == 1 else None)
     et["modelo"] = et.modelo.fillna(unico).fillna("")
+    et["pela_meta"] = texto[et.index].map(tecnologia).isna()
     # Uma linha por meta, UF, tecnologia e modelo; toda meta de tecnologia entra no quadro
     tec = (et.groupby(["nr", "meta", "id", "qtd_meta", "uf", "tecnologia", "modelo"])
-           .apply(lambda g: pd.Series({"quantidade": lote(g), "valor": g.valor.sum(), "etapas": len(g)}),
+           .apply(lambda g: pd.Series({"quantidade": lote(g), "valor": g.valor.sum(), "etapas": len(g),
+                                       "pela_meta": g.pela_meta.all(),
+                                       # textos das etapas, para a nota dos casos sem modelo identificado
+                                       "textos": " | ".join(g.DESC_ETAPA.str.strip().str.slice(0, 120).drop_duplicates().head(3))}),
                   include_groups=False)
            .reset_index().rename(columns={"id": "id_meta"}))
+    # Lote que só tem tecnologia pelo título da meta (ou nenhuma) e custa menos de R$ 300 por unidade
+    # é complemento de valor de outra meta (rendimentos "para a meta de construção de cisternas"),
+    # não unidade nova
+    unidades = tec.quantidade.where((tec.qtd_meta <= 1) | (tec.quantidade <= tec.qtd_meta), tec.qtd_meta)
+    tec = tec[~(tec.pela_meta & (unidades > 0) & (tec.valor / unidades < 300))]
     tec["soma_etapas"] = tec.groupby("id_meta").quantidade.transform("sum")
     grupos = tec.groupby("id_meta").quantidade.transform("size")
     difere = (tec.soma_etapas - tec.qtd_meta).abs() >= 0.5
@@ -469,8 +509,10 @@ def main():
     tec.loc[tec.ajuste == "meta", "quantidade"] = tec.qtd_meta
     tec["id"] = tec.id_meta + "-" + tec.uf + "-" + tec.tecnologia + "-" + tec.modelo
     tec["modelo_nome"] = tec.modelo.map(MODELOS)
+    tec["textos"] = tec.textos.where(tec.modelo == "", "")
+    tec = tec[~(tec.tecnologia.isin(TEC_INDEFINIDA) & (tec.quantidade == 0))]
     tec[["id", "nr", "meta", "uf", "tecnologia", "modelo", "modelo_nome", "quantidade", "valor", "etapas", "qtd_meta",
-         "soma_etapas", "ajuste"]] \
+         "soma_etapas", "ajuste", "textos"]] \
         .sort_values(["nr", "meta", "uf", "id"]).to_csv(DADOS / "tecnologias.csv", index=False)
 
     # --- prazos e alterações: termos aditivos, prorrogações de ofício e solicitações de alteração

@@ -360,7 +360,7 @@
         <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
       </span>
     </div>
-    <p class="cis-muted">Entram todas as metas de implementação de tecnologias. A tecnologia e o estado vêm do texto de cada etapa (sem estado no texto, vale a UF do parceiro). O modelo, com o nº e o nome resumido do SIG Cisternas, vem da instrução normativa ou operacional citada na etapa, do nº do modelo ou das variantes descritas no texto (material, ampliação do telhado, várzea, autônomo ou comunitário, acompanhamento familiar – SAFISP); sem SAFISP no texto, vale o modelo sem acompanhamento. Um lote registrado em etapas separadas (custeio e investimento, material e serviço, ISS, complementos, caráter produtivo) conta uma vez só. Etapa zerada, com valor abaixo de R$ 1, ou marcada como "não integra esta meta" conta zero.</p>
+    <p class="cis-muted">Entram todas as metas de implementação de tecnologias. A tecnologia e o estado vêm do texto de cada etapa (sem estado no texto, vale a UF do parceiro). O modelo, com o nº e o nome resumido do SIG Cisternas, vem da instrução normativa ou operacional citada na etapa, do nº do modelo ou das variantes descritas no texto (material, ampliação do telhado, várzea, autônomo ou comunitário, acompanhamento familiar – SAFISP); sem SAFISP no texto, vale o modelo sem acompanhamento. Etapa sem tecnologia no texto fica com a do título da meta; quando nem assim dá para saber a tecnologia ou o modelo, a quantidade entra no quadro como "não identificado" e o caso aparece na lista abaixo dele. Um lote registrado em etapas separadas (custeio e investimento, material e serviço, ISS, complementos, caráter produtivo) conta uma vez só. Etapa zerada, com valor abaixo de R$ 1, ou marcada como "não integra esta meta" conta zero.</p>
     <div class="cis-quadrobox">
       <p class="cis-tabtit">Tabela 2: Distribuição territorial atual das tecnologias previstas no <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por UF</p>
       <table class="cis-quadro" data-draw="tectab" data-source="tecnologias"></table>
@@ -368,6 +368,7 @@
     </div>
     <p class="cis-muted" data-tec="vazio" hidden>Nenhuma meta deste instrumento tem etapas que permitam separar as tecnologias por UF.</p>
     <ul class="cis-notas" data-draw="tecnotas" data-source="tecnologias"></ul>
+    <div data-draw="tecsemmodelo" data-source="tecnologias"></div>
   </section>
 
   <section class="cis-card" id="cronograma">
@@ -998,9 +999,12 @@
   const TECNOLOGIAS = ['Cisterna de 16 mil litros', 'Cisterna calçadão', 'Cisterna de enxurrada', 'Cisterna telhadão', 'Cisterna escolar',
     'Cisterna comunitária', 'Cisterna de produção', 'Cisterna de 52 mil litros', 'Barragem subterrânea', 'Pequena barragem',
     'Barreiro trincheira', 'Tanque de pedra', "Bomba d'água popular", 'Sistema pluvial multiuso', 'Sistema de tratamento e reuso',
-    'Microssistema de abastecimento'];
+    'Microssistema de abastecimento', 'Limpeza de aguadas', 'Cisterna – tipo não identificado', 'Tecnologia não identificada'];
   // Coluna da Tabela 2: nome resumido e nº do modelo (SIG Cisternas) ou a tecnologia, quando o texto não diz o modelo
-  const colunaTec = (x) => (x.modelo ? x.modelo_nome + ' – nº ' + x.modelo : x.tecnologia + ' – modelo não identificado');
+  // Sem tecnologia definida (atualizar_dados.py: TEC_INDEFINIDA) o nome já diz o que falta
+  const TEC_INDEFINIDA = ['Cisterna – tipo não identificado', 'Tecnologia não identificada'];
+  const colunaTec = (x) => (x.modelo ? x.modelo_nome + ' – nº ' + x.modelo
+    : TEC_INDEFINIDA.includes(x.tecnologia) ? x.tecnologia : x.tecnologia + ' – modelo não identificado');
   const ordemTec = (a, b) => (TECNOLOGIAS.indexOf(a.tecnologia) - TECNOLOGIAS.indexOf(b.tecnologia))
     || ((parseFloat(a.modelo) || 999) - (parseFloat(b.modelo) || 999));
 
@@ -1148,6 +1152,30 @@
       }[x.ajuste];
       if (txt) ul.append(celula('li', 'Meta ' + meta + ': ' + txt));
     });
+  });
+
+  // Colunas em que o texto do Transferegov não permite dizer a tecnologia ou o modelo, com o texto das etapas
+  dash.draw('tecsemmodelo', (el) => {
+    const t = dash.data('tecnologias');
+    const nr = atual();
+    el.replaceChildren();
+    if (t.status !== 'ok' || !nr) return;
+    const casos = new Map();
+    t.data.filter((x) => x.nr === nr && !x.modelo && n(x.quantidade)).sort(ordemTec).forEach((x) => {
+      const chave = x.meta + '|' + colunaTec(x);
+      if (!casos.has(chave)) casos.set(chave, {meta: n(x.meta), coluna: colunaTec(x), linhas: []});
+      casos.get(chave).linhas.push(x);
+    });
+    if (!casos.size) return;
+    el.append(celula('p', 'Casos em que os dados do Transferegov não permitem classificar com clareza a tecnologia ou o modelo (as quantidades estão no quadro):', {class: 'cis-muted'}));
+    const ul = celula('ul', '', {class: 'cis-notas'});
+    [...casos.values()].sort((a, b) => a.meta - b.meta).forEach((c) => {
+      const total = c.linhas.reduce((s, x) => s + n(x.quantidade), 0);
+      const porUf = c.linhas.length > 1 ? ' (' + c.linhas.map((x) => x.uf + ' ' + fmt.int(x.quantidade)).join(', ') + ')' : ' (' + c.linhas[0].uf + ')';
+      const texto = c.linhas[0].textos ? ' Texto da etapa: “' + c.linhas[0].textos.split(' | ')[0] + '”.' : '';
+      ul.append(celula('li', 'Meta ' + c.meta + ', ' + c.coluna + ': ' + fmt.int(total) + porUf + '.' + texto));
+    });
+    el.append(ul);
   });
 
   // --- prazos, alterações e situação
