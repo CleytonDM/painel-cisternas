@@ -135,7 +135,15 @@ jobs:
           else
             carga=$(python -c "import csv; print(next(csv.DictReader(open('dados/instrumentos.csv', encoding='utf-8')))['data_carga'][:10])")
             git commit -m "Carga do Transferegov de $carga"
-            git push
+            # O GitHub às vezes recusa o push com erro interno (em 04/11, "Internal Server Error").
+            # Tenta de novo, trazendo antes algum commit que tenha entrado em main enquanto isso.
+            for espera in 30 60 120 240 0; do
+              git push && break
+              [ "$espera" -eq 0 ] && { echo "::error::Não foi possível gravar a carga $carga."; exit 1; }
+              echo "Push recusado; nova tentativa em $espera s."
+              sleep "$espera"
+              git pull --rebase -q origin main
+            done
           fi
 
       - name: Montar o site
