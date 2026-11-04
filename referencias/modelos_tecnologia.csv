@@ -1,0 +1,48 @@
+"NU_MODELO_TECNOLOGIA","ID_MODELO_SIG","NOME_COMPLETO","NOME_RESUMIDO"
+1,1,Cisterna de Placas de 16 mil litros,Cisterna 16 mil L
+2,2,Cisterna Calçadão de 52 mil litros,Cisterna Calçadão
+3,3,Cisterna de Enxurradas de 52 mil litros,Cisterna Enxurrada
+4,4,Barreiro Trincheira Familiar,Barreiro Trincheira
+5,5,Barragem Subterrânea,Barragem Subterrânea
+6,6,Cisterna Escolar de 52 mil litros,Cisterna Escolar 52 mil L
+7,7,Sistema Pluvial Multiuso Comunitário,Sist. Pluvial Multiuso Comunitário
+8,8,Sistema Pluvial Multiuso Autônomo,Sist. Pluvial Multiuso Autônomo
+9,9,Cisterna de Ferrocimento de 16 mil litros,Cisterna Ferrocimento 16 mil L
+10,10,Cisterna Telhadão - Multiuso de 25 mil litros com galpão de 40 m2,"Cisterna Telhadão (25 mil, 40 m2)"
+11,11,Sistema de Tratamento e Reuso de Água Cinza Domiciliar,Sist. Tratamento e Reuso
+12,12,Cisterna Escolar de 10 mil litros,Cisterna Escolar 10 mil L
+13,13,Sistema Pluvial Multiuso Autônomo para Ambiente de Várzea,Sist. Multiuso (Autônomo/Várzea)
+13.1,66,Sistema Pluvial Multiuso Autônomo para Ambiente de Várzea com Ampliação de Telhado,Sist. Multiuso (Autônomo/Várzea/Telhado)
+14,14,Sistema Pluvial Multiuso Comunitário para Ambiente de Várzea,Sist. Pluvial Multiuso Comunitário Várzea
+15,15,Microssistema Comunitário de Abastecimento de Água - Captação de manancial subterrâneo,Microssist Comunitário (man. subterrâneo)
+16,16,Microssistema Comunitário de Abastecimento de Água - Captação de manancial superficial,Microssist Comunitário (man. superficial)
+17,17,Cisterna Telhadão Multiuso de 25 mil área de captação de 80 m²,"Cisterna Telhadão (25 mil, 80 m2)"
+18,18,Cisterna Telhadão Multiuso de 16 mil com galpão de 80 m²,"Cisterna Telhadão (16 mil, 80 m2)"
+19,19,Microssistema de Abastecimento de Água para Escolas,Microssistema Escolar
+20,20,Sistema Pluvial Multiuso Autônomo – Simplificado,Sist. Multiuso (Autônomo/Simplificado)
+21,21,Cisterna Calçadão de 52 mil litros com serviço de acompanhamento familiar para inclusão social e produtiva,Cisterna Calçadão com SAFISP
+22,22,Cisterna de Enxurradas de 52 mil litros com serviço de acompanhamento familiar para inclusão social e produtiva,Cisterna Enxurrada com SAFISP
+23,23,Microaçude,Microaçude
+24,24,Sistema Pluvial Multiuso Autônomo com serviço de acompanhamento familiar para inclusão social e produtiva,Sist. Multiuso Autônomo com SAFISP
+25,25,Sistema Pluvial Multiuso Comunitário com serviço de acompanhamento familiar para inclusão social e produtiva,Sist. Multiuso Comunitário com SAFISP
+26,26,Sistema Pluvial Multiuso Autônomo ambiente de várzea com serviço de acompanhamento familiar para inclusão social e produtiva,Sist. Multiuso Autônomo/Várzea com SAFISP
+27,27,Sistema Pluvial Multiuso Comunitário para ambiente de várzea com serviço de acompanhamento familiar para inclusão social e produtiva,Sist. Pluvial Multiuso Comunitário Várzea com SAFISP
+28,28,Barragem subterrânea com serviço de acompanhamento familiar para inclusão social e produtiva,Barragem Subterrânea com SAFISP
+29,29,Microssistema de Abastecimento de Água com Pontos de Uso Coletivo,Microssistema com Ponto Coletivo
+30,30,Cisterna Comunitária para Manejo da Agrobiodiversidade,Cisterna Comunitária (Agrobiodiversidade)
+31.1,31,Cisterna de Placas de 16 mil litros - Ampliação do Telhado - 20 m2,Cisterna 16 mil L (ampliação Telhado 20 m2)
+31.2,32,Cisterna de Placas de 16 mil litros - Ampliação do Telhado - 40 m2,Cisterna 16 mil L (ampliação Telhado 40 m2)
+32.1,33,Recuperação de Cisterna de Placa de 16 mil litros - Recuperação de Piso,Recuperação de Cisterna - Piso
+32.2,34,Recuperação de Cisterna de Placa de 16 mil litros - Recuperação de Parede,Recuperação de Cisterna - Parede
+32.3,35,Recuperação de Cisterna de Placa de 16 mil litros - Recuperação de Cobertura,Recuperação de Cisterna - Cobertura
+33,36,Cisterna Telhadão Multiuso de 52 mil litros,Cisterna Telhadão (52 mil L)
+34,37,Microssistema Comunitário de Abastecimento de Água,Microssistema Comunitário
+35,38,Cisterna Telhadão Multiuso de 16 mil com galpão de 40 m²,"Cisterna Telhadão (16 mil, 40 m2)"
+36,46,Microssistema comunitário de abastecimento de água simplificado,Microssistema simplificado
+90,39,Bomba D'água Popular,Bomba Popular
+91,40,Barreiro Lonado,Barreiro Lonado
+92,41,Barreiro Trincheira Coletivo,Barreiro Trincheira Coletivo
+93,42,Limpeza de Aguadas,Limpeza de Aguadas
+94,43,Tanque de Pedra,Tanque de Pedra
+95,44,Barraginha,Barraginha
+99,45,Outras implementações,Outras implementações

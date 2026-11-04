@@ -123,7 +123,37 @@ TECNOLOGIAS = [
     (r"CISTERNAS? DE PRODUCAO", "Cisterna de produção"),
     (r"CISTERNA.*52(\.000| ?MIL)", "Cisterna de 52 mil litros"),
     (r"CISTERNA.*(16|PLACA|CONSUMO)|(16|PLACA).*CISTERNA", "Cisterna de 16 mil litros"),
+    (r"MICROSSISTEMA", "Microssistema de abastecimento"),
 ]
+
+# Modelos de tecnologia social do Programa Cisternas (tabela do SIG Cisternas: nº do modelo e nome resumido)
+MODELOS = pd.read_csv(Path(__file__).parent / "referencias" / "modelos_tecnologia.csv", dtype=str) \
+    .set_index("NU_MODELO_TECNOLOGIA").NOME_RESUMIDO.to_dict()
+# Modelos com variantes (31.1/31.2, 32.1 a 32.3) quando o texto não diz qual
+MODELOS.update({"31": "Cisterna 16 mil L (ampliação Telhado)", "32": "Recuperação de Cisterna"})
+# Instruções normativas (número/ano) de cada modelo, do catálogo de tecnologias sociais do MDS
+NORMAS_MODELO = {
+    "1": ["70/2026", "51/2024", "9/2023", "5/2021", "2/2021"], "2": ["68/2026", "10/2023", "4/2021"],
+    "3": ["71/2026", "30/2023"], "4": ["33/2023"], "5": ["69/2026", "29/2023"], "6": ["76/2026", "57/2025", "11/2023", "3/2021"],
+    "7": ["49/2024", "21/2023"], "8": ["48/2024", "23/2023"], "9": ["55/2024"], "11": ["36/2024"], "12": ["28/2023"],
+    "13": ["47/2024", "22/2023", "22/2024"], "14": ["50/2024", "20/2023"], "21": ["73/2026", "52/2024", "12/2023"],
+    "22": ["72/2026", "53/2024", "31/2023"], "24": ["46/2024", "24/2023"], "25": ["38/2024", "26/2023"],
+    "26": ["45/2023", "27/2023", "27/2024"], "27": ["39/2024", "25/2023"], "28": ["74/2026", "54/2024", "32/2023"],
+    "29": ["40/2024"], "30": ["41/2024"], "31": ["44/2024"], "32": ["56/2024"], "33": ["60/2025"], "34": ["61/2025"],
+    "35": ["62/2025"], "36": ["63/2025"],
+}
+MODELO_DA_NORMA = {norma: modelo for modelo, normas in NORMAS_MODELO.items() for norma in normas}
+# Instruções operacionais anteriores (o número recomeça a cada ano): ano -> {número: modelo}
+IO_MODELO = {
+    "2013": {1: "1", 2: "2", 3: "3", 4: "4", 5: "5"},
+    "2014": {3: "6", 7: "7", 8: "8", 9: "9"},
+    "2015": {1: "1", 2: "3", 3: "4", 4: "5", 5: "2"},
+    "2016": {1: "10", 2: "6", 3: "11", 4: "12", 5: "13", 6: "8", 7: "14", 8: "7"},
+    "2017": {2: "1", 3: "9", 4: "15", 5: "6", 6: "16", 7: "19", 8: "17", 9: "18", 10: "4", 11: "2", 12: "3",
+             13: "5", 14: "20", 15: "21", 16: "22"},
+    "2018": {1: "23", 2: "8", 3: "7", 4: "13", 5: "14", 6: "24", 7: "25", 8: "26", 9: "27", 10: "10"},
+}
+MODELO_DA_NORMA.update({f"{n}/{ano}": m for ano, nums in IO_MODELO.items() for n, m in nums.items()})
 
 # Meta que não é de implementação de tecnologia, mesmo citando cisternas nas etapas
 META_NAO_TEC = r"CAPACITA|OFICINA|SELECAO|CADASTRA|ASSISTENCIA TECNICA|MOBILIZA|COMUNICA|MONITORA|GESTAO|AVALIA|ENCONTRO|INTERCAMBIO"
@@ -150,6 +180,64 @@ def uf_no_texto(t):
 
 def tecnologia(t):
     return next((nome for padrao, nome in TECNOLOGIAS if re.search(padrao, t)), None)
+
+
+def modelo(t, tec):
+    """Nº do modelo de tecnologia social da etapa: pela instrução normativa citada, pelo nº do modelo
+    escrito no texto ou pelas variantes descritas (material, SAFISP, várzea, ampliação do telhado...).
+    None quando o texto não permite saber. Sem SAFISP no texto, vale o modelo sem acompanhamento."""
+    m = re.search(r"(?:\bIN\b|\bIO\b|INSTRUCAO (?:NORMATIVA|OPERACIONAL))(?: SESAN)*(?: N[O]?)?\s*0?(\d+)(?:/SEDS[A-Z/]*)?"
+                  r"(?:,? DE \d\d/\d\d/(\d{4})|/(\d{4}))", t)
+    if m and f"{int(m.group(1))}/{m.group(2) or m.group(3)}" in MODELO_DA_NORMA:
+        base = MODELO_DA_NORMA[f"{int(m.group(1))}/{m.group(2) or m.group(3)}"]
+    elif (m := re.search(r"\b(?:TS|TECNOLOGIA SOCIAL)\s*(?:N[O]?\s*)?(\d{1,2})\b", t)) and m.group(1).lstrip("0") in MODELOS:
+        base = m.group(1).lstrip("0")
+    else:
+        base = None
+    saf = bool(re.search(r"SAFISP|ACOMPANHAMENTO FAMILIAR", t))
+    litros = lambda q: re.search(rf"\b{q}(\.000| ?MIL)", t)
+    if tec == "Cisterna de 16 mil litros":
+        if base not in (None, "31", "32"):
+            return base
+        if re.search(r"AMPL.*TELHADO", t) or base == "31":
+            return "31.2" if re.search(r"\b40 ?M", t) else "31.1" if re.search(r"\b20 ?M", t) else "31"
+        if re.search(r"RECUPERA|REFORMA|CONSERTO", t) or base == "32":
+            return next((v for p, v in [("PISO", "32.1"), ("PAREDE", "32.2"), ("COBERT", "32.3")] if p in t), "32")
+        return "9" if "FERROCIMENTO" in t else "1" if "PLACA" in t else None
+    if base:
+        return "13.1" if base == "13" and re.search(r"AMPL.*TELHADO", t) else base
+    if tec == "Sistema pluvial multiuso":
+        aut, com = "AUTONOMO" in t, "COMUNITARIO" in t
+        if aut == com:
+            return None
+        if aut and "SIMPLIFICAD" in t:
+            return "20"
+        return {(1, 0, 0): "8", (1, 1, 0): "13", (1, 0, 1): "24", (1, 1, 1): "26",
+                (0, 0, 0): "7", (0, 1, 0): "14", (0, 0, 1): "25", (0, 1, 1): "27"}[(aut, "VARZEA" in t, saf)]
+    if tec == "Cisterna calçadão":
+        return "21" if saf else "2"
+    if tec == "Cisterna de enxurrada":
+        return "22" if saf else "3"
+    if tec == "Barragem subterrânea":
+        return "28" if saf else "5"
+    if tec == "Barreiro trincheira":
+        return "92" if re.search(r"COLETIVO|COMUNITARIO", t) else "4"
+    if tec == "Cisterna escolar":
+        return "12" if litros(10) else "6" if litros(52) or re.search(r"\bIO 20(14|21)\b", t) else None
+    if tec == "Cisterna telhadão":
+        galpao = re.search(r"\b(40|80) ?M", t)
+        chave = (next((q for q in ("16", "25", "52") if litros(q)), None), galpao.group(1) if galpao else None)
+        return {("52", None): "33", ("25", "40"): "10", ("25", "80"): "17", ("16", "80"): "18", ("16", "40"): "35"}.get(chave) \
+            or ("10" if re.search(r"\bIO 2016\b", t) else None)
+    if tec == "Cisterna comunitária":
+        return "30" if "AGROBIODIVERSIDADE" in t else None
+    if tec == "Microssistema de abastecimento":
+        for padrao, nu in [(r"SIMPLIFICADO", "36"), (r"ESCOLA", "19"), (r"PONTOS? DE USO COLETIVO", "29"),
+                           (r"SUBTERRANE", "15"), (r"SUPERFICIA", "16")]:
+            if re.search(padrao, t):
+                return nu
+        return "34" if re.search(r"\bIN\b.*61/2025", t) else None
+    return {"Sistema de tratamento e reuso": "11", "Bomba d'água popular": "90", "Tanque de pedra": "94"}.get(tec)
 
 
 def parte(t):
@@ -357,9 +445,14 @@ def main():
     et["conta"] = (et.valor >= 1) & ~texto.str.contains("NAO INTEGRA", regex=False)
     et["quantidade"] = et.qtd.where(et.conta, 0)
     et["parte"] = texto.map(parte)
-    et = et[et.tecnologia.notna() & ~et.especificacao.map(sem_acento).str.contains(META_NAO_TEC)]
-    # Uma linha por meta, UF e tecnologia; toda meta de tecnologia entra no quadro
-    tec = (et.groupby(["nr", "meta", "id", "qtd_meta", "uf", "tecnologia"])
+    et = et[et.tecnologia.notna() & ~et.especificacao.map(sem_acento).str.contains(META_NAO_TEC)].copy()
+    et["modelo"] = [modelo(t, tecn) for t, tecn in zip(texto[et.index], et.tecnologia)]
+    # Partes do mesmo lote (custeio, ISS, material...) nem sempre repetem o modelo: na meta, UF e
+    # tecnologia com um modelo só identificado, as etapas sem modelo ficam com ele
+    unico = et.groupby(["id", "uf", "tecnologia"]).modelo.transform(lambda s: s.dropna().iloc[0] if s.nunique() == 1 else None)
+    et["modelo"] = et.modelo.fillna(unico).fillna("")
+    # Uma linha por meta, UF, tecnologia e modelo; toda meta de tecnologia entra no quadro
+    tec = (et.groupby(["nr", "meta", "id", "qtd_meta", "uf", "tecnologia", "modelo"])
            .apply(lambda g: pd.Series({"quantidade": lote(g), "valor": g.valor.sum(), "etapas": len(g)}),
                   include_groups=False)
            .reset_index().rename(columns={"id": "id_meta"}))
@@ -374,8 +467,10 @@ def main():
     tec.loc[difere & (tec.qtd_meta > 1) & (grupos == 1), "ajuste"] = "meta"
     tec.loc[difere & (tec.qtd_meta > 1) & (grupos > 1), "ajuste"] = "diferenca"
     tec.loc[tec.ajuste == "meta", "quantidade"] = tec.qtd_meta
-    tec["id"] = tec.id_meta + "-" + tec.uf + "-" + tec.tecnologia
-    tec[["id", "nr", "meta", "uf", "tecnologia", "quantidade", "valor", "etapas", "qtd_meta", "soma_etapas", "ajuste"]] \
+    tec["id"] = tec.id_meta + "-" + tec.uf + "-" + tec.tecnologia + "-" + tec.modelo
+    tec["modelo_nome"] = tec.modelo.map(MODELOS)
+    tec[["id", "nr", "meta", "uf", "tecnologia", "modelo", "modelo_nome", "quantidade", "valor", "etapas", "qtd_meta",
+         "soma_etapas", "ajuste"]] \
         .sort_values(["nr", "meta", "uf", "id"]).to_csv(DADOS / "tecnologias.csv", index=False)
 
     # --- prazos e alterações: termos aditivos, prorrogações de ofício e solicitações de alteração

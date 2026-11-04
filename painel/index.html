@@ -360,11 +360,11 @@
         <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
       </span>
     </div>
-    <p class="cis-muted">Entram todas as metas de implementação de tecnologias. A tecnologia e o estado vêm do texto de cada etapa (sem estado no texto, vale a UF do parceiro). Um lote registrado em etapas separadas (custeio e investimento, material e serviço, ISS, complementos, caráter produtivo) conta uma vez só. Etapa zerada, com valor abaixo de R$ 1, ou marcada como "não integra esta meta" conta zero.</p>
+    <p class="cis-muted">Entram todas as metas de implementação de tecnologias. A tecnologia e o estado vêm do texto de cada etapa (sem estado no texto, vale a UF do parceiro). O modelo, com o nº e o nome resumido do SIG Cisternas, vem da instrução normativa ou operacional citada na etapa, do nº do modelo ou das variantes descritas no texto (material, ampliação do telhado, várzea, autônomo ou comunitário, acompanhamento familiar – SAFISP); sem SAFISP no texto, vale o modelo sem acompanhamento. Um lote registrado em etapas separadas (custeio e investimento, material e serviço, ISS, complementos, caráter produtivo) conta uma vez só. Etapa zerada, com valor abaixo de R$ 1, ou marcada como "não integra esta meta" conta zero.</p>
     <div class="cis-quadrobox">
       <p class="cis-tabtit">Tabela 2: Distribuição territorial atual das tecnologias previstas no <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por UF</p>
       <table class="cis-quadro" data-draw="tectab" data-source="tecnologias"></table>
-      <p class="cis-origem">Fonte: Transferegov, módulo Discricionárias, cronograma físico do plano de trabalho (metas e etapas; dados abertos siconv_meta_crono_fisico e siconv_etapa_crono_fisico), carga de <span data-draw="carga" data-source="instrumentos">—</span>. Elaboração: quantidades das etapas somadas por UF e por tecnologia, identificadas na descrição de cada etapa.</p>
+      <p class="cis-origem">Fonte: Transferegov, módulo Discricionárias, cronograma físico do plano de trabalho (metas e etapas; dados abertos siconv_meta_crono_fisico e siconv_etapa_crono_fisico), carga de <span data-draw="carga" data-source="instrumentos">—</span>. Elaboração: quantidades das etapas somadas por UF e por modelo de tecnologia, identificados na descrição de cada etapa; nº e nome dos modelos conforme a tabela de tecnologias sociais do SIG Cisternas.</p>
     </div>
     <p class="cis-muted" data-tec="vazio" hidden>Nenhuma meta deste instrumento tem etapas que permitam separar as tecnologias por UF.</p>
     <ul class="cis-notas" data-draw="tecnotas" data-source="tecnologias"></ul>
@@ -997,7 +997,12 @@
   // Mesma ordem das regras de atualizar_dados.py
   const TECNOLOGIAS = ['Cisterna de 16 mil litros', 'Cisterna calçadão', 'Cisterna de enxurrada', 'Cisterna telhadão', 'Cisterna escolar',
     'Cisterna comunitária', 'Cisterna de produção', 'Cisterna de 52 mil litros', 'Barragem subterrânea', 'Pequena barragem',
-    'Barreiro trincheira', 'Tanque de pedra', "Bomba d'água popular", 'Sistema pluvial multiuso', 'Sistema de tratamento e reuso'];
+    'Barreiro trincheira', 'Tanque de pedra', "Bomba d'água popular", 'Sistema pluvial multiuso', 'Sistema de tratamento e reuso',
+    'Microssistema de abastecimento'];
+  // Coluna da Tabela 2: nº e nome resumido do modelo (SIG Cisternas) ou a tecnologia, quando o texto não diz o modelo
+  const colunaTec = (x) => (x.modelo ? x.modelo + ' – ' + x.modelo_nome : x.tecnologia + ' (modelo não identificado)');
+  const ordemTec = (a, b) => (TECNOLOGIAS.indexOf(a.tecnologia) - TECNOLOGIAS.indexOf(b.tecnologia))
+    || ((parseFloat(a.modelo) || 999) - (parseFloat(b.modelo) || 999));
 
   // Objeto: primeiros 300 caracteres, com um link para abrir o texto inteiro
   const OBJETO_MAX = 300;
@@ -1091,8 +1096,7 @@
     const metas = [...new Set(linhas.map((x) => n(x.meta)))].sort((a, b) => a - b);
     const ufs = [...new Set(linhas.map((x) => x.uf))].sort();
     const grupos = metas.map((meta) => {
-      const tecs = [...TECNOLOGIAS, ...new Set(linhas.map((x) => x.tecnologia))].filter((tec, k, todas) => todas.indexOf(tec) === k
-        && linhas.some((x) => n(x.meta) === meta && x.tecnologia === tec));
+      const tecs = [...new Set(linhas.filter((x) => n(x.meta) === meta).sort(ordemTec).map(colunaTec))];
       return {meta, tecs, sub: tecs.length > 1};
     });
     const soma = (f) => linhas.filter(f).reduce((s, x) => s + (n(x.quantidade) ?? 0), 0);
@@ -1113,7 +1117,7 @@
       const tr = document.createElement('tr');
       tr.append(celula(tag, rotulo));
       grupos.forEach((g) => {
-        g.tecs.forEach((tec) => tr.append(celula(tag, fmt.int(soma((x) => filtro(x) && n(x.meta) === g.meta && x.tecnologia === tec)))));
+        g.tecs.forEach((tec) => tr.append(celula(tag, fmt.int(soma((x) => filtro(x) && n(x.meta) === g.meta && colunaTec(x) === tec)))));
         if (g.sub) tr.append(celula(tag, fmt.int(soma((x) => filtro(x) && n(x.meta) === g.meta))));
       });
       tr.append(celula(tag, fmt.int(soma(filtro))));
