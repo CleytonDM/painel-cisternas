@@ -6,6 +6,7 @@ completo, os tokens de tema (tema.css), o d3 e uma versão mínima do runtime de
 
 Uso: python site/montar_site.py
 """
+import csv
 import re
 import shutil
 from datetime import datetime, timezone
@@ -14,7 +15,6 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 RAIZ = AQUI.parent
 SAIDA = RAIZ / "_site"
-REPO = "https://github.com/CleytonDM/painel-cisternas"
 
 GOTA = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E"
         "%3Cpath d='M32 4C40 20 54 32 54 44A22 22 0 0 1 10 44C10 32 24 20 32 4Z' fill='%231B6086'/%3E%3C/svg%3E")
@@ -26,6 +26,9 @@ def main():
     # No Claude cada <script> do painel roda no seu próprio escopo; aqui um bloco faz o mesmo
     painel = re.sub(r"<script>(.*?)</script>", r"<script>{\1}</script>", painel, flags=re.S)
     versao = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
+    # data de referência da carga do Transferegov em uso; o site é remontado a cada carga nova
+    with open(RAIZ / "dados" / "instrumentos.csv", encoding="utf-8") as f:
+        carga = datetime.strptime(next(csv.DictReader(f))["data_carga"][:10], "%Y-%m-%d").strftime("%d/%m/%Y")
 
     html = f"""<!doctype html>
 <html lang="pt-BR">
@@ -44,8 +47,7 @@ def main():
 <div id="dash-root">
 {painel}
 <footer class="site-rodape">
-  Dados abertos do Transferegov (módulo Discricionárias), atualizados todo dia às 7h (horário de Brasília).
-  Os CSVs usados no painel, o histórico do saldo em conta e o código estão em <a href="{REPO}">{REPO.removeprefix("https://")}</a>.
+  Dados abertos do Transferegov (módulo Discricionárias), atualizados em: {carga}
 </footer>
 </div>
 <script>dash.iniciar();</script>
@@ -58,8 +60,8 @@ def main():
     (SAIDA / "index.html").write_text(html, encoding="utf-8")
     for nome in ("dash.js", "tema.css"):
         shutil.copy(AQUI / nome, SAIDA / nome)
-    for csv in sorted((RAIZ / "dados").glob("*.csv")):
-        shutil.copy(csv, SAIDA / "dados" / csv.name)
+    for arq in sorted((RAIZ / "dados").glob("*.csv")):
+        shutil.copy(arq, SAIDA / "dados" / arq.name)
     (SAIDA / ".nojekyll").touch()
     print(f"site em {SAIDA} ({len(html) / 1e3:.0f} KB de página, versão {versao})")
 
