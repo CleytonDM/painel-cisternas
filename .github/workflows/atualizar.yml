@@ -1,12 +1,19 @@
 name: Atualizar e publicar o painel
 
 on:
-  # O Transferegov publica a carga por volta das 6h30 de Brasília. O agendamento do GitHub atrasa
-  # horas (em 01 e 02/11 rodou às 13h40 e às 17h10), então há várias tentativas no dia, fora da hora
-  # cheia; cada uma só baixa os dados quando a carga mudou.
+  # O Transferegov publica a carga por volta das 8h15 de Brasília (em 03/11, às 8h13), e o agendamento
+  # do GitHub atrasa horas ou pula horários. Por isso uma execução de vigia começa cedo e consulta a
+  # data da carga a cada 5 minutos até a carga nova aparecer; a atualização roda logo em seguida.
+  # Os outros horários são reserva: conferem uma vez e só baixam se a carga mudou.
   schedule:
-    - cron: "37 9,11,13,16,20 * * *"  # 6h37, 8h37, 10h37, 13h37 e 17h37 em Brasília (UTC-3)
+    - cron: "7 8 * * *"           # vigia: 5h07 em Brasília (UTC-3)
+    - cron: "37 15,19,23 * * *"   # reserva: 12h37, 16h37 e 20h37
   workflow_dispatch:       # rodar à mão pela aba Actions
+    inputs:
+      vigiar:
+        description: "Esperar a carga nova do Transferegov antes de atualizar"
+        type: boolean
+        default: false
   push:                    # mudança no painel: publica de novo sem baixar dados
     branches: [main]
     paths: ["painel/index.html", "site/**"]
@@ -16,13 +23,10 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: painel
-  cancel-in-progress: false
-
 jobs:
   verificar:
     runs-on: ubuntu-latest
+    timeout-minutes: 350
     outputs:
       nova: ${{ steps.carga.outputs.nova }}
     steps:
@@ -32,29 +36,61 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Comparar a carga do Transferegov com a do painel
         id: carga
+        env:
+          VIGIAR: ${{ github.event.schedule == '7 8 * * *' || inputs.vigiar == true }}
         run: |
-          curl -sSfL --retry 3 -o dc.zip "https://api-publica.transferegov.gestao.gov.br/downloads/dadosgov/data_carga_siconv.zip?v=$(date +%s)"
           python - >> "$GITHUB_OUTPUT" <<'PY'
-          import csv, io, sys, zipfile
-          from datetime import datetime
-          z = zipfile.ZipFile("dc.zip")
-          linhas = io.TextIOWrapper(z.open(z.namelist()[0]), encoding="utf-8-sig").read().split()
-          fonte = datetime.strptime(linhas[1], "%d/%m/%Y").strftime("%Y-%m-%d")
+          import csv, io, os, sys, time, urllib.request, zipfile
+          from datetime import datetime, timezone
+
+          URL = "https://api-publica.transferegov.gestao.gov.br/downloads/dadosgov/data_carga_siconv.zip"
           painel = next(csv.DictReader(open("dados/instrumentos.csv", encoding="utf-8")))["data_carga"][:10]
-          print(f"Transferegov {fonte}, painel {painel}", file=sys.stderr)
-          print("nova=" + str(fonte != painel).lower())
+          vigiar = os.environ["VIGIAR"] == "true"
+          inicio = time.time()
+
+          def carga_fonte():
+              # parâmetro novo a cada consulta para não receber a cópia antiga do cache da Cloudflare
+              with urllib.request.urlopen(f"{URL}?v={time.time_ns()}", timeout=60) as r:
+                  z = zipfile.ZipFile(io.BytesIO(r.read()))
+              linhas = io.TextIOWrapper(z.open(z.namelist()[0]), encoding="utf-8-sig").read().split()
+              return datetime.strptime(linhas[1], "%d/%m/%Y").strftime("%Y-%m-%d")
+
+          while True:
+              agora = datetime.now(timezone.utc)
+              try:
+                  fonte = carga_fonte()
+              except Exception as erro:
+                  fonte = None
+                  print(f"{agora:%H:%M} UTC: falha ao consultar o Transferegov ({erro})", file=sys.stderr)
+              if fonte:
+                  print(f"{agora:%H:%M} UTC: Transferegov {fonte}, painel {painel}", file=sys.stderr)
+              if fonte and fonte != painel:
+                  print("nova=true")
+                  break
+              # a vigia desiste às 16h UTC (13h em Brasília) ou perto do limite de 6 h do job
+              if not vigiar or agora.hour >= 16 or time.time() - inicio > 5.5 * 3600:
+                  print("nova=false")
+                  break
+              time.sleep(300)
           PY
 
   atualizar:
     needs: verificar
-    if: github.event_name != 'schedule' || needs.verificar.outputs.nova == 'true'
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.vigiar) || needs.verificar.outputs.nova == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    # só a atualização entra na fila; a vigia esperando não segura as publicações do painel
+    concurrency:
+      group: painel
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
+      # a ponta de main no momento do job: a vigia pode ter começado horas antes de um commit novo
       - uses: actions/checkout@v5
+        with:
+          ref: main
 
       - uses: actions/setup-python@v6
         with:
