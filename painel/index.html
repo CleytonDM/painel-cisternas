@@ -999,8 +999,8 @@
     'Cisterna comunitária', 'Cisterna de produção', 'Cisterna de 52 mil litros', 'Barragem subterrânea', 'Pequena barragem',
     'Barreiro trincheira', 'Tanque de pedra', "Bomba d'água popular", 'Sistema pluvial multiuso', 'Sistema de tratamento e reuso',
     'Microssistema de abastecimento'];
-  // Coluna da Tabela 2: nº e nome resumido do modelo (SIG Cisternas) ou a tecnologia, quando o texto não diz o modelo
-  const colunaTec = (x) => (x.modelo ? x.modelo + ' – ' + x.modelo_nome : x.tecnologia + ' (modelo não identificado)');
+  // Coluna da Tabela 2: nome resumido e nº do modelo (SIG Cisternas) ou a tecnologia, quando o texto não diz o modelo
+  const colunaTec = (x) => (x.modelo ? x.modelo_nome + ' – nº ' + x.modelo : x.tecnologia + ' – modelo não identificado');
   const ordemTec = (a, b) => (TECNOLOGIAS.indexOf(a.tecnologia) - TECNOLOGIAS.indexOf(b.tecnologia))
     || ((parseFloat(a.modelo) || 999) - (parseFloat(b.modelo) || 999));
 
