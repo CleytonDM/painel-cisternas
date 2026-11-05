@@ -725,13 +725,13 @@ def main():
         ne_info, ob_info = nes.set_index("id"), obs.set_index("id")
         lig = pd.concat([lig, pd.DataFrame({"k": [k for k in range(1, len(parc) + 1) if k not in set(lig.k)]})])
         for x in lig.itertuples():
-            p = parc.iloc[int(x.k) - 1] if pd.notna(x.k) else None
+            parcela = parc.iloc[int(x.k) - 1] if pd.notna(x.k) else None
             ne = ne_info.loc[x.ne] if pd.notna(x.ne) else None
             ob = ob_info.loc[x.ob] if pd.notna(x.ob) else None
             linhas_exec.append({
                 "nr": nr, "ordem_parcela": int(x.k) if pd.notna(x.k) else 999,
-                "parcela": int(p.parcela) if p is not None else None, "mes": p.mes if p is not None else "",
-                "valor_parcela": round(p.valor, 2) if p is not None else None,
+                "parcela": int(parcela.parcela) if parcela is not None else None, "mes": parcela.mes if parcela is not None else "",
+                "valor_parcela": round(parcela.valor, 2) if parcela is not None else None,
                 "ne": ne.empenho if ne is not None else "", "ne_data": ne.data if ne is not None else "",
                 "ne_zerada": bool(ne is not None and ne.valor_nota == 0 and ne.empenhado != 0),
                 "valor_ne": round(x.valor_ne, 2) if pd.notna(x.valor_ne) else None,
