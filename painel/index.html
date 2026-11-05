@@ -347,7 +347,7 @@
         </thead>
         <tbody data-draw="metatab"></tbody>
         <tfoot>
-          <tr><td colspan="2">Total</td><td class="nowrap" data-draw="metasoma"></td><td></td><td></td><td></td></tr>
+          <tr><td colspan="2">Total</td><td class="dir nowrap" data-draw="metasoma"></td><td></td><td></td><td></td></tr>
         </tfoot>
       </table>
     </div>
@@ -481,9 +481,9 @@
               <th data-field="empenho">Nota de empenho</th>
               <th data-field="tipo">Tipo</th>
               <th data-field="natureza" class="cis-hide-narrow">Natureza</th>
-              <th data-field="valor" class="num">Valor na nota</th>
-              <th data-field="empenhado" class="num">Empenhado</th>
-              <th data-field="repassado" class="num">Repassado</th>
+              <th data-field="valor" class="num">Valor na nota (R$)</th>
+              <th data-field="empenhado" class="num">Empenhado (R$)</th>
+              <th data-field="repassado" class="num">Repassado (R$)</th>
               <th data-field="observacao" class="cis-hide-narrow">Observação</th>
             </tr>
           </thead>
@@ -508,7 +508,7 @@
             <th data-field="documento_favorecido" class="cis-hide-narrow">CNPJ/CPF</th>
             <th data-field="comprovante" class="cis-hide-narrow">Comprovante</th>
             <th data-field="nr_comprovante" class="cis-hide-narrow">Nº</th>
-            <th data-field="valor" class="num">Valor</th>
+            <th data-field="valor" class="num">Valor (R$)</th>
           </tr>
         </thead>
         <tbody data-draw="pagtab"></tbody>
@@ -526,8 +526,8 @@
             <th data-field="numero">Pedido</th>
             <th data-field="data">Data</th>
             <th data-field="situacao">Situação</th>
-            <th data-field="valor_solicitado" class="num">Solicitado</th>
-            <th data-field="valor_aprovado" class="num">Aprovado</th>
+            <th data-field="valor_solicitado" class="num">Solicitado (R$)</th>
+            <th data-field="valor_aprovado" class="num">Aprovado (R$)</th>
           </tr>
         </thead>
         <tbody data-draw="rendtab"></tbody>
@@ -549,7 +549,7 @@
             <th data-field="situacao" class="cis-hide-narrow">Situação</th>
             <th data-field="dias_situacao" class="num cis-hide-narrow">Dias na situação</th>
             <th data-field="fim_vigencia" class="cis-hide-narrow">Fim da vigência</th>
-            <th data-field="vl_saldo_conta" class="num">Saldo em conta</th>
+            <th data-field="vl_saldo_conta" class="num">Saldo em conta (R$)</th>
             <th data-field="alertas">Alertas</th>
           </tr>
         </thead>
@@ -571,6 +571,8 @@
     txt: (v) => String(v),
     brl: (v) => brl.format(Number(v)),
     brlc: (v) => brlc.format(Number(v)),
+    // valor em reais sem o símbolo, para célula de tabela com "(R$)" no cabeçalho
+    reais: (v) => brl.format(Number(v)).replace(/R\$\s?/, ''),
     pct: (v) => pct.format(Number(v)),
     int: (v) => int.format(Number(v)),
     data: (v) => v.slice(8, 10) + '/' + v.slice(5, 7) + '/' + v.slice(0, 4),
@@ -996,7 +998,7 @@
         const tr = document.createElement('tr');
         tr.dataset.key = x.id;
         [[x.data ? fmt.data(x.data) : '', 'nowrap'], [x.favorecido ?? '', ''], [x.documento_favorecido ?? '', 'nowrap cis-hide-narrow'],
-         [x.comprovante ?? '', 'cis-hide-narrow'], [x.nr_comprovante ?? '', 'cis-hide-narrow'], [x.valor === '' ? '' : fmt.brl(x.valor), 'num']]
+         [x.comprovante ?? '', 'cis-hide-narrow'], [x.nr_comprovante ?? '', 'cis-hide-narrow'], [x.valor === '' ? '' : fmt.reais(x.valor), 'num']]
           .forEach(([txt, cls]) => { const td = document.createElement('td'); td.className = cls; td.textContent = txt; tr.append(td); });
         frag.append(tr);
       });
@@ -1097,7 +1099,7 @@
     m.data.filter((x) => x.nr === nr).sort((a, b) => n(a.meta) - n(b.meta)).forEach((x) => {
       const tr = document.createElement('tr');
       tr.dataset.key = x.id;
-      tr.append(celula('td', fmt.int(x.meta)), celula('td', x.especificacao ?? ''), celula('td', x.valor === '' ? '' : fmt.brl(x.valor), {class: 'nowrap'}),
+      tr.append(celula('td', fmt.int(x.meta)), celula('td', x.especificacao ?? ''), celula('td', x.valor === '' ? '' : fmt.reais(x.valor), {class: 'dir nowrap'}),
         celula('td', x.quantidade === '' ? '' : fmt.int(x.quantidade)), celula('td', x.inicio ? fmt.data(x.inicio) : ''), celula('td', x.fim ? fmt.data(x.fim) : ''));
       tb.append(tr);
     });
@@ -1106,7 +1108,7 @@
   dash.draw('metasoma', (el) => {
     const m = dash.data('metas');
     const nr = atual();
-    el.textContent = m.status === 'ok' && nr ? fmt.brl(m.data.filter((x) => x.nr === nr).reduce((s, x) => s + (n(x.valor) ?? 0), 0)) : '';
+    el.textContent = m.status === 'ok' && nr ? fmt.reais(m.data.filter((x) => x.nr === nr).reduce((s, x) => s + (n(x.valor) ?? 0), 0)) : '';
   });
 
   dash.draw('tectab', (tab) => {
@@ -1201,7 +1203,7 @@
 
   // --- Tabela 3: parcelas do MDS x notas de empenho x ordens bancárias (ligação feita em atualizar_dados.py)
   const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  const reais = (v) => (v == null || v === '' ? '' : fmt.brl(v).replace(/R\$\s?/, ''));
+  const reais = (v) => (v == null || v === '' ? '' : fmt.reais(v));
   const execDo = () => {
     const d = dash.data('execucao');
     const nr = atual();
@@ -1490,7 +1492,7 @@
         + fmt.brl(t.emp - t.reg) + ' a mais. O empenhado real pode ser maior, se ainda houver saldo a repassar nessas notas.';
     }
     if (Math.abs(t.semNota) >= 1) txt += ' O total repassado ao instrumento é ' + fmt.brl(t.rep) + ', e as ordens bancárias ligadas às notas somam ' + fmt.brl(t.repNotas) + '; a diferença são ordens bancárias que os dados abertos não ligam a nenhuma nota.'
-      + (t.semNota >= 1 ? ' Elas saíram do saldo de alguma nota, por isso a linha delas na Tabela 3 desconta o empenhado a repassar' + (t.extra >= 1 ? ' e soma ' + fmt.brl(t.extra) + ' ao empenhado, que é ao menos o repassado' : '') + '.' : '');
+      + (t.semNota >= 1 ? ' Elas saíram do saldo de alguma nota, por isso a linha delas na Tabela 4 desconta o empenhado a repassar' + (t.extra >= 1 ? ' e soma ' + fmt.brl(t.extra) + ' ao empenhado, que é ao menos o repassado' : '') + '.' : '');
     el.textContent = txt;
   });
 
@@ -1505,7 +1507,7 @@
     const linha = (tag, rotulo, reg, emp, rep, falta) => {
       const tr = document.createElement('tr');
       tr.append(celula(tag, rotulo));
-      [...(mostraReg ? [reg] : []), emp, rep, falta].forEach((x) => tr.append(celula(tag, x == null ? '' : v(x), {class: 'nowrap'})));
+      [...(mostraReg ? [reg] : []), emp, rep, falta].forEach((x) => tr.append(celula(tag, x == null ? '' : v(x), {class: 'dir nowrap'})));
       return tr;
     };
     const thead = document.createElement('thead');
@@ -1540,9 +1542,9 @@
       if (n(x.valor) < 0) tr.className = 'anula';
       const ajustada = empenhado(x) - (n(x.valor) ?? 0) >= 1;
       tr.append(celula('td', x.data ? fmt.data(x.data) : '', {class: 'nowrap'}), celula('td', x.empenho ?? '', {class: 'nowrap'}), celula('td', x.tipo ?? ''),
-        celula('td', x.natureza ?? '', {class: 'nowrap cis-hide-narrow'}), celula('td', n(x.valor) ? fmt.brl(x.valor) : '—', {class: 'num'}),
-        celula('td', empenhado(x) ? fmt.brl(empenhado(x)) : '—', ajustada ? {class: 'num analise', title: 'Valor na nota menor que o repassado: considerado o repassado'} : {class: 'num'}),
-        celula('td', n(x.repassado) ? fmt.brl(x.repassado) : '—', {class: 'num'}), celula('td', x.observacao ?? '', {class: 'detalhe cis-hide-narrow'}));
+        celula('td', x.natureza ?? '', {class: 'nowrap cis-hide-narrow'}), celula('td', n(x.valor) ? fmt.reais(x.valor) : '—', {class: 'num'}),
+        celula('td', empenhado(x) ? fmt.reais(empenhado(x)) : '—', ajustada ? {class: 'num analise', title: 'Valor na nota menor que o repassado: considerado o repassado'} : {class: 'num'}),
+        celula('td', n(x.repassado) ? fmt.reais(x.repassado) : '—', {class: 'num'}), celula('td', x.observacao ?? '', {class: 'detalhe cis-hide-narrow'}));
       tb.append(tr);
     });
   });
@@ -1565,8 +1567,8 @@
       const tr = document.createElement('tr');
       tr.dataset.key = x.id;
       tr.append(celula('td', x.numero ?? ''), celula('td', x.data ? fmt.data(x.data) : '', {class: 'nowrap'}),
-        celula('td', x.situacao ?? '', {class: classeSit(x.situacao)}), celula('td', x.valor_solicitado === '' ? '' : fmt.brl(x.valor_solicitado), {class: 'num'}),
-        celula('td', x.valor_aprovado === '' ? '' : fmt.brl(x.valor_aprovado), {class: 'num'}));
+        celula('td', x.situacao ?? '', {class: classeSit(x.situacao)}), celula('td', x.valor_solicitado === '' ? '' : fmt.reais(x.valor_solicitado), {class: 'num'}),
+        celula('td', x.valor_aprovado === '' ? '' : fmt.reais(x.valor_aprovado), {class: 'num'}));
       tb.append(tr);
     });
   });
@@ -1581,7 +1583,7 @@
       tr.className = x.nivel + (x.nr === nr ? ' atual' : '');
       [[x.nr, 'nowrap'], [x.parceiro ?? '', ''], [x.uf ?? '', ''], [x.situacao ?? '', 'cis-hide-narrow'],
        [x.dias_situacao == null ? '' : fmt.int(x.dias_situacao), 'num cis-hide-narrow'],
-       [x.fim_vigencia ? fmt.data(x.fim_vigencia) : '', 'nowrap cis-hide-narrow'], [fmt.brl(x.vl_saldo_conta), 'num'], [x.alertas, 'alertas']]
+       [x.fim_vigencia ? fmt.data(x.fim_vigencia) : '', 'nowrap cis-hide-narrow'], [fmt.reais(x.vl_saldo_conta), 'num'], [x.alertas, 'alertas']]
         .forEach(([txt, cls]) => { const td = document.createElement('td'); td.className = cls; td.textContent = txt; tr.append(td); });
       tr.onclick = () => {
         dash.setParams({nr: x.nr});
