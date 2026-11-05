@@ -382,8 +382,22 @@ def baixar(nome):
     # Os arquivos passam pelo cache da Cloudflare, que pode entregar a carga do dia anterior
     # horas depois da publicação; um parâmetro novo a cada execução busca o arquivo na origem.
     url = BASE_URL + f"{nome}.zip?v={EXECUCAO}"
-    with urllib.request.urlopen(url, timeout=600) as r, open(destino, "wb") as f:
-        shutil.copyfileobj(r, f, 1 << 20)
+    # Na hora da publicação o servidor alterna erros 500/503 ("ServerBusy") com respostas boas
+    # (em 05/11); tenta de novo com espera crescente, por até uns 15 minutos.
+    for espera in (30, 60, 120, 240, 480, None):
+        try:
+            # timeout é por leitura, não pelo arquivo inteiro: servidor parado não segura a execução
+            with urllib.request.urlopen(url, timeout=120) as r, open(destino, "wb") as f:
+                shutil.copyfileobj(r, f, 1 << 20)
+            if zipfile.is_zipfile(destino):
+                break
+            erro = "arquivo recebido não é zip"
+        except OSError as e:  # HTTPError e URLError são OSError
+            erro = e
+        if espera is None:
+            raise RuntimeError(f"não foi possível baixar {nome}: {erro}")
+        print(f"falha ao baixar {nome} ({erro}); nova tentativa em {espera} s")
+        time.sleep(espera)
     print(f"baixado {nome} ({destino.stat().st_size / 1e6:.1f} MB)")
 
 

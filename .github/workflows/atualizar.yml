@@ -2,13 +2,14 @@ name: Atualizar e publicar o painel
 
 on:
   # O Transferegov publica a carga por volta das 8h15 de Brasília (em 03/11, às 8h13), e o agendamento
-  # do GitHub atrasa de 3 a 10 horas ou pula horários. Por isso há uma execução por hora de madrugada;
-  # cada uma que rodar antes da publicação consulta a data da carga a cada 5 minutos e atualiza logo
-  # que a carga nova aparece. Basta uma delas rodar a tempo. As da tarde e da noite são reserva.
+  # do GitHub atrasa de 3 a 10 horas ou pula horários. O disparo principal vem de fora: o cron-job.org
+  # chama a API (workflow_dispatch com vigiar=true) às 9h e às 10h; ver o README. Os agendamentos abaixo
+  # são reserva: cada um que rodar antes da publicação consulta a carga a cada 5 minutos e atualiza
+  # logo que ela aparece.
   schedule:
     - cron: "30 6-11 * * *"       # 3h30, 4h30, 5h30, 6h30, 7h30 e 8h30 em Brasília (UTC-3)
     - cron: "37 15,19,23 * * *"   # reserva: 12h37, 16h37 e 20h37
-  workflow_dispatch:       # rodar à mão pela aba Actions
+  workflow_dispatch:       # cron-job.org (9h e 10h) ou à mão pela aba Actions
     inputs:
       vigiar:
         description: "Esperar a carga nova do Transferegov antes de atualizar"
