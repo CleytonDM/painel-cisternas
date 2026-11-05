@@ -3,7 +3,7 @@
 // dash.setParams. Os conjuntos de dados são os CSVs de dados/, lidos como texto (como no Claude).
 (() => {
   const FONTES = ['instrumentos', 'pagamentos', 'repasses', 'cronograma', 'metas', 'tecnologias',
-    'prazos', 'situacoes', 'empenhos', 'rendimentos'];
+    'prazos', 'situacoes', 'empenhos', 'rendimentos', 'execucao'];
   const dados = {};
   const calcs = [];
   const desenhos = new Map();

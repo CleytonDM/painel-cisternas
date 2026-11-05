@@ -192,6 +192,100 @@ def tecnologia(t):
     return next((nome for padrao, nome in TECNOLOGIAS if re.search(padrao, t)), None)
 
 
+def parcela_citada(texto, n):
+    """Parcela citada no histórico ("pagamento da 2ª parcela"), contada entre as n parcelas do MDS."""
+    m = re.search(r"(\d+)\s*[AO]?\s*PARCELA|PARCELA\s*(?:N[O]?\s*)?(\d+)", sem_acento(texto or ""))
+    k = int(m.group(1) or m.group(2)) if m else None
+    return k if k and 1 <= k <= n else None
+
+
+def ligar_execucao(parc, obs, nes, links):
+    """Liga parcelas do MDS, notas de empenho e ordens bancárias de um instrumento.
+
+    O Transferegov não diz a qual parcela cada NE ou OB corresponde. A OB vai para a parcela citada no
+    histórico; sem citação, as OBs preenchem as parcelas em ordem de data. A ligação NE-OB é a dos dados
+    abertos, e a NE fica com a parcela das OBs que pagou. A parte da NE ainda não paga vai para a parcela
+    citada no histórico da NE ou para a próxima parcela com valor sem empenho; anulação (valor negativo)
+    fica na parcela da nota anterior. O que passa do cronograma fica sem parcela (k None).
+    Devolve linhas (k, ne, ob, valor_ne, valor_ob, por_ordem)."""
+    n = len(parc)
+    linhas = []
+    saldo = list(parc.valor)
+    partes_ob = {}
+    for o in obs.itertuples():
+        k = parcela_citada(o.historico, n)
+        if k:
+            saldo[k - 1] -= o.valor
+            partes_ob[o.id] = ([(k, o.valor)], False)
+            continue
+        partes, resto = [], o.valor
+        for i in range(n):
+            if resto > 0.005 and saldo[i] > 0.005:
+                u = min(resto, saldo[i])
+                saldo[i] -= u
+                resto -= u
+                partes.append((i + 1, u))
+        if resto > 0.005:
+            partes.append((None, resto))
+        partes_ob[o.id] = (partes, True)
+    # parte paga das notas: cada OB dividida entre as notas que a pagaram, na proporção do valor
+    pago = {}
+    for o in obs.itertuples():
+        partes, ordem = partes_ob[o.id]
+        lig = links[links.ob == o.id]
+        grupos = list(zip(lig.nota, lig.valor)) + [(None, o.valor - lig.valor.sum())]
+        for ne, g in grupos:
+            if abs(g) < 0.005:
+                continue
+            for k, a in partes:
+                v = g * a / o.valor
+                linhas.append((k, ne, o.id, v if ne else 0.0, v, ordem))
+            if ne:
+                pago[ne] = pago.get(ne, 0) + g
+    # parte não paga das notas, em ordem de data
+    empenhado = [0.0] * n
+    for k, _, _, v_ne, _, _ in linhas:
+        if k:
+            empenhado[k - 1] += v_ne
+    ultima = None
+    excedente = 0.0  # empenho que passou do cronograma; uma anulação abate primeiro daqui
+    for e in nes.itertuples():
+        resto = e.valor - pago.get(e.id, 0)
+        k_pago = next((l[0] for l in linhas if l[1] == e.id), None)
+        ultima = k_pago or ultima
+        if abs(resto) < 0.005:
+            continue
+        k = parcela_citada(e.historico, n)
+        if resto < 0 and not k and excedente > 0.005:
+            u = min(-resto, excedente)
+            linhas.append((None, e.id, None, -u, 0.0, True))
+            excedente -= u
+            resto += u
+            if resto > -0.005:
+                continue
+        if resto < 0 or k:
+            k = k or k_pago or ultima
+            linhas.append((k, e.id, None, resto, 0.0, not parcela_citada(e.historico, n)))
+            if k:
+                empenhado[k - 1] += resto
+            ultima = k or ultima
+            continue
+        # o resto de uma nota já paga em parte começa pela parcela dela
+        for i in range((k_pago or 1) - 1, n):
+            if resto > 0.005 and parc.valor.iloc[i] - empenhado[i] > 0.005:
+                u = min(resto, parc.valor.iloc[i] - empenhado[i])
+                empenhado[i] += u
+                resto -= u
+                linhas.append((i + 1, e.id, None, u, 0.0, True))
+                ultima = i + 1
+        if resto >= 1:
+            linhas.append((None, e.id, None, resto, 0.0, True))
+            excedente += resto
+        elif resto > 0.005:  # centavos de arredondamento ficam na parcela da nota
+            linhas.append((k_pago or ultima, e.id, None, resto, 0.0, True))
+    return linhas
+
+
 def modelo(t, tec):
     """Nº do modelo de tecnologia social da etapa: pela instrução normativa citada, pelo nº do modelo
     escrito no texto ou pelas variantes descritas (material, SAFISP, várzea, ampliação do telhado...).
@@ -593,6 +687,47 @@ def main():
     inst["vl_empenhado"] = (inst.vl_empenhado + inst.nr.map(ajuste).fillna(0)).round(2)
     inst.loc[com_notas, "vl_empenhado"] = inst.loc[com_notas, ["vl_empenhado", "vl_repassado"]].max(axis=1)
     inst.to_csv(DADOS / "instrumentos.csv", index=False)
+
+    # --- execução orçamentária e financeira: parcelas do MDS x notas de empenho x ordens bancárias
+    cro_mds = cro[cro.NR_CONVENIO.isin(acomp) & (cro.TIPO_RESP_CRONO_DESEMBOLSO == "Concedente")].assign(
+        parcela=lambda b: pd.to_numeric(b.NR_PARCELA_CRONO_DESEMBOLSO, errors="coerce"),
+        mes=lambda b: b.ANO_CRONO_DESEMBOLSO + "-" + pd.to_numeric(b.MES_CRONO_DESEMBOLSO, errors="coerce")
+        .fillna(1).astype(int).map("{:02d}".format),
+        valor=lambda b: valor_br(b.VALOR_PARCELA_CRONO_DESEMBOLSO))
+    obs_mds = des[des.NR_CONVENIO.isin(acomp)].rename(columns={"ID_DESEMBOLSO": "id", "OBSERVACAO_DH": "historico"})
+    nes_mds = notas.assign(historico=emp.OBSERVACAO_EMPENHO, ligada=notas.repassado != 0, valor_nota=notas.valor)
+    links = pd.DataFrame({"ob": ed.ID_DESEMBOLSO, "nota": ed.ID_EMPENHO + "-" + ed.CD_ORIGEM_EMPENHO, "valor": valor_br(ed.VALOR_GRUPO)})
+    linhas_exec = []
+    for nr in sorted(acomp):
+        parc = cro_mds[cro_mds.NR_CONVENIO == nr].sort_values(["mes", "parcela"]).reset_index(drop=True)
+        obs = obs_mds[obs_mds.NR_CONVENIO == nr].sort_values(["data", "NR_SIAFI"])
+        nes = nes_mds[(nes_mds.nr == nr) & ((nes_mds.empenhado != 0) | nes_mds.ligada)].sort_values(["data", "empenho"]) \
+            .assign(valor=lambda b: b.empenhado)
+        if parc.empty and obs.empty and nes.empty:
+            continue
+        lig = pd.DataFrame(ligar_execucao(parc, obs, nes, links[links.ob.isin(set(obs.id))]),
+                           columns=["k", "ne", "ob", "valor_ne", "valor_ob", "por_ordem"])
+        lig = lig.groupby(["k", "ne", "ob", "por_ordem"], dropna=False)[["valor_ne", "valor_ob"]].sum().reset_index()
+        ne_info, ob_info = nes.set_index("id"), obs.set_index("id")
+        lig = pd.concat([lig, pd.DataFrame({"k": [k for k in range(1, len(parc) + 1) if k not in set(lig.k)]})])
+        for x in lig.itertuples():
+            p = parc.iloc[int(x.k) - 1] if pd.notna(x.k) else None
+            ne = ne_info.loc[x.ne] if pd.notna(x.ne) else None
+            ob = ob_info.loc[x.ob] if pd.notna(x.ob) else None
+            linhas_exec.append({
+                "nr": nr, "ordem_parcela": int(x.k) if pd.notna(x.k) else 999,
+                "parcela": int(p.parcela) if p is not None else None, "mes": p.mes if p is not None else "",
+                "valor_parcela": round(p.valor, 2) if p is not None else None,
+                "ne": ne.empenho if ne is not None else "", "ne_data": ne.data if ne is not None else "",
+                "ne_zerada": bool(ne is not None and ne.valor_nota == 0 and ne.empenhado != 0),
+                "valor_ne": round(x.valor_ne, 2) if pd.notna(x.valor_ne) else None,
+                "ob": ob.NR_SIAFI if ob is not None else "", "ob_data": ob.data if ob is not None else "",
+                "valor_ob": round(x.valor_ob, 2) if pd.notna(x.valor_ob) else None,
+                "por_ordem": bool(x.por_ordem) if pd.notna(x.por_ordem) else False,
+            })
+    pd.DataFrame(linhas_exec).astype({"parcela": "Int64"}) \
+        .sort_values(["nr", "ordem_parcela", "ne_data", "ne", "ob_data", "ob"], na_position="last") \
+        .to_csv(DADOS / "execucao.csv", index=False)
 
     # --- pedidos para usar os rendimentos da aplicação financeira
     ra = ler("siconv_solicitacao_rendimento_aplicacao", filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])

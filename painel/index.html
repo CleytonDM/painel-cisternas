@@ -197,6 +197,8 @@
   .cis-quadro th, .cis-quadro td { border: 1px solid var(--color-border-line); padding: 3px var(--cds-pad-sm); text-align: center; vertical-align: middle; }
   .cis-quadro thead th, .cis-quadro tfoot td { background: var(--cis-tinta-forte); font-weight: var(--cds-font-weight-medium); }
   .cis-quadro .nowrap { white-space: nowrap; }
+  .cis-quadro td.dir { text-align: right; }
+  .cis-quadronota { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
   .cis-notas { margin: 0; padding-left: 1.2rem; display: grid; gap: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
   .cis-origem { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
   .cis-vazio {
@@ -371,6 +373,25 @@
     <div data-draw="tecsemmodelo" data-source="tecnologias"></div>
   </section>
 
+  <section class="cis-card" id="execucao">
+    <div class="cis-cardhead">
+      <h2>Execução orçamentária e financeira</h2>
+      <span>
+        <span class="cis-aviso" data-aviso="ok" hidden>Copiada. Cole no Excel ou no SEI.</span>
+        <span class="cis-aviso" data-aviso="sel" hidden>Tabela selecionada: tecle Ctrl+C para copiar.</span>
+        <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
+      </span>
+    </div>
+    <p class="cis-muted">Parcelas do MDS no cronograma de desembolso atual, as notas de empenho (NE) e as ordens bancárias (OB) ligadas a cada uma. A OB aparece na linha da NE que a pagou.</p>
+    <div class="cis-quadrobox">
+      <p class="cis-tabtit">Tabela 3: Execução orçamentária e financeira do <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por parcela do cronograma de desembolso</p>
+      <table class="cis-quadro" data-draw="exectab" data-source="execucao"></table>
+      <p class="cis-quadronota" data-draw="execnota" data-source="execucao"></p>
+      <p class="cis-origem">Fonte: Transferegov, módulo Discricionárias (dados abertos siconv_cronograma_desembolso, siconv_empenho, siconv_desembolso e siconv_empenho_desembolso), carga de <span data-draw="carga" data-source="instrumentos">—</span>.</p>
+    </div>
+    <p class="cis-muted" data-exec="vazio" hidden>Nenhuma parcela, nota de empenho ou ordem bancária registrada para este instrumento.</p>
+  </section>
+
   <section class="cis-card" id="cronograma">
     <h2>Previsto, repassado e pago</h2>
     <p class="cis-muted">Valores acumulados: parcelas do MDS no cronograma de desembolso, ordens bancárias do MDS para a conta do instrumento e pagamentos feitos pelo parceiro. A distância entre repassado e pago é o dinheiro que ficou na conta. O cronograma é o que está registrado hoje e pode ter sido refeito por aditivos.</p>
@@ -446,7 +467,7 @@
     <div class="cis-resumo" data-draw="emp-kpis" data-source="empenhos instrumentos"></div>
     <p class="cis-muted" data-draw="emp-resumo" data-source="empenhos instrumentos">—</p>
     <div class="cis-quadrobox">
-      <p class="cis-tabtit">Tabela 3: Empenhado e repassado pelo MDS no <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por grupo de despesa</p>
+      <p class="cis-tabtit">Tabela 4: Empenhado e repassado pelo MDS no <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por grupo de despesa</p>
       <table class="cis-quadro" data-draw="empquadro" data-source="empenhos instrumentos"></table>
       <p class="cis-origem">Fonte: Transferegov, módulo Discricionárias (dados abertos siconv_empenho e siconv_empenho_desembolso), carga de <span data-draw="carga" data-source="instrumentos">—</span>. Elaboração: o repassado de cada nota é a soma das ordens bancárias do MDS pagas com ela; nas notas emitidas desde 2019, o empenhado é ao menos o que já foi repassado com a nota.</p>
     </div>
@@ -1178,6 +1199,122 @@
     el.append(ul);
   });
 
+  // --- Tabela 3: parcelas do MDS x notas de empenho x ordens bancárias (ligação feita em atualizar_dados.py)
+  const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+  const reais = (v) => (v == null || v === '' ? '' : fmt.brl(v).replace(/R\$\s?/, ''));
+  const execDo = () => {
+    const d = dash.data('execucao');
+    const nr = atual();
+    return d.status === 'ok' && nr ? d.data.filter((x) => x.nr === nr) : null;
+  };
+
+  dash.draw('exectab', (tab) => {
+    const linhas = execDo();
+    tab.replaceChildren();
+    if (!linhas) return;
+    document.querySelectorAll('[data-exec="vazio"]').forEach((p) => { p.hidden = linhas.length > 0; });
+    if (!linhas.length) return;
+    const verdade = (v) => v === true || v === 'True';
+
+    const thead = document.createElement('thead');
+    const h1 = document.createElement('tr');
+    h1.append(celula('th', 'Cronograma de desembolso (parcelas do MDS)', {colspan: 5}), celula('th', 'Notas de empenho', {colspan: 3}),
+      celula('th', 'Ordens bancárias', {colspan: 3}));
+    const h2 = document.createElement('tr');
+    ['Parcela', 'Tipo', 'Mês', 'Ano', 'Valor (R$)', 'NE', 'Valor (R$)', 'Data', 'OB', 'Valor (R$)', 'Data'].forEach((c) => h2.append(celula('th', c)));
+    thead.append(h1, h2);
+
+    // parcela -> notas (na ordem) -> linhas de OB
+    const parcelas = new Map();
+    linhas.forEach((x) => {
+      if (!parcelas.has(x.ordem_parcela)) parcelas.set(x.ordem_parcela, {x, notas: new Map()});
+      const p = parcelas.get(x.ordem_parcela);
+      if (!x.ne && !x.ob) return;
+      const chave = x.ne || '—' + x.ob;
+      if (!p.notas.has(chave)) p.notas.set(chave, {x, valor: 0, ordem: false, obs: []});
+      const nota = p.notas.get(chave);
+      nota.valor += n(x.valor_ne) ?? 0;
+      nota.ordem = nota.ordem || verdade(x.por_ordem);
+      if (x.ob) nota.obs.push(x);
+    });
+
+    const tbody = document.createElement('tbody');
+    const marca = (txt, ordem, zerada) => txt + (ordem ? '*' : '') + (zerada ? '¹' : '');
+    [...parcelas.values()].sort((a, b) => n(a.x.ordem_parcela) - n(b.x.ordem_parcela)).forEach((p) => {
+      const notas = [...p.notas.values()];
+      const total = notas.reduce((s, nota) => s + Math.max(nota.obs.length, 1), 0) || 1;
+      let primeira = true;
+      const linhaParcela = (tr) => {
+        if (!primeira) return;
+        primeira = false;
+        if (n(p.x.ordem_parcela) === 999) {
+          tr.append(celula('td', 'Sem parcela no cronograma atual', {colspan: 5, rowspan: total}));
+          return;
+        }
+        const mes = p.x.mes ?? '';
+        tr.append(celula('td', p.x.parcela ?? '', {rowspan: total}), celula('td', 'Concedente', {rowspan: total}),
+          celula('td', MESES[n(mes.slice(5, 7)) - 1] ?? '', {rowspan: total}), celula('td', mes.slice(0, 4), {rowspan: total}),
+          celula('td', reais(p.x.valor_parcela), {rowspan: total, class: 'dir nowrap'}));
+      };
+      if (!notas.length) {
+        const tr = document.createElement('tr');
+        linhaParcela(tr);
+        for (let k = 0; k < 6; k++) tr.append(celula('td', ''));
+        tbody.append(tr);
+        return;
+      }
+      notas.forEach((nota) => {
+        const obs = nota.obs.length ? nota.obs : [null];
+        obs.forEach((o, i) => {
+          const tr = document.createElement('tr');
+          linhaParcela(tr);
+          if (i === 0) {
+            const rs = {rowspan: obs.length};
+            tr.append(celula('td', nota.x.ne ? marca(nota.x.ne, nota.ordem, verdade(nota.x.ne_zerada)) : 'não informada', {...rs, class: 'nowrap'}),
+              celula('td', nota.x.ne ? reais(nota.valor) : '', {...rs, class: 'dir nowrap'}),
+              celula('td', nota.x.ne_data ? fmt.data(nota.x.ne_data) : '', {...rs, class: 'nowrap'}));
+          }
+          tr.append(celula('td', o ? marca(o.ob, verdade(o.por_ordem), false) : '', {class: 'nowrap'}),
+            celula('td', o ? reais(o.valor_ob) : '', {class: 'dir nowrap'}), celula('td', o?.ob_data ? fmt.data(o.ob_data) : '', {class: 'nowrap'}));
+          tbody.append(tr);
+        });
+      });
+    });
+
+    const soma = (campo, f = () => true) => linhas.filter(f).reduce((s, x) => s + (n(x[campo]) ?? 0), 0);
+    const vistas = new Set();
+    const parcelado = soma('valor_parcela', (x) => n(x.ordem_parcela) !== 999 && !vistas.has(x.ordem_parcela) && vistas.add(x.ordem_parcela));
+    const tfoot = document.createElement('tfoot');
+    const tr = document.createElement('tr');
+    tr.append(celula('td', '', {colspan: 3}), celula('td', 'Total'), celula('td', reais(parcelado), {class: 'dir nowrap'}),
+      celula('td', 'Total'), celula('td', reais(soma('valor_ne')), {class: 'dir nowrap'}), celula('td', ''),
+      celula('td', 'Total'), celula('td', reais(soma('valor_ob')), {class: 'dir nowrap'}), celula('td', ''));
+    tfoot.append(tr);
+    tab.append(thead, tbody, tfoot);
+  });
+
+  // Nota do quadro: como parcela, NE e OB foram ligadas (o Transferegov não registra essa ligação)
+  dash.draw('execnota', (el) => {
+    const linhas = execDo();
+    el.textContent = '';
+    if (!linhas || !linhas.length) return;
+    const verdade = (v) => v === true || v === 'True';
+    const temOrdem = linhas.some((x) => verdade(x.por_ordem) && (x.ne || x.ob));
+    const temZerada = linhas.some((x) => verdade(x.ne_zerada));
+    const semParcela = linhas.some((x) => n(x.ordem_parcela) === 999);
+    el.textContent = 'Nota: o Transferegov não registra a qual parcela do cronograma corresponde cada nota de empenho (NE) ou ordem bancária (OB); '
+      + 'a ligação entre NE e OB é a dos dados abertos (cada OB informa as NEs que a pagaram). '
+      + 'A parcela de cada OB é a citada no histórico da própria OB (por exemplo, "pagamento da 2ª parcela", contando as parcelas do MDS em ordem de data); '
+      + 'sem citação, as OBs preenchem as parcelas em ordem de data, da mais antiga com saldo para a seguinte. '
+      + 'Cada NE fica na parcela das OBs que pagou; a parte ainda não paga vai para a parcela citada no histórico da NE ou, sem citação, '
+      + 'para a próxima parcela com valor ainda não empenhado. Anulações entram com valor negativo na parcela da nota anterior. '
+      + 'Nas OBs e NEs que citam a parcela no histórico, a regra por ordem de data chega à mesma parcela em 98% e 97% dos casos, respectivamente.'
+      + (semParcela ? ' O que passa do valor do cronograma atual (por exemplo, depois de reprogramação) fica em "Sem parcela no cronograma atual".' : '')
+      + (temOrdem ? ' (*) NE ou OB ligada à parcela pela ordem de data, sem citação da parcela no histórico.' : '')
+      + (temZerada ? ' (¹) NE com valor zerado nos dados abertos (só o valor da emissão); o valor mostrado é o já repassado com ela.' : '')
+      + ' O valor da NE é o empenhado considerado no painel: nas notas emitidas desde 2019, ao menos o que já foi repassado com a nota.';
+  });
+
   // --- prazos, alterações e situação
   const tDia = (s) => Date.parse(s.slice(0, 10) + 'T00:00:00Z');
   const plural = (q, um, varios) => fmt.int(q) + ' ' + (q === 1 ? um : varios);
@@ -1478,7 +1615,8 @@
       [...tr.cells].forEach((c) => {
         const txt = limpa(c.textContent);
         const span = (c.colSpan > 1 ? ` colspan="${c.colSpan}"` : '') + (c.rowSpan > 1 ? ` rowspan="${c.rowSpan}"` : '');
-        html += `<${tag}${span} style="${BORDA}${parte === 'TBODY' ? '' : CINZA}">${esc(txt)}</${tag}>`;
+        const dir = c.classList.contains('dir') ? 'text-align:right;' : '';
+        html += `<${tag}${span} style="${BORDA}${dir}${parte === 'TBODY' ? '' : CINZA}">${esc(txt)}</${tag}>`;
         while (grade[i][col] !== undefined) col++;
         for (let r = 0; r < c.rowSpan; r++) {
           grade[i + r] = grade[i + r] || [];
@@ -1489,9 +1627,10 @@
       html += '</tr>';
     });
     html += '</table>';
-    const fonte = limpa(box.querySelector('.cis-origem')?.textContent ?? '');
-    if (fonte) html += `<p style="font-family:Calibri,Arial,sans-serif;font-size:9pt">${esc(fonte)}</p>`;
-    const tsv = [titulo, ...grade.map((l) => Array.from(l, (v) => v ?? '').join('\t')), ...(fonte ? [fonte] : [])].join('\r\n');
+    // nota do quadro (como os dados foram ligados) e fonte vão junto com a tabela
+    const rodape = [...box.querySelectorAll('.cis-quadronota, .cis-origem')].map((p) => limpa(p.textContent)).filter(Boolean);
+    rodape.forEach((t) => { html += `<p style="font-family:Calibri,Arial,sans-serif;font-size:9pt">${esc(t)}</p>`; });
+    const tsv = [titulo, ...grade.map((l) => Array.from(l, (v) => v ?? '').join('\t')), ...rodape].join('\r\n');
     return {html, tsv};
   };
 
