@@ -8,7 +8,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 700219,2012-08-14,2016-12-15,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,1584,False
 700219,2016-12-15,2016-12-20,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,5,False
 700219,2016-12-20,2021-04-20,Prestação de contas rejeitada,PRESTACAO_CONTAS_REJEITADA,1582,False
-700219,2021-04-20,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,2027,True
+700219,2021-04-20,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,2028,True
 705882,2009-05-12,2009-05-18,Proposta cadastrada,PROPOSTA_CADASTRADA,6,False
 705882,2009-05-18,2009-05-26,Proposta em análise,PROPOSTA_EM_ANALISE,8,False
 705882,2009-05-26,2009-05-26,Proposta em complementação,PROPOSTA_EM_COMPLEMENTACAO,0,False
@@ -29,7 +29,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 705882,2015-03-30,2016-09-29,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,549,False
 705882,2016-09-29,2016-12-16,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,78,False
 705882,2016-12-16,2023-03-09,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,2274,False
-705882,2023-03-09,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1339,True
+705882,2023-03-09,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1340,True
 707181,2009-04-21,2009-08-01,Proposta cadastrada,PROPOSTA_CADASTRADA,102,False
 707181,2009-08-01,2009-09-04,Proposta em análise,PROPOSTA_EM_ANALISE,34,False
 707181,2009-09-04,2009-09-22,Proposta em complementação,PROPOSTA_EM_COMPLEMENTACAO,18,False
@@ -48,7 +48,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 707181,2011-04-28,2016-12-15,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,2058,False
 707181,2016-12-15,2022-06-01,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1994,False
 707181,2022-06-01,2022-09-28,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,119,False
-707181,2022-09-28,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1501,True
+707181,2022-09-28,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1502,True
 707379,2009-04-29,2009-04-29,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 707379,2009-04-29,2009-05-08,Proposta em análise,PROPOSTA_EM_ANALISE,9,False
 707379,2009-05-08,2009-05-15,Proposta em complementação,PROPOSTA_EM_COMPLEMENTACAO,7,False
@@ -77,7 +77,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 707379,2014-08-26,2016-12-15,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,842,False
 707379,2016-12-15,2018-04-10,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,481,False
 707379,2018-04-10,2019-09-27,Prestação de contas rejeitada,PRESTACAO_CONTAS_REJEITADA,535,False
-707379,2019-09-27,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,2598,True
+707379,2019-09-27,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,2599,True
 718479,2009-11-26,2009-11-30,Proposta cadastrada,PROPOSTA_CADASTRADA,4,False
 718479,2009-11-30,2009-11-30,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
 718479,2009-11-30,2009-12-03,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,3,False
@@ -102,7 +102,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 718479,2025-06-02,2025-08-08,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,67,False
 718479,2025-08-08,2025-08-14,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,6,False
 718479,2025-08-14,2025-09-12,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,29,False
-718479,2025-09-12,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,421,True
+718479,2025-09-12,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,422,True
 733049,2010-03-04,2010-03-05,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 733049,2010-03-05,2010-03-09,Proposta em análise,PROPOSTA_EM_ANALISE,4,False
 733049,2010-03-09,2010-03-09,Proposta em complementação,PROPOSTA_EM_COMPLEMENTACAO,0,False
@@ -120,7 +120,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 733049,2021-06-28,2022-08-22,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,420,False
 733049,2022-08-22,2022-08-22,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,0,False
 733049,2022-08-22,2026-08-11,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,1450,False
-733049,2026-08-11,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,88,True
+733049,2026-08-11,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,89,True
 733189,2010-03-01,2010-03-02,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 733189,2010-03-02,2010-03-17,Proposta em análise,PROPOSTA_EM_ANALISE,15,False
 733189,2010-03-17,2010-03-30,Proposta em complementação,PROPOSTA_EM_COMPLEMENTACAO,13,False
@@ -144,7 +144,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 733189,2016-02-17,2025-03-24,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,3323,False
 733189,2025-03-24,2025-12-15,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,266,False
 733189,2025-12-15,2026-08-05,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,233,False
-733189,2026-08-05,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,94,True
+733189,2026-08-05,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,95,True
 739529,2010-05-18,2010-06-02,Proposta cadastrada,PROPOSTA_CADASTRADA,15,False
 739529,2010-06-02,2010-06-10,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,8,False
 739529,2010-06-10,2010-06-16,Proposta em análise,PROPOSTA_EM_ANALISE,6,False
@@ -157,7 +157,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 739529,2015-01-21,2018-02-26,Inadimplente,INADIMPLENTE,1132,False
 739529,2018-02-26,2018-03-15,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,17,False
 739529,2018-03-15,2018-07-17,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,124,False
-739529,2018-07-17,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,3035,True
+739529,2018-07-17,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,3036,True
 753587,2010-12-14,2010-12-15,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 753587,2010-12-15,2010-12-30,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,15,False
 753587,2010-12-30,2010-12-30,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
@@ -168,7 +168,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 753587,2014-02-19,2018-03-16,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1486,False
 753587,2018-03-16,2018-04-19,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,34,False
 753587,2018-04-19,2019-03-26,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,341,False
-753587,2019-03-26,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,2783,True
+753587,2019-03-26,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,2784,True
 756028,2011-06-17,2011-06-20,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 756028,2011-06-20,2011-06-22,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,2,False
 756028,2011-06-22,2011-06-22,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -205,7 +205,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 756028,2018-05-23,2018-06-19,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,27,False
 756028,2018-06-19,2022-05-02,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,1413,False
 756028,2022-05-02,2026-09-01,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1583,False
-756028,2026-09-01,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,67,True
+756028,2026-09-01,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,68,True
 756033,2011-06-17,2011-06-24,Proposta cadastrada,PROPOSTA_CADASTRADA,7,False
 756033,2011-06-24,2011-08-05,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,42,False
 756033,2011-08-05,2011-08-05,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -230,7 +230,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 756033,2017-04-07,2018-06-13,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,432,False
 756033,2018-06-13,2022-05-02,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,1419,False
 756033,2022-05-02,2026-08-28,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1579,False
-756033,2026-08-28,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,71,True
+756033,2026-08-28,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,72,True
 756747,2011-07-25,2011-07-25,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 756747,2011-07-25,2011-08-05,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,11,False
 756747,2011-08-05,2011-08-05,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -264,7 +264,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 756747,2019-10-23,2021-09-30,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,708,False
 756747,2021-09-30,2021-10-27,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,27,False
 756747,2021-10-27,2026-11-03,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1833,False
-756747,2026-11-03,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,4,True
+756747,2026-11-03,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,5,True
 757754,2011-08-18,2011-08-25,Proposta cadastrada,PROPOSTA_CADASTRADA,7,False
 757754,2011-08-25,2011-08-25,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 757754,2011-08-25,2011-08-25,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -281,7 +281,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 757754,2013-08-28,2016-11-29,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,1189,False
 757754,2016-11-29,2023-08-21,Em execução,EM_EXECUCAO,2456,False
 757754,2023-08-21,2024-09-25,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,401,False
-757754,2024-09-25,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,773,True
+757754,2024-09-25,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,774,True
 759540,2011-11-18,2011-11-21,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 759540,2011-11-21,2011-11-21,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
 759540,2011-11-21,2011-11-21,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
@@ -294,7 +294,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 759540,2012-01-16,2012-04-27,Assinado,ASSINADA,102,False
 759540,2012-04-27,2014-03-31,Em execução,EM_EXECUCAO,703,False
 759540,2014-03-31,2016-11-17,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,962,False
-759540,2016-11-17,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,3642,True
+759540,2016-11-17,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,3643,True
 761742,2011-11-11,2011-11-16,Proposta cadastrada,PROPOSTA_CADASTRADA,5,False
 761742,2011-11-16,2011-11-16,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 761742,2011-11-16,2011-11-16,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -335,7 +335,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 761742,2023-07-12,2024-01-18,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,190,False
 761742,2024-01-18,2026-03-04,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,776,False
 761742,2026-03-04,2026-06-16,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,104,False
-761742,2026-06-16,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,144,True
+761742,2026-06-16,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,145,True
 764558,2011-12-04,2011-12-15,Proposta cadastrada,PROPOSTA_CADASTRADA,11,False
 764558,2011-12-15,2011-12-16,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,1,False
 764558,2011-12-16,2011-12-16,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
@@ -363,7 +363,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 764558,2021-06-29,2022-08-22,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,419,False
 764558,2022-08-22,2024-03-26,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,582,False
 764558,2024-03-26,2024-07-30,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,126,False
-764558,2024-07-30,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,830,True
+764558,2024-07-30,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,831,True
 769792,2012-05-30,2012-06-08,Proposta cadastrada,PROPOSTA_CADASTRADA,9,False
 769792,2012-06-08,2012-06-08,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
 769792,2012-06-08,2012-06-08,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
@@ -385,7 +385,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 769792,2021-02-23,2021-03-08,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,13,False
 769792,2021-03-08,2021-09-09,Em execução,EM_EXECUCAO,185,False
 769792,2021-09-09,2021-09-14,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,5,False
-769792,2021-09-14,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1880,True
+769792,2021-09-14,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1881,True
 769890,2012-05-22,2012-06-11,Proposta cadastrada,PROPOSTA_CADASTRADA,20,False
 769890,2012-06-11,2012-06-12,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,1,False
 769890,2012-06-12,2012-06-12,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
@@ -399,7 +399,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 769890,2020-06-24,2025-02-24,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,1706,False
 769890,2025-02-24,2025-02-27,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,3,False
 769890,2025-02-27,2025-02-27,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,0,False
-769890,2025-02-27,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,618,True
+769890,2025-02-27,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,619,True
 775945,2012-11-13,2012-11-16,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 775945,2012-11-16,2012-11-22,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,6,False
 775945,2012-11-22,2012-11-22,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
@@ -416,7 +416,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 775945,2018-07-30,2025-07-03,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,2530,False
 775945,2025-07-03,2025-11-10,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,130,False
 775945,2025-11-10,2026-11-03,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,358,False
-775945,2026-11-03,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,4,True
+775945,2026-11-03,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,5,True
 775967,2012-11-08,2012-11-12,Proposta cadastrada,PROPOSTA_CADASTRADA,4,False
 775967,2012-11-12,2012-11-13,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,1,False
 775967,2012-11-13,2012-11-13,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
@@ -434,7 +434,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 775967,2016-01-18,2016-11-29,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,316,False
 775967,2016-11-29,2022-03-30,Em execução,EM_EXECUCAO,1947,False
 775967,2022-03-30,2022-04-18,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,19,False
-775967,2022-04-18,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,1664,True
+775967,2022-04-18,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,1665,True
 794256,2013-12-06,2013-12-09,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 794256,2013-12-09,2013-12-09,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 794256,2013-12-09,2013-12-10,Proposta em análise,PROPOSTA_EM_ANALISE,1,False
@@ -454,7 +454,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 794256,2024-07-09,2024-07-11,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,2,False
 794256,2024-07-11,2025-08-14,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,399,False
 794256,2025-08-14,2025-08-14,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,0,False
-794256,2025-08-14,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,450,True
+794256,2025-08-14,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,451,True
 794638,2013-12-06,2013-12-10,Proposta cadastrada,PROPOSTA_CADASTRADA,4,False
 794638,2013-12-10,2013-12-10,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
 794638,2013-12-10,2013-12-10,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
@@ -472,7 +472,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 794638,2016-01-18,2016-05-09,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,112,False
 794638,2016-05-09,2021-05-20,Em execução,EM_EXECUCAO,1837,False
 794638,2021-05-20,2023-01-13,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,603,False
-794638,2023-01-13,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1394,True
+794638,2023-01-13,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1395,True
 794674,2013-12-05,2013-12-05,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 794674,2013-12-05,2013-12-10,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,5,False
 794674,2013-12-10,2013-12-10,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
@@ -486,7 +486,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 794674,2016-12-02,2021-06-28,Em execução,EM_EXECUCAO,1669,False
 794674,2021-06-28,2021-06-30,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,2,False
 794674,2021-06-30,2024-07-04,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,1100,False
-794674,2024-07-04,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,856,True
+794674,2024-07-04,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,857,True
 794680,2013-12-10,2013-12-10,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 794680,2013-12-10,2013-12-11,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,1,False
 794680,2013-12-11,2013-12-11,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
@@ -498,7 +498,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 794680,2016-01-26,2022-09-15,Em execução,EM_EXECUCAO,2424,False
 794680,2022-09-15,2024-02-28,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,531,False
 794680,2024-02-28,2025-09-12,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,562,False
-794680,2025-09-12,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,421,True
+794680,2025-09-12,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,422,True
 811724,2014-09-24,2014-09-24,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 811724,2014-09-24,2014-10-06,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,12,False
 811724,2014-10-06,2014-10-06,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -511,7 +511,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 811724,2015-10-16,2018-10-30,Em execução,EM_EXECUCAO,1110,False
 811724,2018-10-30,2018-11-08,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,9,False
 811724,2018-11-08,2019-10-08,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,334,False
-811724,2019-10-08,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,2587,True
+811724,2019-10-08,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,2588,True
 827965,2016-04-20,2016-04-21,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 827965,2016-04-21,2016-04-22,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,1,False
 827965,2016-04-22,2016-04-22,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -525,7 +525,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 827965,2016-04-26,2016-05-09,Plano de trabalho complementado em análise,PLANO_TRABALHO_COMPLEMENTADO_EM_ANALISE,13,False
 827965,2016-05-09,2016-05-10,Assinado,ASSINADA,1,False
 827965,2016-05-10,2026-05-08,Em execução,EM_EXECUCAO,3650,False
-827965,2026-05-08,,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,183,True
+827965,2026-05-08,,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,184,True
 839214,2016-11-29,2016-11-30,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 839214,2016-11-30,2016-11-30,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 839214,2016-11-30,2016-12-01,Proposta em análise,PROPOSTA_EM_ANALISE,1,False
@@ -534,7 +534,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 839214,2016-12-26,2017-09-15,Assinado,ASSINADA,263,False
 839214,2017-09-15,2021-10-14,Em execução,EM_EXECUCAO,1490,False
 839214,2021-10-14,2022-02-15,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,124,False
-839214,2022-02-15,,Em execução,EM_EXECUCAO,1726,True
+839214,2022-02-15,,Em execução,EM_EXECUCAO,1727,True
 839447,2016-11-29,2016-11-29,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 839447,2016-11-29,2016-12-05,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,6,False
 839447,2016-12-05,2016-12-05,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -549,7 +549,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 839447,2016-12-27,2017-11-16,Assinado,ASSINADA,324,False
 839447,2017-11-16,2023-05-22,Em execução,EM_EXECUCAO,2013,False
 839447,2023-05-22,2023-11-01,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,163,False
-839447,2023-11-01,,Em execução,EM_EXECUCAO,1102,True
+839447,2023-11-01,,Em execução,EM_EXECUCAO,1103,True
 851296,2017-08-15,2017-08-15,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 851296,2017-08-15,2017-08-31,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,16,False
 851296,2017-08-31,2017-09-06,Proposta em análise,PROPOSTA_EM_ANALISE,6,False
@@ -568,7 +568,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 851296,2022-02-22,2022-04-14,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,51,False
 851296,2022-04-14,2023-09-18,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,522,False
 851296,2023-09-18,2023-09-19,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,1,False
-851296,2023-09-19,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,1145,True
+851296,2023-09-19,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,1146,True
 852350,2017-08-03,2017-08-09,Proposta cadastrada,PROPOSTA_CADASTRADA,6,False
 852350,2017-08-09,2017-09-06,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,28,False
 852350,2017-09-06,2017-09-06,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -582,7 +582,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 852350,2018-01-05,2018-01-29,Assinado,ASSINADA,24,False
 852350,2018-01-29,2026-07-22,Em execução,EM_EXECUCAO,3096,False
 852350,2026-07-22,2026-09-18,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,58,False
-852350,2026-09-18,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,50,True
+852350,2026-09-18,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,51,True
 853235,2017-08-15,2017-08-15,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 853235,2017-08-15,2017-09-01,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,17,False
 853235,2017-09-01,2017-09-05,Proposta em análise,PROPOSTA_EM_ANALISE,4,False
@@ -602,7 +602,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 853235,2020-10-19,2021-11-25,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,402,False
 853235,2021-11-25,2022-07-05,Em execução,EM_EXECUCAO,222,False
 853235,2022-07-05,2023-07-07,Aguardando prestação de contas,AGUARDANDO_PRESTACAO_CONTAS,367,False
-853235,2023-07-07,,Em execução,EM_EXECUCAO,1219,True
+853235,2023-07-07,,Em execução,EM_EXECUCAO,1220,True
 853785,2017-03-30,2017-04-25,Proposta cadastrada,PROPOSTA_CADASTRADA,26,False
 853785,2017-04-25,2017-12-01,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,220,False
 853785,2017-12-01,2017-12-01,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -619,7 +619,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 853785,2018-01-29,2021-02-04,Em execução,EM_EXECUCAO,1102,False
 853785,2021-02-04,2022-05-13,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,463,False
 853785,2022-05-13,2022-05-13,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,0,False
-853785,2022-05-13,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,1639,True
+853785,2022-05-13,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,1640,True
 857171,2017-08-02,2017-08-14,Proposta cadastrada,PROPOSTA_CADASTRADA,12,False
 857171,2017-08-14,2017-12-07,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,115,False
 857171,2017-12-07,2017-12-07,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -632,7 +632,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 857171,2017-12-26,2017-12-28,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,2,False
 857171,2017-12-28,2017-12-28,Assinatura pendente de registro no SIAFI,ASSINATURA_PENDENTE_REGISTRO_TV_SIAFI,0,False
 857171,2017-12-28,2018-01-29,Assinado,ASSINADA,32,False
-857171,2018-01-29,,Em execução,EM_EXECUCAO,3204,True
+857171,2018-01-29,,Em execução,EM_EXECUCAO,3205,True
 859840,2017-11-27,2017-12-03,Proposta cadastrada,PROPOSTA_CADASTRADA,6,False
 859840,2017-12-03,2017-12-20,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,17,False
 859840,2017-12-20,2017-12-20,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -658,7 +658,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 859840,2022-08-22,2023-11-21,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,456,False
 859840,2023-11-21,2024-07-17,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,239,False
 859840,2024-07-17,2026-06-08,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,691,False
-859840,2026-06-08,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,152,True
+859840,2026-06-08,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,153,True
 862649,2017-12-11,2017-12-12,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 862649,2017-12-12,2017-12-22,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 862649,2017-12-22,2017-12-22,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -680,7 +680,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 862649,2024-04-23,2024-04-23,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,0,False
 862649,2024-04-23,2024-06-03,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,41,False
 862649,2024-06-03,2026-08-21,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,809,False
-862649,2026-08-21,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,78,True
+862649,2026-08-21,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,79,True
 895504,2019-11-18,2019-11-19,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 895504,2019-11-19,2019-12-13,Chamamento público: enviada para análise preliminar,EM_CHAMAMENTO_PUBLICO_ENVIADA_PARA_ANALISE_PRELIMINAR,24,False
 895504,2019-12-13,2019-12-20,Chamamento público: classificada na análise preliminar,EM_CHAMAMENTO_PUBLICO_CLASSIFICADA_ANALISE_PRELIMINAR,7,False
@@ -704,7 +704,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 895504,2024-08-02,2024-08-05,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,3,False
 895504,2024-08-05,2024-08-07,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,2,False
 895504,2024-08-07,2025-09-01,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,390,False
-895504,2025-09-01,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,432,True
+895504,2025-09-01,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,433,True
 896886,2019-11-18,2019-11-19,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 896886,2019-11-19,2019-12-13,Chamamento público: enviada para análise preliminar,EM_CHAMAMENTO_PUBLICO_ENVIADA_PARA_ANALISE_PRELIMINAR,24,False
 896886,2019-12-13,2019-12-20,Chamamento público: classificada na análise preliminar,EM_CHAMAMENTO_PUBLICO_CLASSIFICADA_ANALISE_PRELIMINAR,7,False
@@ -720,7 +720,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 896886,2026-07-28,2026-09-18,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,52,False
 896886,2026-09-18,2026-09-30,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,12,False
 896886,2026-09-30,2026-09-30,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,0,False
-896886,2026-09-30,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,38,True
+896886,2026-09-30,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,39,True
 901956,2020-03-06,2020-03-06,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 901956,2020-03-06,2020-05-15,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,70,False
 901956,2020-05-15,2020-05-15,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -739,7 +739,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 901956,2026-01-16,2026-01-28,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,12,False
 901956,2026-01-28,2026-01-30,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,2,False
 901956,2026-01-30,2026-03-02,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,31,False
-901956,2026-03-02,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,250,True
+901956,2026-03-02,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,251,True
 902159,2020-03-01,2020-03-13,Proposta cadastrada,PROPOSTA_CADASTRADA,12,False
 902159,2020-03-13,2020-05-15,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,63,False
 902159,2020-05-15,2020-05-15,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -763,7 +763,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 902159,2026-03-11,2026-03-11,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,0,False
 902159,2026-03-11,2026-03-13,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,2,False
 902159,2026-03-13,2026-06-12,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,91,False
-902159,2026-06-12,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,148,True
+902159,2026-06-12,,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,149,True
 918909,2021-11-01,2021-11-04,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 918909,2021-11-04,2021-11-10,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,6,False
 918909,2021-11-10,2021-11-10,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -781,7 +781,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 918909,2023-08-15,2023-08-16,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,1,False
 918909,2023-08-16,2024-08-12,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,362,False
 918909,2024-08-12,2024-08-29,Prestação de contas rejeitada,PRESTACAO_CONTAS_REJEITADA,17,False
-918909,2024-08-29,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,800,True
+918909,2024-08-29,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,801,True
 918994,2021-11-01,2021-11-03,Proposta cadastrada,PROPOSTA_CADASTRADA,2,False
 918994,2021-11-03,2021-11-10,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,7,False
 918994,2021-11-10,2021-11-10,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -797,7 +797,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 918994,2022-01-04,2022-08-30,Assinado,ASSINADA,238,False
 918994,2022-08-30,2024-09-05,Em execução,EM_EXECUCAO,737,False
 918994,2024-09-05,2024-11-26,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,82,False
-918994,2024-11-26,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,711,True
+918994,2024-11-26,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,712,True
 919047,2021-10-31,2021-11-04,Proposta cadastrada,PROPOSTA_CADASTRADA,4,False
 919047,2021-11-04,2021-11-10,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,6,False
 919047,2021-11-10,2021-11-10,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -810,7 +810,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 919047,2021-11-16,2021-11-24,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,8,False
 919047,2021-11-24,2022-01-04,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,41,False
 919047,2022-01-04,2023-05-09,Assinado,ASSINADA,490,False
-919047,2023-05-09,,Em execução,EM_EXECUCAO,1278,True
+919047,2023-05-09,,Em execução,EM_EXECUCAO,1279,True
 919058,2021-11-11,2021-11-12,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 919058,2021-11-12,2021-11-12,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 919058,2021-11-12,2021-11-12,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -835,20 +835,20 @@ nr,inicio,fim,situacao,codigo,dias,atual
 919058,2022-01-04,2022-03-14,Assinado,ASSINADA,69,False
 919058,2022-03-14,2026-07-14,Em execução,EM_EXECUCAO,1583,False
 919058,2026-07-14,2026-07-21,Prestação de contas enviada para análise,PRESTACAO_CONTAS_ENVIADA_ANALISE,7,False
-919058,2026-07-21,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,109,True
+919058,2026-07-21,,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,110,True
 941602,2023-06-12,2023-06-13,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 941602,2023-06-13,2023-06-14,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,1,False
 941602,2023-06-14,2023-06-14,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
 941602,2023-06-14,2023-07-13,Proposta em análise,PROPOSTA_EM_ANALISE,29,False
 941602,2023-07-13,2024-11-25,Assinado,ASSINADA,501,False
-941602,2024-11-25,,Em execução,EM_EXECUCAO,712,True
+941602,2024-11-25,,Em execução,EM_EXECUCAO,713,True
 941781,2023-06-15,2023-06-19,Proposta cadastrada,PROPOSTA_CADASTRADA,4,False
 941781,2023-06-19,2023-06-20,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,1,False
 941781,2023-06-20,2023-06-20,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 941781,2023-06-20,2023-06-20,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
 941781,2023-06-20,2023-08-09,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,50,False
 941781,2023-08-09,2024-04-24,Assinado,ASSINADA,259,False
-941781,2024-04-24,,Em execução,EM_EXECUCAO,927,True
+941781,2024-04-24,,Em execução,EM_EXECUCAO,928,True
 942187,2023-06-26,2023-06-26,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 942187,2023-06-26,2023-06-26,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 942187,2023-06-26,2023-06-26,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -858,7 +858,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 942187,2023-06-29,2023-08-10,Proposta complementada enviada para análise,PROPOSTA_COMPLEMENTADA_ENVIADA_ANALISE,42,False
 942187,2023-08-10,2023-08-11,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,1,False
 942187,2023-08-11,2025-11-14,Assinado,ASSINADA,826,False
-942187,2025-11-14,,Em execução,EM_EXECUCAO,358,True
+942187,2025-11-14,,Em execução,EM_EXECUCAO,359,True
 944934,2023-08-01,2023-08-04,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 944934,2023-08-04,2023-08-11,Chamamento público: enviada para análise preliminar,EM_CHAMAMENTO_PUBLICO_ENVIADA_PARA_ANALISE_PRELIMINAR,7,False
 944934,2023-08-11,2023-08-18,Chamamento público: classificada na análise preliminar,EM_CHAMAMENTO_PUBLICO_CLASSIFICADA_ANALISE_PRELIMINAR,7,False
@@ -873,7 +873,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 944934,2026-10-21,2026-10-21,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,0,False
 944934,2026-10-21,2026-10-21,Prestação de contas em complementação,PRESTACAO_CONTAS_EM_COMPLEMENTACAO,0,False
 944934,2026-10-21,2026-10-28,Prestação de contas em análise,PRESTACAO_CONTAS_EM_ANALISE,7,False
-944934,2026-10-28,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,10,True
+944934,2026-10-28,,Prestação de contas comprovada em análise,PRESTACAO_CONTAS_COMPROVADA_EM_ANALISE,11,True
 945310,2023-07-27,2023-07-27,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 945310,2023-07-27,2023-08-07,Chamamento público: enviada para análise preliminar,EM_CHAMAMENTO_PUBLICO_ENVIADA_PARA_ANALISE_PRELIMINAR,11,False
 945310,2023-08-07,2023-08-14,Chamamento público: classificada na análise preliminar,EM_CHAMAMENTO_PUBLICO_CLASSIFICADA_ANALISE_PRELIMINAR,7,False
@@ -889,7 +889,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 945310,2023-10-06,2023-10-06,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
 945310,2023-10-06,2023-10-06,Plano de trabalho complementado em análise,PLANO_TRABALHO_COMPLEMENTADO_EM_ANALISE,0,False
 945310,2023-10-06,2024-02-28,Assinado,ASSINADA,145,False
-945310,2024-02-28,,Em execução,EM_EXECUCAO,983,True
+945310,2024-02-28,,Em execução,EM_EXECUCAO,984,True
 945514,2023-07-22,2023-07-23,Proposta cadastrada,PROPOSTA_CADASTRADA,1,False
 945514,2023-07-23,2023-08-07,Chamamento público: enviada para análise preliminar,EM_CHAMAMENTO_PUBLICO_ENVIADA_PARA_ANALISE_PRELIMINAR,15,False
 945514,2023-08-07,2023-08-14,Chamamento público: classificada na análise preliminar,EM_CHAMAMENTO_PUBLICO_CLASSIFICADA_ANALISE_PRELIMINAR,7,False
@@ -913,7 +913,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 945514,2023-10-17,2023-10-17,Plano de trabalho em complementação,PLANO_TRABALHO_EM_COMPLEMENTACAO,0,False
 945514,2023-10-17,2023-10-17,Plano de trabalho complementado em análise,PLANO_TRABALHO_COMPLEMENTADO_EM_ANALISE,0,False
 945514,2023-10-17,2024-02-28,Assinado,ASSINADA,134,False
-945514,2024-02-28,,Em execução,EM_EXECUCAO,983,True
+945514,2024-02-28,,Em execução,EM_EXECUCAO,984,True
 956059,2024-03-11,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 956059,2024-03-11,2024-03-21,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 956059,2024-03-21,2024-03-21,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -929,7 +929,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956059,2024-04-29,2024-04-29,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
 956059,2024-04-29,2024-05-28,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,29,False
 956059,2024-05-28,2024-10-24,Assinado,ASSINADA,149,False
-956059,2024-10-24,,Em execução,EM_EXECUCAO,744,True
+956059,2024-10-24,,Em execução,EM_EXECUCAO,745,True
 956067,2024-02-27,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,13,False
 956067,2024-03-11,2024-03-21,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 956067,2024-03-21,2024-03-21,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -941,7 +941,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956067,2024-04-10,2024-04-14,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,4,False
 956067,2024-04-14,2024-05-27,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,43,False
 956067,2024-05-27,2024-10-24,Assinado,ASSINADA,150,False
-956067,2024-10-24,,Em execução,EM_EXECUCAO,744,True
+956067,2024-10-24,,Em execução,EM_EXECUCAO,745,True
 956071,2024-03-08,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 956071,2024-03-11,2024-03-22,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,11,False
 956071,2024-03-22,2024-03-22,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -966,7 +966,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956071,2024-05-23,2024-05-27,Proposta complementada enviada para análise,PROPOSTA_COMPLEMENTADA_ENVIADA_ANALISE,4,False
 956071,2024-05-27,2024-05-28,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,1,False
 956071,2024-05-28,2024-10-23,Assinado,ASSINADA,148,False
-956071,2024-10-23,,Em execução,EM_EXECUCAO,745,True
+956071,2024-10-23,,Em execução,EM_EXECUCAO,746,True
 956075,2024-03-05,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,6,False
 956075,2024-03-11,2024-03-21,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 956075,2024-03-21,2024-03-21,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -982,7 +982,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956075,2024-04-15,2024-04-15,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,0,False
 956075,2024-04-15,2024-05-28,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,43,False
 956075,2024-05-28,2024-10-24,Assinado,ASSINADA,149,False
-956075,2024-10-24,,Em execução,EM_EXECUCAO,744,True
+956075,2024-10-24,,Em execução,EM_EXECUCAO,745,True
 956076,2024-03-11,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 956076,2024-03-11,2024-03-22,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,11,False
 956076,2024-03-22,2024-03-22,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -1001,7 +1001,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956076,2024-04-15,2024-04-15,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,0,False
 956076,2024-04-15,2024-05-28,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,43,False
 956076,2024-05-28,2024-10-24,Assinado,ASSINADA,149,False
-956076,2024-10-24,,Em execução,EM_EXECUCAO,744,True
+956076,2024-10-24,,Em execução,EM_EXECUCAO,745,True
 956078,2024-03-07,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,4,False
 956078,2024-03-11,2024-03-21,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 956078,2024-03-21,2024-03-21,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -1021,7 +1021,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956078,2024-04-15,2024-05-24,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,39,False
 956078,2024-05-24,2024-05-24,Assinatura pendente de registro no SIAFI,ASSINATURA_PENDENTE_REGISTRO_TV_SIAFI,0,False
 956078,2024-05-24,2024-08-05,Assinado,ASSINADA,73,False
-956078,2024-08-05,,Em execução,EM_EXECUCAO,824,True
+956078,2024-08-05,,Em execução,EM_EXECUCAO,825,True
 956084,2024-03-08,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 956084,2024-03-11,2024-03-21,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 956084,2024-03-21,2024-03-21,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -1037,7 +1037,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956084,2024-04-15,2024-04-15,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,0,False
 956084,2024-04-15,2024-05-24,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,39,False
 956084,2024-05-24,2024-10-23,Assinado,ASSINADA,152,False
-956084,2024-10-23,,Em execução,EM_EXECUCAO,745,True
+956084,2024-10-23,,Em execução,EM_EXECUCAO,746,True
 956085,2024-02-26,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,14,False
 956085,2024-03-11,2024-03-21,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 956085,2024-03-21,2024-03-21,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -1060,7 +1060,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956085,2024-04-29,2024-05-20,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,21,False
 956085,2024-05-20,2024-05-28,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,8,False
 956085,2024-05-28,2024-06-19,Assinado,ASSINADA,22,False
-956085,2024-06-19,,Em execução,EM_EXECUCAO,871,True
+956085,2024-06-19,,Em execução,EM_EXECUCAO,872,True
 956098,2024-03-11,2024-03-11,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 956098,2024-03-11,2024-03-21,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 956098,2024-03-21,2024-03-21,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -1077,7 +1077,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 956098,2024-04-15,2024-05-27,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,42,False
 956098,2024-05-27,2024-05-27,Assinatura pendente de registro no SIAFI,ASSINATURA_PENDENTE_REGISTRO_TV_SIAFI,0,False
 956098,2024-05-27,2024-10-23,Assinado,ASSINADA,149,False
-956098,2024-10-23,,Em execução,EM_EXECUCAO,745,True
+956098,2024-10-23,,Em execução,EM_EXECUCAO,746,True
 958647,2024-04-14,2024-04-14,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 958647,2024-04-14,2024-04-24,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,10,False
 958647,2024-04-24,2024-04-24,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -1093,7 +1093,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 958647,2024-06-14,2024-06-14,Proposta complementada enviada para análise,PROPOSTA_COMPLEMENTADA_ENVIADA_ANALISE,0,False
 958647,2024-06-14,2024-07-04,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,20,False
 958647,2024-07-04,2026-06-12,Assinado,ASSINADA,708,False
-958647,2026-06-12,,Em execução,EM_EXECUCAO,148,True
+958647,2026-06-12,,Em execução,EM_EXECUCAO,149,True
 964769,2024-04-30,2024-04-30,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 964769,2024-04-30,2024-05-23,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,23,False
 964769,2024-05-23,2024-05-23,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -1104,13 +1104,13 @@ nr,inicio,fim,situacao,codigo,dias,atual
 964769,2024-07-04,2024-07-12,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,8,False
 964769,2024-07-12,2024-07-12,Assinatura pendente de registro no SIAFI,ASSINATURA_PENDENTE_REGISTRO_TV_SIAFI,0,False
 964769,2024-07-12,2025-11-28,Assinado,ASSINADA,504,False
-964769,2025-11-28,,Em execução,EM_EXECUCAO,344,True
+964769,2025-11-28,,Em execução,EM_EXECUCAO,345,True
 970030,2024-11-29,2024-11-29,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 970030,2024-11-29,2024-11-29,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 970030,2024-11-29,2024-12-23,Proposta em análise,PROPOSTA_EM_ANALISE,24,False
 970030,2024-12-23,2024-12-27,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,4,False
 970030,2024-12-27,2026-01-23,Assinado,ASSINADA,392,False
-970030,2026-01-23,,Em execução,EM_EXECUCAO,288,True
+970030,2026-01-23,,Em execução,EM_EXECUCAO,289,True
 973859,2024-12-18,2024-12-26,Proposta cadastrada,PROPOSTA_CADASTRADA,8,False
 973859,2024-12-26,2025-02-03,Chamamento público: enviada para análise preliminar,EM_CHAMAMENTO_PUBLICO_ENVIADA_PARA_ANALISE_PRELIMINAR,39,False
 973859,2025-02-03,2025-02-17,Chamamento público: classificada na análise preliminar,EM_CHAMAMENTO_PUBLICO_CLASSIFICADA_ANALISE_PRELIMINAR,14,False
@@ -1132,7 +1132,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 973859,2025-05-28,2025-05-29,Plano de trabalho complementado em análise,PLANO_TRABALHO_COMPLEMENTADO_EM_ANALISE,1,False
 973859,2025-05-29,2025-05-29,Assinatura pendente de registro no SIAFI,ASSINATURA_PENDENTE_REGISTRO_TV_SIAFI,0,False
 973859,2025-05-29,2025-06-26,Assinado,ASSINADA,28,False
-973859,2025-06-26,,Em execução,EM_EXECUCAO,499,True
+973859,2025-06-26,,Em execução,EM_EXECUCAO,500,True
 979056,2025-06-19,2025-06-19,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 979056,2025-06-19,2025-08-27,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,69,False
 979056,2025-08-27,2025-08-27,Proposta em análise,PROPOSTA_EM_ANALISE,0,False
@@ -1141,7 +1141,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 979056,2025-09-11,2025-09-11,Proposta complementada enviada para análise,PROPOSTA_COMPLEMENTADA_ENVIADA_ANALISE,0,False
 979056,2025-09-11,2025-09-11,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,0,False
 979056,2025-09-11,2025-10-08,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,27,False
-979056,2025-10-08,,Assinado,ASSINADA,395,True
+979056,2025-10-08,,Assinado,ASSINADA,396,True
 986621,2025-11-07,2025-11-07,Proposta cadastrada,PROPOSTA_CADASTRADA,0,False
 986621,2025-11-07,2025-11-13,Chamamento público: enviada para análise preliminar,EM_CHAMAMENTO_PUBLICO_ENVIADA_PARA_ANALISE_PRELIMINAR,6,False
 986621,2025-11-13,2025-11-24,Chamamento público: classificada na análise preliminar,EM_CHAMAMENTO_PUBLICO_CLASSIFICADA_ANALISE_PRELIMINAR,11,False
@@ -1151,7 +1151,7 @@ nr,inicio,fim,situacao,codigo,dias,atual
 986621,2025-12-01,2025-12-01,Plano de trabalho em análise,PLANO_TRABALHO_EM_ANALISE,0,False
 986621,2025-12-01,2025-12-11,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,10,False
 986621,2025-12-11,2026-02-04,Assinado,ASSINADA,55,False
-986621,2026-02-04,,Em execução,EM_EXECUCAO,276,True
+986621,2026-02-04,,Em execução,EM_EXECUCAO,277,True
 992329,2025-12-19,2025-12-22,Proposta cadastrada,PROPOSTA_CADASTRADA,3,False
 992329,2025-12-22,2025-12-22,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 992329,2025-12-22,2026-01-20,Proposta em análise,PROPOSTA_EM_ANALISE,29,False
@@ -1160,10 +1160,10 @@ nr,inicio,fim,situacao,codigo,dias,atual
 992329,2026-01-26,2026-01-26,Proposta em complementação,PROPOSTA_EM_COMPLEMENTACAO,0,False
 992329,2026-01-26,2026-02-13,Proposta complementada enviada para análise,PROPOSTA_COMPLEMENTADA_ENVIADA_ANALISE,18,False
 992329,2026-02-13,2026-02-18,Proposta complementada em análise,PROPOSTA_COMPLEMENTADA_EM_ANALISE,5,False
-992329,2026-02-18,,Assinado,ASSINADA,262,True
+992329,2026-02-18,,Assinado,ASSINADA,263,True
 996485,2026-04-01,2026-04-29,Proposta cadastrada,PROPOSTA_CADASTRADA,28,False
 996485,2026-04-29,2026-04-29,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,0,False
 996485,2026-04-29,2026-04-29,Proposta enviada para análise,PROPOSTA_ENVIADA_ANALISE,0,False
 996485,2026-04-29,2026-05-07,Proposta em análise,PROPOSTA_EM_ANALISE,8,False
 996485,2026-05-07,2026-05-25,Plano de trabalho aprovado,PLANO_TRABALHO_APROVADO,18,False
-996485,2026-05-25,,Assinado,ASSINADA,166,True
+996485,2026-05-25,,Assinado,ASSINADA,167,True
