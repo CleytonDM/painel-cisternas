@@ -18,6 +18,7 @@ A carga sai por volta das 8h15 (horário de Brasília). Quando há carga nova, o
 
 - **Disparo principal (cron-job.org), às 9h e às 10h de Brasília.** O agendamento do próprio GitHub atrasa horas e às vezes pula horários; já o disparo pela API começa em segundos. O cron-job.org chama a API com a opção `vigiar`: o workflow espera a carga do dia aparecer (consulta a cada 5 minutos, até as 13h) e só então baixa. Às 10h, se a carga já entrou, ele só confere e encerra.
 - **Reserva (agendamento do GitHub):** de hora em hora das 3h30 às 8h30, e às 12h37, 16h37 e 20h37. Cada execução só baixa se a carga mudou.
+- **Toda execução registra a verificação** em `dados/verificacao.csv` (hora em UTC e carga encontrada) e publica o site de novo, mesmo sem carga nova. O cabeçalho e o rodapé do painel mostram "Dados do Transferegov disponíveis até…" e "Última verificação…". O Transferegov às vezes passa dias republicando a mesma carga (de 09 a 11/11, por exemplo).
 
 Configuração do cron-job.org (um job com os horários 9h e 10h, fuso America/Sao_Paulo):
 

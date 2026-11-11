@@ -9,7 +9,7 @@ Uso: python site/montar_site.py
 import csv
 import re
 import shutil
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 AQUI = Path(__file__).resolve().parent
@@ -29,6 +29,13 @@ def main():
     # data de referência da carga do Transferegov em uso; o site é remontado a cada carga nova
     with open(RAIZ / "dados" / "instrumentos.csv", encoding="utf-8") as f:
         carga = datetime.strptime(next(csv.DictReader(f))["data_carga"][:10], "%Y-%m-%d").strftime("%d/%m/%Y")
+    # hora da última consulta ao Transferegov, gravada em UTC pelo workflow; Brasília é UTC-3 o ano todo
+    verificacao = ""
+    arq = RAIZ / "dados" / "verificacao.csv"
+    if arq.exists():
+        with open(arq, encoding="utf-8") as f:
+            quando = datetime.strptime(next(csv.DictReader(f))["verificado_em"], "%Y-%m-%dT%H:%M:%SZ") - timedelta(hours=3)
+        verificacao = f" Última verificação: {quando:%d/%m/%Y}, às {quando:%H:%M} (horário de Brasília)."
 
     html = f"""<!doctype html>
 <html lang="pt-BR">
@@ -47,7 +54,9 @@ def main():
 <div id="dash-root">
 {painel}
 <footer class="site-rodape">
-  Dados abertos do Transferegov (módulo Discricionárias), atualizados em: {carga}
+  Dados abertos do Transferegov (módulo Discricionárias), disponíveis até {carga}.{verificacao}<br>
+  O painel consulta o Transferegov todo dia, a partir das 9h, e se atualiza assim que uma carga nova é publicada.
+  A publicação dos dados abertos pelo Transferegov pode atrasar um ou mais dias; enquanto isso, o painel mostra a carga mais recente disponível.
 </footer>
 </div>
 <script>dash.iniciar();</script>

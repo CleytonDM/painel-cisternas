@@ -31,6 +31,7 @@ jobs:
     outputs:
       nova: ${{ steps.carga.outputs.nova }}
       fonte: ${{ steps.carga.outputs.fonte }}
+      verificado: ${{ steps.carga.outputs.verificado }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -63,27 +64,31 @@ jobs:
                                      capture_output=True, text=True, encoding="utf-8").stdout
               return next(csv.DictReader(io.StringIO(texto)))["data_carga"][:10]
 
+          ultima = None  # última consulta que o Transferegov respondeu: (hora, carga)
           while True:
               agora = datetime.now(timezone.utc)
               try:
                   fonte, painel = carga_fonte(), carga_painel()
+                  ultima = (agora, fonte)
                   print(f"{agora:%H:%M} UTC: Transferegov {fonte}, painel {painel}", file=sys.stderr)
               except Exception as erro:
                   fonte = painel = None
                   print(f"{agora:%H:%M} UTC: falha na consulta ({erro})", file=sys.stderr)
-              if fonte and fonte != painel:
-                  print(f"nova=true\nfonte={fonte}")
-                  break
+              nova = bool(fonte and fonte != painel)
               # quem espera desiste às 16h UTC (13h em Brasília) ou perto do limite de 6 h do job
-              if not vigiar or agora.hour >= 16 or time.time() - inicio > 5.5 * 3600:
-                  print("nova=false")
+              if nova or not vigiar or agora.hour >= 16 or time.time() - inicio > 5.5 * 3600:
+                  print(f"nova={str(nova).lower()}")
+                  if ultima:
+                      print(f"fonte={ultima[1]}")
+                      print(f"verificado={ultima[0]:%Y-%m-%dT%H:%M:%SZ}")
                   break
               time.sleep(300)
           PY
 
+  # Roda sempre: com carga nova, baixa e grava os dados; sem carga nova, só registra a hora da
+  # verificação (dados/verificacao.csv, mostrada no painel) e publica o site de novo.
   atualizar:
     needs: verificar
-    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.vigiar) || needs.verificar.outputs.nova == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     # só a atualização entra na fila; as execuções esperando a carga não seguram as publicações do painel
@@ -103,6 +108,7 @@ jobs:
       # a vez dela, a carga já está em main. Aí não há o que fazer.
       - name: Conferir se outra execução já trouxe esta carga
         id: trava
+        if: needs.verificar.outputs.nova == 'true'
         env:
           FONTE: ${{ needs.verificar.outputs.fonte }}
         run: |
@@ -113,20 +119,29 @@ jobs:
           fi
 
       - uses: actions/setup-python@v6
-        if: steps.trava.outputs.feita != 'true'
         with:
           python-version: "3.13"
           cache: pip
 
-      - if: steps.trava.outputs.feita != 'true'
-        run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt
 
       - name: Baixar a carga do Transferegov e gerar os CSVs
-        if: steps.trava.outputs.feita != 'true' && github.event_name != 'push'
+        if: >-
+          github.event_name != 'push' && steps.trava.outputs.feita != 'true' &&
+          (needs.verificar.outputs.nova == 'true' || (github.event_name == 'workflow_dispatch' && !inputs.vigiar))
         run: python atualizar_dados.py
 
+      - name: Registrar a verificação
+        if: github.event_name != 'push' && needs.verificar.outputs.verificado != ''
+        env:
+          VERIFICADO: ${{ needs.verificar.outputs.verificado }}
+          FONTE: ${{ needs.verificar.outputs.fonte }}
+        run: |
+          echo "verificado_em,carga_fonte" > dados/verificacao.csv
+          echo "$VERIFICADO,$FONTE" >> dados/verificacao.csv
+
       - name: Guardar os CSVs no repositório
-        if: steps.trava.outputs.feita != 'true' && github.event_name != 'push'
+        if: github.event_name != 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -135,7 +150,11 @@ jobs:
             echo "Sem mudança nos dados."
           else
             carga=$(python -c "import csv; print(next(csv.DictReader(open('dados/instrumentos.csv', encoding='utf-8')))['data_carga'][:10])")
-            git commit -m "Carga do Transferegov de $carga"
+            if git diff --cached --quiet -- dados/instrumentos.csv; then
+              git commit -m "Verificação do Transferegov: sem carga nova (painel com a carga de $carga)"
+            else
+              git commit -m "Carga do Transferegov de $carga"
+            fi
             # O GitHub às vezes recusa o push com erro interno (em 04/11, "Internal Server Error").
             # Tenta de novo, trazendo antes algum commit que tenha entrado em main enquanto isso.
             for espera in 30 60 120 240 0; do
@@ -148,15 +167,11 @@ jobs:
           fi
 
       - name: Montar o site
-        if: steps.trava.outputs.feita != 'true'
         run: python site/montar_site.py
 
       - uses: actions/configure-pages@v5
-        if: steps.trava.outputs.feita != 'true'
       - uses: actions/upload-pages-artifact@v4
-        if: steps.trava.outputs.feita != 'true'
         with:
           path: _site
       - id: deploy
-        if: steps.trava.outputs.feita != 'true'
         uses: actions/deploy-pages@v4
