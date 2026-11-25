@@ -97,7 +97,7 @@ jobs:
       cancel-in-progress: false
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url || steps.deploy2.outputs.page_url || steps.deploy3.outputs.page_url }}
     steps:
       # a ponta de main no momento do job: a execução pode ter começado horas antes de um commit novo
       - uses: actions/checkout@v5
@@ -173,5 +173,21 @@ jobs:
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
+      # O GitHub Pages às vezes recusa a publicação com "Fetching artifact metadata failed" (11 vezes
+      # de 13 a 25/11), e o site ficava horas sem a carga já gravada. Tenta de novo depois de 2 e de 5 minutos.
       - id: deploy
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - name: Esperar antes da segunda tentativa de publicação
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 120
+      - id: deploy2
+        if: steps.deploy.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - name: Esperar antes da terceira tentativa de publicação
+        if: steps.deploy.outcome == 'failure' && steps.deploy2.outcome == 'failure'
+        run: sleep 300
+      - id: deploy3
+        if: steps.deploy.outcome == 'failure' && steps.deploy2.outcome == 'failure'
         uses: actions/deploy-pages@v4
