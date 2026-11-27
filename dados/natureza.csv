@@ -53,15 +53,15 @@ nr,linha,investimento,servico,tributo,custeio,total,regra,iss,sem_nota,dif_plano
 941602,contrapartida,0.0,347914.55,0.0,347914.55,347914.55,custeio primeiro,True,-0.0,0.0,0
 941602,contrapartida_depositada,,,,,526350.12,custeio primeiro,True,-0.0,0.0,0
 941602,rendimentos,662502.14,0.0,89356.57,89356.57,751858.71,custeio primeiro,True,-0.0,0.0,0
-857171,global,54397242.68,16041419.9,2705332.87,18746752.77,73143995.45,custeio primeiro,True,0.0,-0.0,0
-857171,mds,50150774.4,13613273.31,2412473.46,16025746.77,66176521.17,custeio primeiro,True,0.0,-0.0,0
-857171,empenhado,29959915.25,,,8567423.15,38527338.4,custeio primeiro,True,0.0,-0.0,0
-857171,falta,20190859.15,,,7458323.62,27649182.77,custeio primeiro,True,0.0,-0.0,0
-857171,repassado,50150774.4,,,16025746.77,66176521.17,custeio primeiro,True,0.0,-0.0,0
-857171,a_repassar,-20190859.15,,,-7458323.62,-27649182.77,custeio primeiro,True,0.0,-0.0,0
-857171,contrapartida,0.0,1479716.17,0.0,1479716.17,1479716.17,custeio primeiro,True,0.0,-0.0,0
-857171,contrapartida_depositada,,,,,1479716.14,custeio primeiro,True,0.0,-0.0,0
-857171,rendimentos,4246468.28,948430.42,292859.41,1241289.83,5487758.11,custeio primeiro,True,0.0,-0.0,0
+857171,global,54397242.68,16041419.9,2705332.87,18746752.77,73143995.45,deduzida,True,0.0,-0.0,0
+857171,mds,50150774.4,13613273.31,2412473.46,16025746.77,66176521.17,deduzida,True,0.0,-0.0,0
+857171,empenhado,50150774.4,,,16025746.77,66176521.17,deduzida,True,0.0,-0.0,0
+857171,falta,0.0,,,0.0,0.0,deduzida,True,0.0,-0.0,0
+857171,repassado,50150774.4,,,16025746.77,66176521.17,deduzida,True,0.0,-0.0,0
+857171,a_repassar,0.0,,,0.0,0.0,deduzida,True,0.0,-0.0,0
+857171,contrapartida,0.0,1479716.17,0.0,1479716.17,1479716.17,deduzida,True,0.0,-0.0,0
+857171,contrapartida_depositada,,,,,1479716.14,deduzida,True,0.0,-0.0,0
+857171,rendimentos,4246468.28,948430.42,292859.41,1241289.83,5487758.11,deduzida,True,0.0,-0.0,0
 945310,global,20702590.28,9025973.04,2072899.32,11098872.36,31801462.64,sem,True,0.0,0.0,0
 945310,mds,20616650.64,8819150.1,2064082.02,10883232.12,31499882.76,sem,True,0.0,0.0,0
 945310,empenhado,20010857.46,,,11489025.3,31499882.76,sem,True,0.0,0.0,0
@@ -215,24 +215,24 @@ nr,linha,investimento,servico,tributo,custeio,total,regra,iss,sem_nota,dif_plano
 839214,contrapartida,0.0,3000000.0,0.0,3000000.0,3000000.0,deduzida,True,0.0,0.0,0
 839214,contrapartida_depositada,,,,,3034885.93,deduzida,True,0.0,0.0,0
 839214,rendimentos,2113779.66,1717910.92,166928.61,1884839.53,3998619.19,deduzida,True,0.0,0.0,0
-839447,global,23068330.5,7829466.18,0.0,7829466.18,30897796.68,custeio primeiro,False,0.0,0.0,0
-839447,mds,22502627.79,6840810.36,0.0,6840810.36,29343438.15,custeio primeiro,False,0.0,0.0,0
-839447,empenhado,19509244.2,,,5751732.15,25260976.35,custeio primeiro,False,0.0,0.0,0
-839447,falta,2993383.59,,,1089078.21,4082461.8,custeio primeiro,False,0.0,0.0,0
-839447,repassado,22502627.79,,,6840810.36,29343438.15,custeio primeiro,False,0.0,0.0,0
-839447,a_repassar,-2993383.59,,,-1089078.21,-4082461.8,custeio primeiro,False,0.0,0.0,0
-839447,contrapartida,0.0,803738.95,0.0,803738.95,803738.95,custeio primeiro,False,0.0,0.0,0
-839447,contrapartida_depositada,,,,,818577.93,custeio primeiro,False,0.0,0.0,0
-839447,rendimentos,565702.71,184916.87,0.0,184916.87,750619.58,custeio primeiro,False,0.0,0.0,0
-853235,global,13987961.2,3870594.08,963435.12,4834029.2,18821990.4,custeio primeiro,True,0.0,0.0,0
-853235,mds,13987961.2,3682319.98,963435.12,4645755.1,18633716.3,custeio primeiro,True,0.0,0.0,0
-853235,empenhado,12592551.83,,,4645755.1,17238306.93,custeio primeiro,True,0.0,0.0,0
-853235,falta,1395409.37,,,0.0,1395409.37,custeio primeiro,True,0.0,0.0,0
-853235,repassado,13987961.2,,,4645755.1,18633716.3,custeio primeiro,True,0.0,0.0,0
-853235,a_repassar,-1395409.37,,,0.0,-1395409.37,custeio primeiro,True,0.0,0.0,0
-853235,contrapartida,0.0,188274.1,0.0,188274.1,188274.1,custeio primeiro,True,0.0,0.0,0
-853235,contrapartida_depositada,,,,,188274.1,custeio primeiro,True,0.0,0.0,0
-853235,rendimentos,0.0,0.0,0.0,0.0,0.0,custeio primeiro,True,0.0,0.0,0
+839447,global,23068330.5,7829466.18,0.0,7829466.18,30897796.68,deduzida,False,0.0,0.0,0
+839447,mds,22502627.79,6840810.36,0.0,6840810.36,29343438.15,deduzida,False,0.0,0.0,0
+839447,empenhado,22502627.79,,,6840810.36,29343438.15,deduzida,False,0.0,0.0,0
+839447,falta,0.0,,,0.0,0.0,deduzida,False,0.0,0.0,0
+839447,repassado,22502627.79,,,6840810.36,29343438.15,deduzida,False,0.0,0.0,0
+839447,a_repassar,0.0,,,0.0,0.0,deduzida,False,0.0,0.0,0
+839447,contrapartida,0.0,803738.95,0.0,803738.95,803738.95,deduzida,False,0.0,0.0,0
+839447,contrapartida_depositada,,,,,818577.93,deduzida,False,0.0,0.0,0
+839447,rendimentos,565702.71,184916.87,0.0,184916.87,750619.58,deduzida,False,0.0,0.0,0
+853235,global,13987961.2,3870594.08,963435.12,4834029.2,18821990.4,deduzida,True,0.0,0.0,0
+853235,mds,13987961.2,3682319.98,963435.12,4645755.1,18633716.3,deduzida,True,0.0,0.0,0
+853235,empenhado,13987961.2,,,4645755.1,18633716.3,deduzida,True,0.0,0.0,0
+853235,falta,0.0,,,0.0,0.0,deduzida,True,0.0,0.0,0
+853235,repassado,13987961.2,,,4645755.1,18633716.3,deduzida,True,0.0,0.0,0
+853235,a_repassar,0.0,,,0.0,-0.0,deduzida,True,0.0,0.0,0
+853235,contrapartida,0.0,188274.1,0.0,188274.1,188274.1,deduzida,True,0.0,0.0,0
+853235,contrapartida_depositada,,,,,188274.1,deduzida,True,0.0,0.0,0
+853235,rendimentos,0.0,0.0,0.0,0.0,0.0,deduzida,True,0.0,0.0,0
 986621,global,1607893.2,369714.0,0.0,369714.0,1977607.2,sem,False,0.0,0.0,0
 986621,mds,1607893.2,369714.0,0.0,369714.0,1977607.2,sem,False,0.0,0.0,0
 986621,empenhado,1607893.2,,,369714.0,1977607.2,sem,False,0.0,0.0,0
@@ -271,10 +271,10 @@ nr,linha,investimento,servico,tributo,custeio,total,regra,iss,sem_nota,dif_plano
 944934,rendimentos,6074085.4,2937044.26,487324.47,3424368.73,9498454.13,sem,True,-0.0,0.0,0
 896886,global,10668693.69,6285252.3,765024.82,7050277.12,17718970.81,sem,True,0.0,0.0,0
 896886,mds,9913132.41,4220799.87,0.0,4220799.87,14133932.28,sem,True,0.0,0.0,0
-896886,empenhado,0.0,,,0.0,0.0,sem,True,0.0,0.0,0
-896886,falta,9913132.41,,,4220799.87,14133932.28,sem,True,0.0,0.0,0
+896886,empenhado,9959692.53,,,4174239.75,14133932.28,sem,True,0.0,0.0,0
+896886,falta,-46560.12,,,46560.12,0.0,sem,True,0.0,0.0,0
 896886,repassado,9959692.53,,,4174239.75,14133932.28,sem,True,0.0,0.0,0
-896886,a_repassar,-9959692.53,,,-4174239.75,-14133932.28,sem,True,0.0,0.0,0
+896886,a_repassar,0.0,,,0.0,0.0,sem,True,0.0,0.0,0
 896886,contrapartida,0.0,0.0,0.0,0.0,0.0,sem,True,0.0,0.0,0
 896886,contrapartida_depositada,,,,,0.0,sem,True,0.0,0.0,0
 896886,rendimentos,755561.28,2064452.43,765024.82,2829477.25,3585038.53,sem,True,0.0,0.0,0
@@ -296,24 +296,24 @@ nr,linha,investimento,servico,tributo,custeio,total,regra,iss,sem_nota,dif_plano
 852350,contrapartida,0.0,84574.97,0.0,84574.97,84574.97,deduzida,True,0.0,0.0,0
 852350,contrapartida_depositada,,,,,84574.97,deduzida,True,0.0,0.0,0
 852350,rendimentos,475598.7,203828.01,35759.3,239587.31,715186.01,deduzida,True,0.0,0.0,0
-901956,global,1876905.6,567352.65,128645.9,695998.55,2572904.15,custeio primeiro,True,0.0,0.0,0
-901956,mds,1876905.6,533252.5,128645.9,661898.4,2538804.0,custeio primeiro,True,0.0,0.0,0
-901956,empenhado,1479103.0,,,559701.0,2038804.0,custeio primeiro,True,0.0,0.0,0
-901956,falta,397802.6,,,102197.4,500000.0,custeio primeiro,True,0.0,0.0,0
-901956,repassado,1854103.0,,,684701.0,2538804.0,custeio primeiro,True,0.0,0.0,0
-901956,a_repassar,-375000.0,,,-125000.0,-500000.0,custeio primeiro,True,0.0,0.0,0
-901956,contrapartida,0.0,34100.15,0.0,34100.15,34100.15,custeio primeiro,True,0.0,0.0,0
-901956,contrapartida_depositada,,,,,34100.15,custeio primeiro,True,0.0,0.0,0
-901956,rendimentos,0.0,0.0,0.0,0.0,0.0,custeio primeiro,True,0.0,0.0,0
-902159,global,350000.0,185119.48,28164.78,213284.26,563284.26,custeio primeiro,True,0.0,0.0,0
-902159,mds,350000.0,90116.22,22576.53,112692.75,462692.75,custeio primeiro,True,0.0,0.0,0
-902159,empenhado,0.0,,,0.0,0.0,custeio primeiro,True,0.0,0.0,0
-902159,falta,350000.0,,,112692.75,462692.75,custeio primeiro,True,0.0,0.0,0
-902159,repassado,350000.0,,,112692.75,462692.75,custeio primeiro,True,0.0,0.0,0
-902159,a_repassar,-350000.0,,,-112692.75,-462692.75,custeio primeiro,True,0.0,0.0,0
-902159,contrapartida,0.0,2239.35,0.0,2239.35,2239.35,custeio primeiro,True,0.0,0.0,0
-902159,contrapartida_depositada,,,,,2239.35,custeio primeiro,True,0.0,0.0,0
-902159,rendimentos,0.0,92763.91,5588.25,98352.16,98352.16,custeio primeiro,True,0.0,0.0,0
+901956,global,1876905.6,567352.65,128645.9,695998.55,2572904.15,deduzida,True,0.0,0.0,0
+901956,mds,1854103.0,556055.1,128645.9,684701.0,2538804.0,deduzida,True,0.0,0.0,0
+901956,empenhado,1854103.0,,,684701.0,2538804.0,deduzida,True,0.0,0.0,0
+901956,falta,0.0,,,0.0,0.0,deduzida,True,0.0,0.0,0
+901956,repassado,1854103.0,,,684701.0,2538804.0,deduzida,True,0.0,0.0,0
+901956,a_repassar,0.0,,,0.0,0.0,deduzida,True,0.0,0.0,0
+901956,contrapartida,22802.6,11297.55,0.0,11297.55,34100.15,deduzida,True,0.0,0.0,0
+901956,contrapartida_depositada,,,,,34100.15,deduzida,True,0.0,0.0,0
+901956,rendimentos,0.0,0.0,0.0,0.0,0.0,deduzida,True,0.0,0.0,0
+902159,global,350000.0,185119.48,28164.78,213284.26,563284.26,deduzida,True,0.0,0.0,0
+902159,mds,350000.0,90116.22,22576.53,112692.75,462692.75,deduzida,True,0.0,0.0,0
+902159,empenhado,350000.0,,,112692.75,462692.75,deduzida,True,0.0,0.0,0
+902159,falta,0.0,,,0.0,0.0,deduzida,True,0.0,0.0,0
+902159,repassado,350000.0,,,112692.75,462692.75,deduzida,True,0.0,0.0,0
+902159,a_repassar,0.0,,,0.0,0.0,deduzida,True,0.0,0.0,0
+902159,contrapartida,0.0,2239.35,0.0,2239.35,2239.35,deduzida,True,0.0,0.0,0
+902159,contrapartida_depositada,,,,,2239.35,deduzida,True,0.0,0.0,0
+902159,rendimentos,0.0,92763.91,5588.25,98352.16,98352.16,deduzida,True,0.0,0.0,0
 918994,global,10637227.37,3650248.78,712523.85,4362772.63,15000000.0,custeio primeiro,True,0.0,-0.0,0
 918994,mds,10637227.37,3635248.78,712523.85,4347772.63,14985000.0,custeio primeiro,True,0.0,-0.0,0
 918994,empenhado,9059548.61,,,3633237.74,12692786.35,custeio primeiro,True,0.0,-0.0,0
@@ -334,10 +334,10 @@ nr,linha,investimento,servico,tributo,custeio,total,regra,iss,sem_nota,dif_plano
 862649,rendimentos,0.0,289146.68,54208.0,343354.68,343354.68,sem,True,0.0,0.0,0
 895504,global,13256470.8,4988820.92,1166920.92,6155741.84,19412212.64,sem,True,0.0,0.0,0
 895504,mds,13256470.8,4599820.92,1044793.92,5644614.84,18901085.64,sem,True,0.0,0.0,0
-895504,empenhado,0.0,,,0.0,0.0,sem,True,0.0,0.0,0
-895504,falta,13256470.8,,,5644614.84,18901085.64,sem,True,0.0,0.0,0
+895504,empenhado,13256470.8,,,1745467.34,15001938.14,sem,True,0.0,0.0,0
+895504,falta,0.0,,,3899147.5,3899147.5,sem,True,0.0,0.0,0
 895504,repassado,13256470.8,,,1745467.34,15001938.14,sem,True,0.0,0.0,0
-895504,a_repassar,-13256470.8,,,-1745467.34,-15001938.14,sem,True,0.0,0.0,0
+895504,a_repassar,0.0,,,0.0,0.0,sem,True,0.0,0.0,0
 895504,contrapartida,0.0,0.0,0.0,0.0,0.0,sem,True,0.0,0.0,0
 895504,contrapartida_depositada,,,,,9264096.12,sem,True,0.0,0.0,0
 895504,rendimentos,0.0,389000.0,122127.0,511127.0,511127.0,sem,True,0.0,0.0,0
