@@ -1407,11 +1407,9 @@
     const m = naturezaDo(atual());
     tab.replaceChildren();
     if (!m || !m.size) return;
-    // Serviço e tributo (ISS) em colunas próprias só quando o plano separa o ISS do custeio
-    const iss = m.get('global').iss === true || m.get('global').iss === 'True';
-    const cols = iss ? ['investimento', 'servico', 'tributo', 'custeio', 'total'] : ['investimento', 'custeio', 'total'];
-    const nomes = {investimento: 'Investimento (R$)', servico: 'Custeio – serviço (R$)', tributo: 'Custeio – tributo (ISS) (R$)',
-      custeio: iss ? 'Custeio total (R$)' : 'Custeio (R$)', total: 'Total (R$)'};
+    // O MDS empenha o custeio sem separar o ISS, então a tabela não divide o custeio (o ISS do plano vai na nota)
+    const cols = ['investimento', 'custeio', 'total'];
+    const nomes = {investimento: 'Investimento (R$)', custeio: 'Custeio (R$)', total: 'Total (R$)'};
     const thead = document.createElement('thead');
     const h = document.createElement('tr');
     h.append(celula('th', ''));
@@ -1422,12 +1420,7 @@
       const tr = document.createElement('tr');
       if (cls) tr.className = cls;
       tr.append(celula('td', rotulo, {class: 'rotulo'}));
-      // linha sem divisão do custeio (empenho, repasse): uma só célula cobrindo serviço, tributo e total
-      const semDivisao = iss && (x?.servico == null || x.servico === '') && (x?.tributo == null || x.tributo === '');
-      cols.forEach((c) => {
-        if (semDivisao && (c === 'servico' || c === 'tributo')) return;
-        tr.append(celula('td', valorNat(x?.[c]), semDivisao && c === 'custeio' ? {class: 'dir nowrap', colspan: 3} : {class: 'dir nowrap'}));
-      });
+      cols.forEach((c) => tr.append(celula('td', valorNat(x?.[c]), {class: 'dir nowrap'})));
       tbody.append(tr);
     };
     linha(m.get('global'), 'Valor global (plano de aplicação)');
@@ -1460,7 +1453,7 @@
       'Empenhado e repassado por natureza vêm das notas de empenho do MDS; o valor das notas emitidas desde 2019 é o valor atual no Portal da Transparência, com reforços e anulações.',
     ];
     if (n(g.estimadas) > 0) partes.push(plural(n(g.estimadas), 'nota não foi encontrada', 'notas não foram encontradas') + ' no Portal da Transparência; nelas vale ao menos o que já foi repassado, e o falta empenhar pode estar superestimado.');
-    if (g.iss === true || g.iss === 'True') partes.push('O plano separa o ISS (natureza 339047) dentro do custeio; o MDS empenha o custeio sem separar o tributo, por isso empenho e repasse aparecem só no custeio total.');
+    if (Math.abs(n(g.tributo) ?? 0) >= 1) partes.push('Do custeio previsto no plano, ' + fmt.brl(n(g.tributo)) + ' são ISS (natureza 339047), pago pelo parceiro com os recursos de custeio; o MDS empenha o custeio sem separar o tributo.');
     if (n(f.investimento) < -1 || n(f.custeio) < -1) partes.push('Valor negativo em "Falta empenhar" indica empenho acima do previsto no plano para aquela natureza.');
     if (Math.abs(n(g.sem_nota)) >= 1) partes.push(fmt.brl(n(g.sem_nota)) + ' repassados por ordens bancárias que os dados abertos não ligam a nenhuma nota de empenho entram só no total.');
     if (Math.abs(n(g.dif_plano)) >= 1) partes.push('Os recursos do convênio no plano de aplicação diferem do repasse mais a contrapartida em ' + fmt.brl(Math.abs(n(g.dif_plano))) + '.');
