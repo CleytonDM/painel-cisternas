@@ -835,17 +835,14 @@ def main():
         elif e_inv + e_cus >= i.vl_repasse - 1 and conv.investimento - e_inv >= -1 and conv_cus - e_cus >= -1:
             regra, cp_inv, cp_cus = "deduzida", max(conv.investimento - e_inv, 0), max(conv_cus - e_cus, 0)
         else:
-            # proporcional (decisão do usuário em 2026-11-27): a contrapartida se divide entre as naturezas na
-            # mesma proporção dos recursos do convênio no plano, ou seja, na proporção dos valores do MDS
-            base = conv.investimento + conv_cus
-            regra = "proporcional"
-            cp_inv = cp * conv.investimento / base if base > 0 else 0.0
-            cp_cus = cp - cp_inv
+            # custeio primeiro (decisão do usuário em 2026-11-27, no lugar da regra proporcional): a contrapartida
+            # vai antes para o custeio, mas só até o que o MDS ainda não empenhou nele; o restante vai para o investimento
+            regra, cp_cus = "custeio primeiro", min(cp, max(conv_cus - e_cus, 0))
+            cp_inv = cp - cp_cus
         if i.nr in cp_ref.index and regra != "informada":
             print(f"  Aviso: a divisão da contrapartida informada para {i.nr} não soma a contrapartida atual "
                   f"({cp:,.2f}); vale a regra '{regra}'.")
-        # dentro do custeio, serviço e ISS na proporção do plano
-        cp_serv = cp_cus * conv.servico / conv_cus if conv_cus > 0 else cp_cus
+        cp_serv = min(cp_cus, conv.servico)  # dentro do custeio, a contrapartida vai antes para o serviço
         mds = {"investimento": conv.investimento - cp_inv, "servico": conv.servico - cp_serv, "tributo": conv.tributo - (cp_cus - cp_serv)}
         linha = lambda nome, inv, serv=None, trib=None, cus=None, total=None: linhas_nat.append({
             "nr": i.nr, "linha": nome, "investimento": inv, "servico": serv, "tributo": trib,

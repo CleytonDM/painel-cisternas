@@ -1445,7 +1445,7 @@
       deduzida: 'Contrapartida por natureza deduzida: como o MDS já empenhou todo o repasse, ela é o que o plano prevê em cada natureza além do empenhado.',
       informada: 'Contrapartida por natureza informada pela área de negócio a partir do plano de trabalho'
         + (g.fonte_contrapartida ? ' (' + g.fonte_contrapartida + ')' : '') + '.',
-      proporcional: 'Os dados abertos não dizem em que natureza entra a contrapartida. Regra adotada: a contrapartida é dividida entre investimento e custeio na mesma proporção dos recursos do convênio no plano de aplicação, ou seja, na proporção dos valores do MDS. É uma estimativa; quando a área de negócio informa a divisão do plano de trabalho, vale o valor informado.',
+      'custeio primeiro': 'Os dados abertos não dizem em que natureza entra a contrapartida. Regra adotada: a contrapartida é aplicada primeiro no custeio (até o custeio ainda não empenhado pelo MDS) e o restante no investimento. Nas parcerias já totalmente empenhadas, essa regra coincide com a divisão real em 74% dos casos. É uma estimativa; quando a área de negócio informa a divisão do plano de trabalho, vale o valor informado.',
     }[g.regra] ?? '';
     const partes = [
       'Nota: o valor global e os rendimentos vêm do plano de aplicação detalhado (recursos do convênio e rendimentos de aplicação); o valor do MDS é o plano menos a contrapartida. Em cada natureza, valor global = valor do MDS + contrapartida prevista + rendimentos aprovados.',
@@ -1466,7 +1466,7 @@
     tab.replaceChildren();
     if (d.status !== 'ok' || ins.status !== 'ok') return;
     const porNr = new Map(ins.data.map((i) => [i.nr, i]));
-    const regraCurta = {sem: 'sem contrapartida', deduzida: 'deduzida', informada: 'informada', proporcional: 'regra: proporcional'};
+    const regraCurta = {sem: 'sem contrapartida', deduzida: 'deduzida', informada: 'informada', 'custeio primeiro': 'regra: custeio primeiro'};
     // só parcerias em execução: em prestação de contas ou em proposta não cabe empenho novo
     const linhas = d.data.filter((x) => x.linha === 'falta' && n(x.total) >= 1 && porNr.get(x.nr)?.situacao === 'Em execução')
       .sort((a, b) => n(b.total) - n(a.total));
