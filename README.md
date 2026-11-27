@@ -43,7 +43,8 @@ O Transferegov informa só o saldo do dia. Por isso o `dados/historico_saldo.csv
 | `atualizar_dados.py` | Baixa a carga do Transferegov e gera `dados/*.csv` (`--sem-download` reaproveita os zips de `brutos/`) |
 | `dados/` | CSVs que o painel lê: instrumentos, pagamentos, repasses, cronograma, metas, tecnologias, execução (parcela × NE × OB), empenhos e o histórico do saldo |
 | `referencias/modelos_tecnologia.csv` | Nº e nome resumido dos modelos de tecnologia social (SIG Cisternas), usados na Tabela 2 |
-| `referencias/contrapartida_natureza.csv` | Contrapartida por natureza (nr, investimento, custeio) informada à mão, quando se souber a divisão real; sem linha para a parceria, vale a regra do painel |
+| `referencias/contrapartida_natureza.csv` | Contrapartida por natureza (nr, investimento, custeio, documento de origem) informada pela área de negócio; sem linha para a parceria, ou se a contrapartida mudou depois, vale a regra do painel |
+| `referencias/contrapartida.py` | `gerar` cria a planilha `contrapartida_natureza.xlsx` para a área de negócio preencher; `importar` confere a soma com a contrapartida atual e grava o CSV acima |
 | `dados/empenhos_portal.csv` | Valor atual de cada nota de empenho no Portal da Transparência (com reforços e anulações), consultado pela API com a chave do segredo `PORTAL_TRANSPARENCIA_CHAVE` |
 | `dados/natureza.csv` | Execução por natureza de despesa (Tabelas 4 e 5): plano de aplicação, MDS, empenhado, falta empenhar, repassado, contrapartida e rendimentos |
 | `painel/index.html` | O painel. É o mesmo arquivo usado na versão do painel no Claude |
