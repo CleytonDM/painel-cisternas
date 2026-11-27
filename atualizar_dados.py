@@ -813,9 +813,6 @@ def main():
     por_grupo = lambda df, campo: df.groupby(["nr", "grupo"])[campo].sum().unstack(fill_value=0) \
         .reindex(columns=["Investimento", "Custeio"], fill_value=0)
     emp_g, rep_g = por_grupo(notas, "empenhado"), por_grupo(notas, "repassado")
-    # Contrapartida por natureza informada à mão para uma parceria (nr, investimento, custeio), se houver
-    cp_ref = pd.read_csv(Path(__file__).parent / "referencias" / "contrapartida_natureza.csv", dtype=str,
-                         keep_default_na=False).set_index("nr")
     linhas_nat = []
     for _, i in inst[inst.acompanhamento].iterrows():
         conv = plano.loc[(i.id_proposta, "1")] if (i.id_proposta, "1") in plano.index else pd.Series(0.0, plano.columns)
@@ -828,20 +825,13 @@ def main():
         # em que natureza a contrapartida entra
         if cp < 1:
             regra, cp_inv, cp_cus = "sem", 0.0, 0.0
-        elif i.nr in cp_ref.index and abs(float(cp_ref.loc[i.nr, "investimento"]) + float(cp_ref.loc[i.nr, "custeio"]) - cp) <= 1:
-            # divisão informada pela área de negócio (referencias/contrapartida.py); se a contrapartida
-            # mudou depois (termo aditivo), a divisão antiga deixa de valer e volta a regra
-            regra, cp_inv, cp_cus = "informada", float(cp_ref.loc[i.nr, "investimento"]), float(cp_ref.loc[i.nr, "custeio"])
         elif e_inv + e_cus >= i.vl_repasse - 1 and conv.investimento - e_inv >= -1 and conv_cus - e_cus >= -1:
             regra, cp_inv, cp_cus = "deduzida", max(conv.investimento - e_inv, 0), max(conv_cus - e_cus, 0)
         else:
-            # custeio primeiro (decisão do usuário em 2026-11-27, no lugar da regra proporcional): a contrapartida
-            # vai antes para o custeio, mas só até o que o MDS ainda não empenhou nele; o restante vai para o investimento
+            # custeio primeiro (decisão do usuário em 2026-11-27, para todos os casos; sem divisão informada à mão):
+            # a contrapartida vai antes para o custeio, mas só até o que o MDS ainda não empenhou nele; o restante vai para o investimento
             regra, cp_cus = "custeio primeiro", min(cp, max(conv_cus - e_cus, 0))
             cp_inv = cp - cp_cus
-        if i.nr in cp_ref.index and regra != "informada":
-            print(f"  Aviso: a divisão da contrapartida informada para {i.nr} não soma a contrapartida atual "
-                  f"({cp:,.2f}); vale a regra '{regra}'.")
         cp_serv = min(cp_cus, conv.servico)  # dentro do custeio, a contrapartida vai antes para o serviço
         mds = {"investimento": conv.investimento - cp_inv, "servico": conv.servico - cp_serv, "tributo": conv.tributo - (cp_cus - cp_serv)}
         linha = lambda nome, inv, serv=None, trib=None, cus=None, total=None: linhas_nat.append({
@@ -858,12 +848,8 @@ def main():
         linha("contrapartida_depositada", 0.0, total=num(i.vl_contrapartida_depositada))
         linha("rendimentos", rend.investimento, rend.servico, rend.tributo)
         n_nat = len(linhas_nat)
-        fonte_cp = ""
-        if regra == "informada":  # documento de onde a área de negócio tirou a divisão, para a nota da Tabela 4
-            doc, data = (str(cp_ref.loc[i.nr].get(c, "") or "") for c in ("documento", "data_documento"))
-            fonte_cp = doc + (f", de {pd.to_datetime(data):%d/%m/%Y}" if data and data != "nan" else "")
         for l in linhas_nat[n_nat - 9:]:
-            l.update(regra=regra, fonte_contrapartida=fonte_cp, iss=conv.tributo + rend.tributo > 0, sem_nota=round(repassado - r_inv - r_cus, 2),
+            l.update(regra=regra, iss=conv.tributo + rend.tributo > 0, sem_nota=round(repassado - r_inv - r_cus, 2),
                      dif_plano=round(conv.sum() - (i.vl_repasse + cp), 2),
                      estimadas=int(((notas.nr == i.nr) & (notas.fonte_empenhado == "estimado")).sum()))
     nat_df = pd.DataFrame(linhas_nat)
