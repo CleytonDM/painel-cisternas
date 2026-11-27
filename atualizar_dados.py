@@ -740,11 +740,16 @@ def main():
     # atual no Portal da Transparência; sem ele, o empenhado é ao menos o que já foi repassado com a nota.
     # As notas legadas trazem reforços e anulações em linhas próprias e ficam como estão.
     nova = emp.CD_ORIGEM_EMPENHO == "2"
-    portal = empenhos_portal(dict(zip(emp.chave[nova], emp.UG_EMITENTE[nova] + "00001" + emp.NR_EMPENHO[nova])))
-    notas["valor_portal"] = notas.id.map(pd.to_numeric(portal.valor_atual, errors="coerce"))
-    notas["empenhado"] = notas.valor.where(~nova, notas.valor_portal.fillna(notas[["valor", "repassado"]].max(axis=1)))
+    # O histórico das notas no Portal começa em 2021 (Empenho Web); antes disso o valor atual vem zerado
+    # mesmo em nota paga, então só vale para notas de 2021 em diante, e nunca abaixo do já repassado
+    no_portal = nova & (emp.NR_EMPENHO.str[:4] >= "2021")
+    portal = empenhos_portal(dict(zip(emp.chave[no_portal], emp.UG_EMITENTE[no_portal] + "00001" + emp.NR_EMPENHO[no_portal])))
+    notas["valor_portal"] = notas.id.map(pd.to_numeric(portal.valor_atual, errors="coerce")).where(no_portal)
+    piso = notas[["valor", "repassado"]].max(axis=1)
+    notas["empenhado"] = notas.valor.where(~nova, notas[["valor_portal", "repassado"]].max(axis=1).where(notas.valor_portal.notna(), piso))
     notas["fonte_empenhado"] = "transferegov"
-    notas.loc[nova, "fonte_empenhado"] = notas.valor_portal[nova].notna().map({True: "portal", False: "estimado"})
+    notas.loc[no_portal, "fonte_empenhado"] = notas.valor_portal[no_portal].notna().map({True: "portal", False: "estimado"})
+    notas.loc[nova & ~no_portal, "fonte_empenhado"] = "anterior a 2021"
     notas.sort_values(["nr", "data", "empenho", "id"], ascending=[True, False, True, True]).to_csv(DADOS / "empenhos.csv", index=False)
     # Ordens bancárias sem nota ligada também saíram de algum empenho: o empenhado é ao menos o repassado
     ajuste = (notas.empenhado - notas.valor).groupby(notas.nr).sum()
