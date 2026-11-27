@@ -7,6 +7,8 @@ Uso: python atualizar_dados.py [--sem-download]
 Saída: cisternas/dados/*.csv (+ historico_saldo.csv acumulado a cada carga)
 """
 import io
+import json
+import os
 import re
 import shutil
 import sys
@@ -63,7 +65,11 @@ ARQUIVOS = [
     "siconv_empenho",
     "siconv_empenho_desembolso",
     "siconv_solicitacao_rendimento_aplicacao",
+    "siconv_plano_aplicacao_detalhado",
 ]
+# Portal da Transparência: valor atual das notas de empenho (com reforços e anulações). A chave da API
+# fica no segredo PORTAL_TRANSPARENCIA_CHAVE do repositório; sem ela vale o último valor guardado.
+PORTAL_API = "https://api.portaldatransparencia.gov.br/api-de-dados"
 
 # Situações do histórico (siconv_historico_situacao) com o nome que o Transferegov mostra
 SITUACOES = {
@@ -411,6 +417,46 @@ def ler(nome, usecols=None, filtro=None):
             return pd.concat([filtro(b) if filtro else b for b in blocos], ignore_index=True)
 
 
+def empenhos_portal(documentos):
+    """Valor atual de cada nota de empenho no Portal da Transparência (emissão, reforços e anulações),
+    para {id da nota: código do documento (UG + gestão + número)}. Devolve DataFrame indexado pelo id,
+    com valor_atual e consultado_em; o que não puder ser consultado agora fica com o último valor
+    guardado em dados/empenhos_portal.csv."""
+    arq = DADOS / "empenhos_portal.csv"
+    colunas = ["documento", "valor_atual", "consultado_em"]
+    cache = pd.read_csv(arq, dtype={"id": str}).set_index("id") if arq.exists() else pd.DataFrame(columns=colunas)
+    chave = os.environ.get("PORTAL_TRANSPARENCIA_CHAVE")
+    if not chave:
+        print("sem PORTAL_TRANSPARENCIA_CHAVE: empenhado do Portal da Transparência vem do arquivo guardado")
+        return cache
+    hoje = time.strftime("%Y-%m-%d")
+    ok = falhas = 0
+    for nid, doc in documentos.items():
+        itens = None
+        for _ in range(3):
+            req = urllib.request.Request(f"{PORTAL_API}/despesas/itens-de-empenho?codigoDocumento={doc}&pagina=1",
+                                         headers={"chave-api-dados": chave, "Accept": "application/json"})
+            try:
+                with urllib.request.urlopen(req, timeout=60) as r:
+                    itens = json.loads(r.read() or b"[]")
+                break
+            except urllib.error.HTTPError as e:
+                if e.code != 429:
+                    break
+                time.sleep(60)  # passou do limite de consultas por minuto
+            except OSError:
+                time.sleep(10)
+        time.sleep(0.75)  # a API aceita 90 consultas por minuto
+        if itens:
+            cache.loc[nid, colunas] = [doc, round(valor_br(pd.Series([i["valorAtual"] for i in itens])).sum(), 2), hoje]
+            ok += 1
+        else:
+            falhas += 1
+    print(f"Portal da Transparência: {ok} notas consultadas, {falhas} sem resposta")
+    cache.rename_axis("id").reset_index().sort_values("id").to_csv(arq, index=False)
+    return cache
+
+
 def valor_br(s):
     """'1.234,56' -> 1234.56. O SICONV mistura formatos: só troca vírgula quando existe."""
     s = s.fillna("").astype(str).str.strip()
@@ -689,11 +735,16 @@ def main():
         "valor": valor_br(emp.VALOR_EMPENHO).round(2), "repassado": emp.chave.map(rep_emp).fillna(0).round(2),
         "observacao": emp.OBSERVACAO_EMPENHO.str.slice(0, 400),
     })
-    # As notas do formato atual (origem NE, desde 2019) vêm só com o valor da emissão: os reforços e
-    # anulações feitos depois no SIAFI não entram nos dados abertos, e muitas vêm zeradas. Nelas, o
-    # empenhado é ao menos o que já foi repassado com a nota. As notas legadas trazem reforços e
-    # anulações em linhas próprias e ficam como estão.
-    notas["empenhado"] = notas.valor.where(emp.CD_ORIGEM_EMPENHO != "2", notas[["valor", "repassado"]].max(axis=1))
+    # As notas do formato atual (origem NE, desde 2019) vêm do Transferegov só com o valor da emissão:
+    # os reforços e anulações feitos depois no SIAFI não entram, e muitas vêm zeradas. Nelas vale o valor
+    # atual no Portal da Transparência; sem ele, o empenhado é ao menos o que já foi repassado com a nota.
+    # As notas legadas trazem reforços e anulações em linhas próprias e ficam como estão.
+    nova = emp.CD_ORIGEM_EMPENHO == "2"
+    portal = empenhos_portal(dict(zip(emp.chave[nova], emp.UG_EMITENTE[nova] + "00001" + emp.NR_EMPENHO[nova])))
+    notas["valor_portal"] = notas.id.map(pd.to_numeric(portal.valor_atual, errors="coerce"))
+    notas["empenhado"] = notas.valor.where(~nova, notas.valor_portal.fillna(notas[["valor", "repassado"]].max(axis=1)))
+    notas["fonte_empenhado"] = "transferegov"
+    notas.loc[nova, "fonte_empenhado"] = notas.valor_portal[nova].notna().map({True: "portal", False: "estimado"})
     notas.sort_values(["nr", "data", "empenho", "id"], ascending=[True, False, True, True]).to_csv(DADOS / "empenhos.csv", index=False)
     # Ordens bancárias sem nota ligada também saíram de algum empenho: o empenhado é ao menos o repassado
     ajuste = (notas.empenhado - notas.valor).groupby(notas.nr).sum()
@@ -742,6 +793,69 @@ def main():
     pd.DataFrame(linhas_exec).astype({"parcela": "Int64"}) \
         .sort_values(["nr", "ordem_parcela", "ne_data", "ne", "ob_data", "ob"], na_position="last") \
         .to_csv(DADOS / "execucao.csv", index=False)
+
+    # --- execução por natureza de despesa: plano de aplicação detalhado x empenhado x repassado.
+    # No plano, a natureza de aquisição 1 são os recursos do convênio (repasse do MDS + contrapartida) e a 3,
+    # os rendimentos de aplicação. A divisão por natureza segue o 1º dígito (3 custeio, 4 investimento);
+    # o ISS (339047) aparece à parte dentro do custeio.
+    pad = ler("siconv_plano_aplicacao_detalhado", ["ID_PROPOSTA", "NATUREZA_AQUISICAO", "COD_NATUREZA_DESPESA", "VALOR_TOTAL_ITEM"],
+              filtro=lambda b: b[b.ID_PROPOSTA.isin(set(inst.id_proposta[inst.acompanhamento]))])
+    pad["valor"] = valor_br(pad.VALOR_TOTAL_ITEM)
+    pad["parte"] = pad.COD_NATUREZA_DESPESA.str[0].map({"3": "servico", "4": "investimento"})
+    pad.loc[pad.COD_NATUREZA_DESPESA.str.startswith("339047"), "parte"] = "tributo"
+    plano = pad.pivot_table(index=["ID_PROPOSTA", "NATUREZA_AQUISICAO"], columns="parte", values="valor", aggfunc="sum", fill_value=0)
+    plano = plano.reindex(columns=["investimento", "servico", "tributo"], fill_value=0)
+    por_grupo = lambda df, campo: df.groupby(["nr", "grupo"])[campo].sum().unstack(fill_value=0) \
+        .reindex(columns=["Investimento", "Custeio"], fill_value=0)
+    emp_g, rep_g = por_grupo(notas, "empenhado"), por_grupo(notas, "repassado")
+    # Contrapartida por natureza informada à mão para uma parceria (nr, investimento, custeio), se houver
+    cp_ref = pd.read_csv(Path(__file__).parent / "referencias" / "contrapartida_natureza.csv", dtype={"nr": str}).set_index("nr")
+    linhas_nat = []
+    for _, i in inst[inst.acompanhamento].iterrows():
+        conv = plano.loc[(i.id_proposta, "1")] if (i.id_proposta, "1") in plano.index else pd.Series(0.0, plano.columns)
+        rend = plano.loc[(i.id_proposta, "3")] if (i.id_proposta, "3") in plano.index else pd.Series(0.0, plano.columns)
+        e_inv, e_cus = emp_g.loc[i.nr] if i.nr in emp_g.index else (0.0, 0.0)
+        r_inv, r_cus = rep_g.loc[i.nr] if i.nr in rep_g.index else (0.0, 0.0)
+        num = lambda x: float(x) if pd.notna(x) else 0.0
+        conv_cus, cp, repassado = conv.servico + conv.tributo, num(i.vl_contrapartida), num(i.vl_repassado)
+        # Onde está a contrapartida: o MDS só empenha o próprio repasse, e os dados abertos não dizem
+        # em que natureza a contrapartida entra
+        if cp < 1:
+            regra, cp_inv, cp_cus = "sem", 0.0, 0.0
+        elif i.nr in cp_ref.index:
+            regra, (cp_inv, cp_cus) = "informada", cp_ref.loc[i.nr, ["investimento", "custeio"]]
+        elif e_inv + e_cus >= i.vl_repasse - 1 and conv.investimento - e_inv >= -1 and conv_cus - e_cus >= -1:
+            regra, cp_inv, cp_cus = "deduzida", max(conv.investimento - e_inv, 0), max(conv_cus - e_cus, 0)
+        else:
+            # a contrapartida vai antes para o custeio, mas só até o que o MDS ainda não empenhou nele
+            regra, cp_cus = "custeio primeiro", min(cp, max(conv_cus - e_cus, 0))
+            cp_inv = cp - cp_cus
+        cp_serv = min(cp_cus, conv.servico)  # dentro do custeio, a contrapartida vai antes para o serviço
+        mds = {"investimento": conv.investimento - cp_inv, "servico": conv.servico - cp_serv, "tributo": conv.tributo - (cp_cus - cp_serv)}
+        linha = lambda nome, inv, serv=None, trib=None, cus=None, total=None: linhas_nat.append({
+            "nr": i.nr, "linha": nome, "investimento": inv, "servico": serv, "tributo": trib,
+            "custeio": cus if cus is not None else (serv or 0) + (trib or 0),
+            "total": total if total is not None else inv + (cus if cus is not None else (serv or 0) + (trib or 0))})
+        linha("global", conv.investimento + rend.investimento, conv.servico + rend.servico, conv.tributo + rend.tributo)
+        linha("mds", mds["investimento"], mds["servico"], mds["tributo"])
+        linha("empenhado", e_inv, cus=e_cus)
+        linha("falta", mds["investimento"] - e_inv, cus=mds["servico"] + mds["tributo"] - e_cus)
+        linha("repassado", r_inv, cus=r_cus, total=repassado)
+        linha("a_repassar", e_inv - r_inv, cus=e_cus - r_cus, total=e_inv + e_cus - repassado)
+        linha("contrapartida", cp_inv, cp_serv, cp_cus - cp_serv)
+        linha("contrapartida_depositada", 0.0, total=num(i.vl_contrapartida_depositada))
+        linha("rendimentos", rend.investimento, rend.servico, rend.tributo)
+        n_nat = len(linhas_nat)
+        for l in linhas_nat[n_nat - 9:]:
+            l.update(regra=regra, iss=conv.tributo + rend.tributo > 0, sem_nota=round(repassado - r_inv - r_cus, 2),
+                     dif_plano=round(conv.sum() - (i.vl_repasse + cp), 2),
+                     estimadas=int(((notas.nr == i.nr) & (notas.fonte_empenhado == "estimado")).sum()))
+    nat_df = pd.DataFrame(linhas_nat)
+    for col in ["investimento", "servico", "tributo", "custeio", "total"]:
+        nat_df[col] = pd.to_numeric(nat_df[col], errors="coerce").round(2)
+    # contrapartida depositada só existe no total
+    nat_df.loc[nat_df.linha == "contrapartida_depositada", ["investimento", "servico", "tributo", "custeio"]] = None
+    nat_df.to_csv(DADOS / "natureza.csv", index=False)
 
     # --- pedidos para usar os rendimentos da aplicação financeira
     ra = ler("siconv_solicitacao_rendimento_aplicacao", filtro=lambda b: b[b.NR_CONVENIO.isin(acomp)])

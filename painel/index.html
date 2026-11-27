@@ -214,6 +214,11 @@
   .cis-quadro .nowrap { white-space: nowrap; }
   .cis-quadro td.dir { text-align: right; }
   .cis-quadronota { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .cis-quadro tr.grupo td { background: var(--cis-tinta); font-weight: var(--cds-font-weight-medium); text-align: left; }
+  .cis-quadro tr.destaque td { font-weight: 700; }
+  .cis-quadro td.rotulo { text-align: left; }
+  .cis-clicavel tbody tr { cursor: pointer; }
+  .cis-clicavel tbody tr:hover td { background: var(--cis-tinta); }
   .cis-notas { margin: 0; padding-left: 1.2rem; display: grid; gap: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
   .cis-origem { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
   .cis-vazio {
@@ -409,6 +414,41 @@
     <p class="cis-muted" data-exec="vazio" hidden>Nenhuma parcela, nota de empenho ou ordem bancária registrada para este instrumento.</p>
   </section>
 
+  <section class="cis-card" id="natureza">
+    <div class="cis-cardhead">
+      <h2>Execução por natureza de despesa</h2>
+      <span>
+        <span class="cis-aviso" data-aviso="ok" hidden>Copiada. Cole no Excel ou no SEI.</span>
+        <span class="cis-aviso" data-aviso="sel" hidden>Tabela selecionada: tecle Ctrl+C para copiar.</span>
+        <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
+      </span>
+    </div>
+    <p class="cis-muted">Quanto do plano de aplicação cabe ao MDS em cada natureza de despesa, quanto já foi empenhado e repassado e quanto falta empenhar.</p>
+    <div class="cis-quadrobox">
+      <p class="cis-tabtit">Tabela 4: Execução orçamentário-financeira do <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por natureza de despesa</p>
+      <table class="cis-quadro" data-draw="natquadro" data-source="natureza"></table>
+      <p class="cis-quadronota" data-draw="natnota" data-source="natureza"></p>
+      <p class="cis-origem">Fonte: Transferegov, módulo Discricionárias (dados abertos siconv_plano_aplicacao_detalhado, siconv_empenho, siconv_empenho_desembolso e siconv_convenio) e Portal da Transparência (valor atual das notas de empenho), carga de <span data-draw="carga" data-source="instrumentos">—</span>.</p>
+    </div>
+  </section>
+
+  <section class="cis-card" id="falta-empenhar">
+    <div class="cis-cardhead">
+      <h2>Falta empenhar por parceria</h2>
+      <span>
+        <span class="cis-aviso" data-aviso="ok" hidden>Copiada. Cole no Excel ou no SEI.</span>
+        <span class="cis-aviso" data-aviso="sel" hidden>Tabela selecionada: tecle Ctrl+C para copiar.</span>
+        <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
+      </span>
+    </div>
+    <p class="cis-muted">Parcerias em execução com saldo do MDS a empenhar, da maior para a menor. Clique numa linha para abrir a parceria.</p>
+    <div class="cis-quadrobox">
+      <p class="cis-tabtit">Tabela 5: Saldo do MDS a empenhar nas parcerias em execução, por natureza de despesa</p>
+      <table class="cis-quadro cis-clicavel" data-draw="faltatab" data-source="natureza instrumentos"></table>
+      <p class="cis-origem">Fonte: a mesma da Tabela 4, carga de <span data-draw="carga" data-source="instrumentos">—</span>. Contrapartida por natureza conforme a regra indicada em cada linha (ver a nota da Tabela 4).</p>
+    </div>
+  </section>
+
   <section class="cis-card" id="cronograma">
     <h2>Previsto, repassado e pago</h2>
     <p class="cis-muted">Valores acumulados: parcelas do MDS no cronograma de desembolso, ordens bancárias do MDS para a conta do instrumento e pagamentos feitos pelo parceiro. A distância entre repassado e pago é o dinheiro que ficou na conta. O cronograma é o que está registrado hoje e pode ter sido refeito por aditivos.</p>
@@ -484,7 +524,7 @@
     <div class="cis-resumo" data-draw="emp-kpis" data-source="empenhos instrumentos"></div>
     <p class="cis-muted" data-draw="emp-resumo" data-source="empenhos instrumentos">—</p>
     <div class="cis-quadrobox">
-      <p class="cis-tabtit">Tabela 4: Empenhado e repassado pelo MDS no <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por grupo de despesa</p>
+      <p class="cis-tabtit">Tabela 6: Empenhado e repassado pelo MDS no <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por grupo de despesa</p>
       <table class="cis-quadro" data-draw="empquadro" data-source="empenhos instrumentos"></table>
       <p class="cis-origem">Fonte: Transferegov, módulo Discricionárias (dados abertos siconv_empenho e siconv_empenho_desembolso), carga de <span data-draw="carga" data-source="instrumentos">—</span>. Elaboração: o repassado de cada nota é a soma das ordens bancárias do MDS pagas com ela; nas notas emitidas desde 2019, o empenhado é ao menos o que já foi repassado com a nota.</p>
     </div>
@@ -507,7 +547,7 @@
           <tbody data-draw="emptab"></tbody>
         </table>
       </div>
-      <p class="cis-origem">Anulações e cancelamentos de restos a pagar entram com valor negativo. Em destaque, as notas em que o repassado passa do valor registrado: o empenhado considerado é o repassado.</p>
+      <p class="cis-origem">Anulações e cancelamentos de restos a pagar entram com valor negativo. Em destaque, as notas cujo empenhado difere do valor registrado no Transferegov: vale o valor atual no Portal da Transparência (passe o mouse para ver a origem).</p>
     </details>
   </section>
 
@@ -1338,8 +1378,125 @@
       + 'Nas OBs e NEs que citam a parcela no histórico, a regra por ordem de data chega à mesma parcela em 98% e 97% dos casos, respectivamente.'
       + (semParcela ? ' O que passa do valor do cronograma atual (por exemplo, depois de reprogramação) fica em "Sem parcela no cronograma atual".' : '')
       + (temOrdem ? ' (*) NE ou OB ligada à parcela pela ordem de data, sem citação da parcela no histórico.' : '')
-      + (temZerada ? ' (¹) NE com valor zerado nos dados abertos (só o valor da emissão); o valor mostrado é o já repassado com ela.' : '')
-      + ' O valor da NE é o empenhado considerado no painel: nas notas emitidas desde 2019, ao menos o que já foi repassado com a nota.';
+      + (temZerada ? ' (¹) NE com valor zerado no Transferegov, que traz só o valor da emissão.' : '')
+      + ' O valor das NEs emitidas desde 2019 é o valor atual no Portal da Transparência, com reforços e anulações; se a nota não for encontrada lá, vale ao menos o que já foi repassado com ela.';
+  });
+
+  // --- Tabela 4: execução por natureza de despesa (dados/natureza.csv, montado em atualizar_dados.py)
+  const naturezaDo = (nr) => {
+    const d = dash.data('natureza');
+    if (d.status !== 'ok' || !nr) return null;
+    return new Map(d.data.filter((x) => x.nr === nr).map((x) => [x.linha, x]));
+  };
+  const valorNat = (v) => (v == null || v === '' ? '' : Math.abs(n(v)) < 0.005 ? '-' : fmt.reais(v));
+  const LINHAS_NAT = [
+    [null, 'MDS'],
+    ['mds', 'Valor do MDS (repasse)'],
+    ['empenhado', 'Empenhado'],
+    ['falta', 'Falta empenhar', 'destaque'],
+    ['repassado', 'Repassado (pago pelo MDS)'],
+    ['a_repassar', 'Empenhado a repassar'],
+    [null, 'Parceiro'],
+    ['contrapartida', 'Contrapartida prevista'],
+    ['contrapartida_depositada', 'Contrapartida depositada'],
+    ['rendimentos', 'Rendimentos de aplicação aprovados'],
+  ];
+
+  dash.draw('natquadro', (tab) => {
+    const m = naturezaDo(atual());
+    tab.replaceChildren();
+    if (!m || !m.size) return;
+    // Serviço e tributo (ISS) em colunas próprias só quando o plano separa o ISS do custeio
+    const iss = m.get('global').iss === true || m.get('global').iss === 'True';
+    const cols = iss ? ['investimento', 'servico', 'tributo', 'custeio', 'total'] : ['investimento', 'custeio', 'total'];
+    const nomes = {investimento: 'Investimento (R$)', servico: 'Custeio – serviço (R$)', tributo: 'Custeio – tributo, ISS (R$)',
+      custeio: iss ? 'Custeio total (R$)' : 'Custeio (R$)', total: 'Total (R$)'};
+    const thead = document.createElement('thead');
+    const h = document.createElement('tr');
+    h.append(celula('th', ''));
+    cols.forEach((c) => h.append(celula('th', nomes[c])));
+    thead.append(h);
+    const tbody = document.createElement('tbody');
+    const linha = (x, rotulo, cls) => {
+      const tr = document.createElement('tr');
+      if (cls) tr.className = cls;
+      tr.append(celula('td', rotulo, {class: 'rotulo'}));
+      cols.forEach((c) => tr.append(celula('td', valorNat(x?.[c]), {class: 'dir nowrap'})));
+      tbody.append(tr);
+    };
+    linha(m.get('global'), 'Valor global (plano de aplicação)', 'destaque');
+    LINHAS_NAT.forEach(([chave, rotulo, cls]) => {
+      if (!chave) {
+        const tr = document.createElement('tr');
+        tr.className = 'grupo';
+        tr.append(celula('td', rotulo, {colspan: cols.length + 1}));
+        tbody.append(tr);
+      } else linha(m.get(chave), rotulo, cls);
+    });
+    tab.append(thead, tbody);
+  });
+
+  // Nota da Tabela 4: de onde vem cada número e como a contrapartida foi dividida entre as naturezas
+  dash.draw('natnota', (el) => {
+    const m = naturezaDo(atual());
+    el.textContent = '';
+    if (!m || !m.size) return;
+    const g = m.get('global'), f = m.get('falta');
+    const regra = {
+      sem: 'Sem contrapartida: todo o plano de aplicação (fora os rendimentos) é do MDS.',
+      deduzida: 'Contrapartida por natureza deduzida: como o MDS já empenhou todo o repasse, ela é o que o plano prevê em cada natureza além do empenhado.',
+      informada: 'Contrapartida por natureza informada à parte, no arquivo de referência do painel.',
+      'custeio primeiro': 'Os dados abertos não dizem em que natureza entra a contrapartida. Regra adotada: a contrapartida é aplicada primeiro no custeio (até o custeio ainda não empenhado pelo MDS) e o restante no investimento. Nas parcerias já totalmente empenhadas, essa regra coincide com a divisão real em 74% dos casos; se o plano de trabalho indicar outra divisão, ela pode ser informada à parte.',
+    }[g.regra] ?? '';
+    const partes = [
+      'Nota: o valor global e os rendimentos vêm do plano de aplicação detalhado (recursos do convênio e rendimentos de aplicação); o valor do MDS é o plano menos a contrapartida.',
+      regra,
+      'Empenhado e repassado por natureza vêm das notas de empenho do MDS; o valor das notas emitidas desde 2019 é o valor atual no Portal da Transparência, com reforços e anulações.',
+    ];
+    if (n(g.estimadas) > 0) partes.push(plural(n(g.estimadas), 'nota não foi encontrada', 'notas não foram encontradas') + ' no Portal da Transparência; nelas vale ao menos o que já foi repassado, e o falta empenhar pode estar superestimado.');
+    if (g.iss === true || g.iss === 'True') partes.push('O plano separa o ISS (natureza 339047) dentro do custeio; o MDS empenha o custeio sem separar o tributo, por isso empenho e repasse aparecem só no custeio total.');
+    if (n(f.investimento) < -1 || n(f.custeio) < -1) partes.push('Valor negativo em "Falta empenhar" indica empenho acima do previsto no plano para aquela natureza.');
+    if (Math.abs(n(g.sem_nota)) >= 1) partes.push(fmt.brl(n(g.sem_nota)) + ' repassados por ordens bancárias que os dados abertos não ligam a nenhuma nota de empenho entram só no total.');
+    if (Math.abs(n(g.dif_plano)) >= 1) partes.push('Os recursos do convênio no plano de aplicação diferem do repasse mais a contrapartida em ' + fmt.brl(Math.abs(n(g.dif_plano))) + '.');
+    el.textContent = partes.join(' ');
+  });
+
+  // Tabela 5: todas as parcerias com saldo do MDS a empenhar
+  dash.draw('faltatab', (tab) => {
+    const d = dash.data('natureza'), ins = dash.data('instrumentos');
+    tab.replaceChildren();
+    if (d.status !== 'ok' || ins.status !== 'ok') return;
+    const porNr = new Map(ins.data.map((i) => [i.nr, i]));
+    const regraCurta = {sem: 'sem contrapartida', deduzida: 'deduzida', informada: 'informada', 'custeio primeiro': 'regra: custeio primeiro'};
+    // só parcerias em execução: em prestação de contas ou em proposta não cabe empenho novo
+    const linhas = d.data.filter((x) => x.linha === 'falta' && n(x.total) >= 1 && porNr.get(x.nr)?.situacao === 'Em execução')
+      .sort((a, b) => n(b.total) - n(a.total));
+    const thead = document.createElement('thead');
+    const h = document.createElement('tr');
+    ['Parceria', 'Parceiro', 'UF', 'Situação', 'Investimento (R$)', 'Custeio (R$)', 'Total (R$)', 'Contrapartida por natureza'].forEach((c) => h.append(celula('th', c)));
+    thead.append(h);
+    const tbody = document.createElement('tbody');
+    linhas.forEach((x) => {
+      const i = porNr.get(x.nr) ?? {nr: x.nr};
+      const tr = document.createElement('tr');
+      if (x.nr === atual()) tr.className = 'destaque';
+      tr.append(celula('td', nrAno(i), {class: 'nowrap'}), celula('td', i.parceiro ?? '', {class: 'rotulo'}), celula('td', i.uf ?? ''),
+        celula('td', i.situacao ?? ''), celula('td', valorNat(x.investimento), {class: 'dir nowrap'}),
+        celula('td', valorNat(x.custeio), {class: 'dir nowrap'}), celula('td', valorNat(x.total), {class: 'dir nowrap'}),
+        celula('td', regraCurta[x.regra] ?? x.regra ?? ''));
+      tr.onclick = () => {
+        dash.setParams({nr: x.nr});
+        document.querySelectorAll('#natureza').forEach((s) => s.scrollIntoView({behavior: 'smooth', block: 'start'}));
+      };
+      tbody.append(tr);
+    });
+    const tfoot = document.createElement('tfoot');
+    const t = document.createElement('tr');
+    const soma = (c) => linhas.reduce((s, x) => s + (n(x[c]) ?? 0), 0);
+    t.append(celula('td', 'Total (' + plural(linhas.length, 'parceria', 'parcerias') + ')', {colspan: 4}), celula('td', valorNat(soma('investimento')), {class: 'dir nowrap'}),
+      celula('td', valorNat(soma('custeio')), {class: 'dir nowrap'}), celula('td', valorNat(soma('total')), {class: 'dir nowrap'}), celula('td', ''));
+    tfoot.append(t);
+    tab.append(thead, tbody, tfoot);
   });
 
   // --- prazos, alterações e situação
@@ -1476,8 +1633,8 @@
   };
   const soma = (linhas, campo) => linhas.reduce((s, x) => s + (n(x[campo]) ?? 0), 0);
 
-  // Empenhado considerado: nas notas emitidas desde 2019 o Transferegov só traz o valor da emissão,
-  // então vale ao menos o que já foi repassado com a nota (coluna empenhado, calculada na carga).
+  // Empenhado: nas notas emitidas desde 2019 o Transferegov só traz o valor da emissão; vale o valor atual
+  // no Portal da Transparência ou, sem ele, ao menos o já repassado (coluna empenhado, calculada na carga).
   const empenhado = (x) => n(x.empenhado) ?? n(x.valor) ?? 0;
   const totaisEmp = (e, i) => {
     const reg = soma(e, 'valor'), empNotas = e.reduce((s, x) => s + empenhado(x), 0), repNotas = soma(e, 'repassado');
@@ -1485,7 +1642,8 @@
     // Ordens bancárias sem nota ligada também saíram de algum empenho: o empenhado é ao menos o repassado
     const extra = Math.max(rep - empNotas, 0);
     return {reg, emp: empNotas + extra, extra, repNotas, rep, semNota: rep - repNotas, pago: n(i.vl_pago) ?? 0, previsto: n(i.vl_repasse) ?? 0,
-      ajustadas: e.filter((x) => empenhado(x) - (n(x.valor) ?? 0) >= 1).length};
+      ajustadas: e.filter((x) => Math.abs(empenhado(x) - (n(x.valor) ?? 0)) >= 1).length,
+      portal: e.filter((x) => x.fonte_empenhado === 'portal').length, estimadas: e.filter((x) => x.fonte_empenhado === 'estimado').length};
   };
 
   dash.draw('emp-kpis', (el) => {
@@ -1512,12 +1670,12 @@
     const anulado = e.filter((x) => n(x.valor) < 0).reduce((s, x) => s + n(x.valor), 0);
     let txt = plural(e.length, 'nota de empenho', 'notas de empenho') + (anulado < 0 ? ', já descontados ' + fmt.brl(-anulado) + ' de anulações e cancelamentos' : '') + '.';
     if (t.ajustadas) {
-      txt += ' O Transferegov mostra ' + fmt.brl(t.reg) + ' empenhados, menos do que já foi repassado, porque nos dados abertos as notas emitidas desde 2019 trazem só o valor da emissão, sem os reforços feitos depois no SIAFI, e muitas vêm zeradas.'
-        + ' Em ' + plural(t.ajustadas, 'nota', 'notas') + ' o MDS já repassou mais do que o valor registrado; nelas o painel considera empenhado o que foi repassado, '
-        + fmt.brl(t.emp - t.reg) + ' a mais. O empenhado real pode ser maior, se ainda houver saldo a repassar nessas notas.';
+      txt += ' O Transferegov mostra ' + fmt.brl(t.reg) + ' empenhados, porque nos dados abertos as notas emitidas desde 2019 trazem só o valor da emissão, sem os reforços e anulações feitos depois no SIAFI.'
+        + (t.portal ? ' Para ' + plural(t.portal, 'nota', 'notas') + ', o painel usa o valor atual no Portal da Transparência.' : '')
+        + (t.estimadas ? ' ' + plural(t.estimadas, 'nota não foi encontrada', 'notas não foram encontradas') + ' no Portal; nelas vale ao menos o que já foi repassado, e o empenhado real pode ser maior.' : '');
     }
     if (Math.abs(t.semNota) >= 1) txt += ' O total repassado ao instrumento é ' + fmt.brl(t.rep) + ', e as ordens bancárias ligadas às notas somam ' + fmt.brl(t.repNotas) + '; a diferença são ordens bancárias que os dados abertos não ligam a nenhuma nota.'
-      + (t.semNota >= 1 ? ' Elas saíram do saldo de alguma nota, por isso a linha delas na Tabela 4 desconta o empenhado a repassar' + (t.extra >= 1 ? ' e soma ' + fmt.brl(t.extra) + ' ao empenhado, que é ao menos o repassado' : '') + '.' : '');
+      + (t.semNota >= 1 ? ' Elas saíram do saldo de alguma nota, por isso a linha delas na Tabela 6 desconta o empenhado a repassar' + (t.extra >= 1 ? ' e soma ' + fmt.brl(t.extra) + ' ao empenhado, que é ao menos o repassado' : '') + '.' : '');
     el.textContent = txt;
   });
 
@@ -1527,7 +1685,7 @@
     if (!e || !i || !e.length) return;
     const t = totaisEmp(e, i);
     const mostraReg = t.ajustadas > 0;
-    const cab = ['Grupo de despesa', ...(mostraReg ? ['Registrado nas notas (R$)'] : []), 'Empenhado (R$)', 'Repassado pelo MDS (R$)', 'Empenhado a repassar (R$)'];
+    const cab = ['Grupo de despesa', ...(mostraReg ? ['Registrado no Transferegov (R$)'] : []), 'Empenhado (R$)', 'Repassado pelo MDS (R$)', 'Empenhado a repassar (R$)'];
     const v = (x) => (Math.abs(x) < 0.005 ? '-' : fmt.brl(x).replace(/R\$\s?/, ''));
     const linha = (tag, rotulo, reg, emp, rep, falta) => {
       const tr = document.createElement('tr');
@@ -1565,10 +1723,10 @@
       const tr = document.createElement('tr');
       tr.dataset.key = x.id;
       if (n(x.valor) < 0) tr.className = 'anula';
-      const ajustada = empenhado(x) - (n(x.valor) ?? 0) >= 1;
+      const ajustada = Math.abs(empenhado(x) - (n(x.valor) ?? 0)) >= 1;
       tr.append(celula('td', x.data ? fmt.data(x.data) : '', {class: 'nowrap'}), celula('td', x.empenho ?? '', {class: 'nowrap'}), celula('td', x.tipo ?? ''),
         celula('td', x.natureza ?? '', {class: 'nowrap cis-hide-narrow'}), celula('td', n(x.valor) ? fmt.reais(x.valor) : '—', {class: 'num'}),
-        celula('td', empenhado(x) ? fmt.reais(empenhado(x)) : '—', ajustada ? {class: 'num analise', title: 'Valor na nota menor que o repassado: considerado o repassado'} : {class: 'num'}),
+        celula('td', empenhado(x) ? fmt.reais(empenhado(x)) : '—', ajustada ? {class: 'num analise', title: x.fonte_empenhado === 'portal' ? 'Valor atual no Portal da Transparência (com reforços e anulações)' : 'Nota não encontrada no Portal: considerado o já repassado'} : {class: 'num'}),
         celula('td', n(x.repassado) ? fmt.reais(x.repassado) : '—', {class: 'num'}), celula('td', x.observacao ?? '', {class: 'detalhe cis-hide-narrow'}));
       tb.append(tr);
     });
