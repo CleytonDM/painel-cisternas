@@ -424,7 +424,7 @@
         <button type="button" class="cis-copy" data-copiar>Copiar tabela</button>
       </span>
     </div>
-    <p class="cis-muted">Quanto do plano de aplicação cabe ao MDS em cada natureza de despesa, quanto já foi empenhado e repassado e quanto falta empenhar.</p>
+    <p class="cis-muted">Quanto do plano de aplicação cabe ao MDS em cada natureza de despesa, quanto já foi empenhado e pago e quanto falta empenhar (empenho a realizar).</p>
     <div class="cis-quadrobox">
       <p class="cis-tabtit">Tabela 4: Execução orçamentário-financeira do <span data-draw="titulo-inst" data-source="instrumentos">—</span>, por natureza de despesa</p>
       <table class="cis-quadro" data-draw="natquadro" data-source="natureza"></table>
@@ -435,7 +435,7 @@
 
   <section class="cis-card" id="falta-empenhar">
     <div class="cis-cardhead">
-      <h2>Falta empenhar por parceria</h2>
+      <h2>Empenho a realizar por parceria</h2>
       <span>
         <span class="cis-aviso" data-aviso="ok" hidden>Copiada. Cole no Excel ou no SEI.</span>
         <span class="cis-aviso" data-aviso="sel" hidden>Tabela selecionada: tecle Ctrl+C para copiar.</span>
@@ -444,7 +444,7 @@
     </div>
     <p class="cis-muted">Parcerias em execução com saldo do MDS a empenhar, da maior para a menor. Clique numa linha para abrir a parceria.</p>
     <div class="cis-quadrobox">
-      <p class="cis-tabtit">Tabela 5: Saldo do MDS a empenhar nas parcerias em execução, por natureza de despesa</p>
+      <p class="cis-tabtit">Tabela 5: Empenho a realizar nas parcerias em execução, por natureza de despesa</p>
       <table class="cis-quadro cis-clicavel" data-draw="faltatab" data-source="natureza instrumentos"></table>
       <p class="cis-origem">Fonte: a mesma da Tabela 4, carga de <span data-draw="carga" data-source="instrumentos">—</span>. Contrapartida por natureza conforme a regra indicada em cada linha (ver a nota da Tabela 4).</p>
     </div>
@@ -1390,14 +1390,13 @@
     return new Map(d.data.filter((x) => x.nr === nr).map((x) => [x.linha, x]));
   };
   const valorNat = (v) => (v == null || v === '' ? '' : Math.abs(n(v)) < 0.005 ? '-' : fmt.reais(v));
+  // Ordem e nomes propostos pelo usuário (27/11): "Pago" é o repassado pelo MDS ao parceiro
   const LINHAS_NAT = [
-    [null, 'MDS'],
-    ['mds', 'Valor do MDS (total)', 'realce'],
+    ['mds', 'Valor MDS'],
     ['empenhado', 'Empenhado'],
-    ['falta', 'Falta empenhar', 'realce destaque'],
-    ['repassado', 'Repassado (pago pelo MDS)'],
-    ['a_repassar', 'Empenhado a repassar'],
-    [null, 'Parceiro'],
+    ['repassado', 'Pago'],
+    ['a_repassar', 'A pagar'],
+    ['falta', 'Empenho a Realizar', 'destaque'],
     ['contrapartida', 'Contrapartida prevista'],
     ['contrapartida_depositada', 'Contrapartida depositada'],
     ['rendimentos', 'Rendimentos de aplicação aprovados'],
@@ -1423,7 +1422,7 @@
       cols.forEach((c) => tr.append(celula('td', valorNat(x?.[c]), {class: 'dir nowrap'})));
       tbody.append(tr);
     };
-    linha(m.get('global'), 'Valor global (plano de aplicação)');
+    linha(m.get('global'), 'Valor Global (plano de aplicação)');
     LINHAS_NAT.forEach(([chave, rotulo, cls]) => {
       if (!chave) {
         const tr = document.createElement('tr');
@@ -1450,11 +1449,11 @@
     const partes = [
       'Nota: o valor global e os rendimentos vêm do plano de aplicação detalhado (recursos do convênio e rendimentos de aplicação); o valor do MDS é o plano menos a contrapartida. Em cada natureza, valor global = valor do MDS + contrapartida prevista + rendimentos aprovados.',
       regra,
-      'Empenhado e repassado por natureza vêm das notas de empenho do MDS; o valor das notas emitidas desde 2019 é o valor atual no Portal da Transparência, com reforços e anulações.',
+      'Empenhado e pago por natureza vêm das notas de empenho do MDS (pago é o repassado pelo MDS ao parceiro, pelas ordens bancárias); o valor das notas emitidas desde 2019 é o valor atual no Portal da Transparência, com reforços e anulações.',
     ];
-    if (n(g.estimadas) > 0) partes.push(plural(n(g.estimadas), 'nota não foi encontrada', 'notas não foram encontradas') + ' no Portal da Transparência; nelas vale ao menos o que já foi repassado, e o falta empenhar pode estar superestimado.');
+    if (n(g.estimadas) > 0) partes.push(plural(n(g.estimadas), 'nota não foi encontrada', 'notas não foram encontradas') + ' no Portal da Transparência; nelas vale ao menos o que já foi pago, e o empenho a realizar pode estar superestimado.');
     if (Math.abs(n(g.tributo) ?? 0) >= 1) partes.push('Do custeio previsto no plano, ' + fmt.brl(n(g.tributo)) + ' são ISS (natureza 339047), pago pelo parceiro com os recursos de custeio; o MDS empenha o custeio sem separar o tributo.');
-    if (n(f.investimento) < -1 || n(f.custeio) < -1) partes.push('Valor negativo em "Falta empenhar" indica empenho acima do previsto no plano para aquela natureza.');
+    if (n(f.investimento) < -1 || n(f.custeio) < -1) partes.push('Valor negativo em "Empenho a Realizar" indica empenho acima do previsto no plano para aquela natureza.');
     if (Math.abs(n(g.sem_nota)) >= 1) partes.push(fmt.brl(n(g.sem_nota)) + ' repassados por ordens bancárias que os dados abertos não ligam a nenhuma nota de empenho entram só no total.');
     if (Math.abs(n(g.dif_plano)) >= 1) partes.push('Os recursos do convênio no plano de aplicação diferem do repasse mais a contrapartida em ' + fmt.brl(Math.abs(n(g.dif_plano))) + '.');
     el.textContent = partes.join(' ');
