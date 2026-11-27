@@ -216,7 +216,8 @@
   .cis-quadronota { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
   .cis-quadro tr.grupo td { background: var(--cis-tinta); font-weight: var(--cds-font-weight-medium); text-align: left; }
   .cis-quadro tr.destaque td { font-weight: 700; }
-  .cis-quadro td.rotulo { text-align: left; }
+  .cis-quadro td.rotulo { text-align: left; min-width: 15rem; }
+  .cis-quadro tr.realce td { background: color-mix(in srgb, var(--cis-claro) 22%, var(--color-panel)); }
   .cis-clicavel tbody tr { cursor: pointer; }
   .cis-clicavel tbody tr:hover td { background: var(--cis-tinta); }
   .cis-notas { margin: 0; padding-left: 1.2rem; display: grid; gap: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
@@ -1391,9 +1392,9 @@
   const valorNat = (v) => (v == null || v === '' ? '' : Math.abs(n(v)) < 0.005 ? '-' : fmt.reais(v));
   const LINHAS_NAT = [
     [null, 'MDS'],
-    ['mds', 'Valor do MDS (repasse)'],
+    ['mds', 'Valor do MDS (total)', 'realce'],
     ['empenhado', 'Empenhado'],
-    ['falta', 'Falta empenhar', 'destaque'],
+    ['falta', 'Falta empenhar', 'realce destaque'],
     ['repassado', 'Repassado (pago pelo MDS)'],
     ['a_repassar', 'Empenhado a repassar'],
     [null, 'Parceiro'],
@@ -1409,7 +1410,7 @@
     // Serviço e tributo (ISS) em colunas próprias só quando o plano separa o ISS do custeio
     const iss = m.get('global').iss === true || m.get('global').iss === 'True';
     const cols = iss ? ['investimento', 'servico', 'tributo', 'custeio', 'total'] : ['investimento', 'custeio', 'total'];
-    const nomes = {investimento: 'Investimento (R$)', servico: 'Custeio – serviço (R$)', tributo: 'Custeio – tributo, ISS (R$)',
+    const nomes = {investimento: 'Investimento (R$)', servico: 'Custeio – serviço (R$)', tributo: 'Custeio – tributo (ISS) (R$)',
       custeio: iss ? 'Custeio total (R$)' : 'Custeio (R$)', total: 'Total (R$)'};
     const thead = document.createElement('thead');
     const h = document.createElement('tr');
@@ -1421,15 +1422,20 @@
       const tr = document.createElement('tr');
       if (cls) tr.className = cls;
       tr.append(celula('td', rotulo, {class: 'rotulo'}));
-      cols.forEach((c) => tr.append(celula('td', valorNat(x?.[c]), {class: 'dir nowrap'})));
+      // linha sem divisão do custeio (empenho, repasse): uma só célula cobrindo serviço, tributo e total
+      const semDivisao = iss && (x?.servico == null || x.servico === '') && (x?.tributo == null || x.tributo === '');
+      cols.forEach((c) => {
+        if (semDivisao && (c === 'servico' || c === 'tributo')) return;
+        tr.append(celula('td', valorNat(x?.[c]), semDivisao && c === 'custeio' ? {class: 'dir nowrap', colspan: 3} : {class: 'dir nowrap'}));
+      });
       tbody.append(tr);
     };
-    linha(m.get('global'), 'Valor global (plano de aplicação)', 'destaque');
+    linha(m.get('global'), 'Valor global (plano de aplicação)');
     LINHAS_NAT.forEach(([chave, rotulo, cls]) => {
       if (!chave) {
         const tr = document.createElement('tr');
         tr.className = 'grupo';
-        tr.append(celula('td', rotulo, {colspan: cols.length + 1}));
+        tr.append(celula('td', rotulo, {colspan: cols.length + 1, class: 'rotulo'}));
         tbody.append(tr);
       } else linha(m.get(chave), rotulo, cls);
     });
@@ -1449,7 +1455,7 @@
       'custeio primeiro': 'Os dados abertos não dizem em que natureza entra a contrapartida. Regra adotada: a contrapartida é aplicada primeiro no custeio (até o custeio ainda não empenhado pelo MDS) e o restante no investimento. Nas parcerias já totalmente empenhadas, essa regra coincide com a divisão real em 74% dos casos; se o plano de trabalho indicar outra divisão, ela pode ser informada à parte.',
     }[g.regra] ?? '';
     const partes = [
-      'Nota: o valor global e os rendimentos vêm do plano de aplicação detalhado (recursos do convênio e rendimentos de aplicação); o valor do MDS é o plano menos a contrapartida.',
+      'Nota: o valor global e os rendimentos vêm do plano de aplicação detalhado (recursos do convênio e rendimentos de aplicação); o valor do MDS é o plano menos a contrapartida. Em cada natureza, valor global = valor do MDS + contrapartida prevista + rendimentos aprovados.',
       regra,
       'Empenhado e repassado por natureza vêm das notas de empenho do MDS; o valor das notas emitidas desde 2019 é o valor atual no Portal da Transparência, com reforços e anulações.',
     ];
@@ -1794,14 +1800,18 @@
     [...tab.rows].forEach((tr, i) => {
       const parte = tr.parentElement.tagName;
       const tag = parte === 'THEAD' ? 'th' : 'td';
+      // faixas de grupo, linhas realçadas e em negrito levam o mesmo destaque para o Excel e o SEI
+      const fundo = tr.classList.contains('grupo') ? 'background:#f2f2f2;font-weight:bold;'
+        : tr.classList.contains('realce') ? 'background:#dce6f1;' : '';
+      const negrito = tr.classList.contains('destaque') ? 'font-weight:bold;' : '';
       html += '<tr>';
       grade[i] = grade[i] || [];
       let col = 0;
       [...tr.cells].forEach((c) => {
         const txt = limpa(c.textContent);
         const span = (c.colSpan > 1 ? ` colspan="${c.colSpan}"` : '') + (c.rowSpan > 1 ? ` rowspan="${c.rowSpan}"` : '');
-        const dir = c.classList.contains('dir') ? 'text-align:right;' : '';
-        html += `<${tag}${span} style="${BORDA}${dir}${parte === 'TBODY' ? '' : CINZA}">${esc(txt)}</${tag}>`;
+        const dir = c.classList.contains('dir') ? 'text-align:right;' : c.classList.contains('rotulo') ? 'text-align:left;' : '';
+        html += `<${tag}${span} style="${BORDA}${dir}${parte === 'TBODY' ? fundo + negrito : CINZA}">${esc(txt)}</${tag}>`;
         while (grade[i][col] !== undefined) col++;
         for (let r = 0; r < c.rowSpan; r++) {
           grade[i + r] = grade[i + r] || [];
